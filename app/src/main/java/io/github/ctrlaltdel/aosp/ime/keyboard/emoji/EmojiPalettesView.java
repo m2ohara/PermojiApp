@@ -30,6 +30,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,9 +39,12 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.permoji.keyboard.KeyboardContact;
+
 import io.github.ctrlaltdel.aosp.ime.keyboard.Key;
 import io.github.ctrlaltdel.aosp.ime.keyboard.KeyboardActionListener;
 import io.github.ctrlaltdel.aosp.ime.keyboard.KeyboardLayoutSet;
+import io.github.ctrlaltdel.aosp.ime.keyboard.KeyboardTheme;
 import io.github.ctrlaltdel.aosp.ime.keyboard.KeyboardView;
 import io.github.ctrlaltdel.aosp.ime.keyboard.internal.KeyDrawParams;
 import io.github.ctrlaltdel.aosp.ime.keyboard.internal.KeyVisualAttributes;
@@ -91,6 +95,8 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
     private final EmojiCategory mEmojiCategory;
 
+    private int mKeyboardStyle;
+
     public EmojiPalettesView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.emojiPalettesViewStyle);
     }
@@ -130,6 +136,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
                 R.styleable.EmojiPalettesView_categoryPageIndicatorBackground, 0);
         emojiPalettesViewAttr.recycle();
         mDeleteKeyOnTouchListener = new DeleteKeyOnTouchListener();
+
     }
 
     @Override
@@ -229,6 +236,9 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         mSpacebar.setOnClickListener(this);
         mEmojiLayoutParams.setKeyProperties(mSpacebar);
         mSpacebarIcon = findViewById(R.id.emoji_keyboard_space_icon);
+
+        FrameLayout contactFrameLayout = (FrameLayout) findViewById(R.id.contactFrame);
+        KeyboardContact.get().setContactFrameLayout(contactFrameLayout, KeyboardTheme.getKeyboardTheme(this.getContext()).mThemeId, getContext());
     }
 
     @Override

@@ -97,6 +97,16 @@
             android:layout_height="match_parent"
             android:hapticFeedbackEnabled="false"
             android:soundEffectsEnabled="false" />
+
+        <FrameLayout
+            android:id="@+id/contactFrame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/contactimage10"
+            android:foreground="@drawable/contact_circle_border_lxx_light"
+            android:layout_weight="0.1429">
+        </FrameLayout>
+
         <!-- TODO: Implement KeyView and replace this. -->
         <!-- Provide audio and haptic feedback by ourselves based on the keyboard settings.
              We just need to ignore the system's audio and haptic feedback settings. -->

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.ctrlaltdel.aosp.ime">
 
@@ -25,36 +26,36 @@
 
         <!-- Services -->
         <service
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.LatinIME"
+            android:name=".latin.LatinIME"
             android:label="@string/ctrl_alt_del_ime_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
+
             <meta-data
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
-
         <service
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.spellcheck.AndroidSpellCheckerService"
+            android:name=".latin.spellcheck.AndroidSpellCheckerService"
             android:label="@string/spell_checker_service_name"
             android:permission="android.permission.BIND_TEXT_SERVICE">
             <intent-filter>
                 <action android:name="android.service.textservice.SpellCheckerService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.view.textservice.scs"
                 android:resource="@xml/spellchecker" />
         </service>
-
         <service
-            android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.DictionaryService"
+            android:name=".dictionarypack.DictionaryService"
             android:label="@string/dictionary_service_name" />
 
         <!-- Activities -->
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.setup.SetupActivity"
+            android:name=".latin.setup.SetupActivity"
             android:icon="@drawable/ic_launcher_keyboard"
             android:label="@string/ctrl_alt_del_ime_name"
             android:launchMode="singleTask"
@@ -62,18 +63,17 @@
             android:theme="@style/platformActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.permissions.PermissionsActivity"
+            android:name=".latin.permissions.PermissionsActivity"
             android:exported="false"
             android:taskAffinity=""
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.setup.SetupWizardActivity"
+            android:name=".latin.setup.SetupWizardActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/ctrl_alt_del_ime_name"
             android:theme="@style/platformActivityTheme">
@@ -81,27 +81,24 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.settings.SettingsActivity"
+            android:name=".latin.settings.SettingsActivity"
             android:label="@string/english_ime_settings"
             android:theme="@style/platformSettingsTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.spellcheck.SpellCheckerSettingsActivity"
+            android:name=".latin.spellcheck.SpellCheckerSettingsActivity"
             android:label="@string/android_spell_checker_settings"
             android:theme="@style/platformSettingsTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.DictionarySettingsActivity"
+            android:name=".dictionarypack.DictionarySettingsActivity"
             android:label="@string/dictionary_settings_title"
             android:theme="@style/platformSettingsTheme"
             android:uiOptions="splitActionBarWhenNarrow">
@@ -109,9 +106,8 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.DownloadOverMeteredDialog"
+            android:name=".dictionarypack.DownloadOverMeteredDialog"
             android:label="@string/dictionary_install_over_metered_network_prompt"
             android:theme="@style/platformActivityTheme">
             <intent-filter>
@@ -121,11 +117,11 @@
 
         <!-- Unexported activity used for tests. -->
         <activity
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.settings.TestFragmentActivity"
+            android:name=".latin.settings.TestFragmentActivity"
             android:exported="false" />
 
         <!-- Broadcast receivers -->
-        <receiver android:name="io.github.ctrlaltdel.aosp.ime.latin.SystemBroadcastReceiver">
+        <receiver android:name=".latin.SystemBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -133,16 +129,14 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
         </receiver>
-
         <receiver
-            android:name="io.github.ctrlaltdel.aosp.ime.latin.DictionaryPackInstallBroadcastReceiver"
+            android:name=".latin.DictionaryPackInstallBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.aosp.UNKNOWN_CLIENT" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.EventHandler">
+        <receiver android:name=".dictionarypack.EventHandler">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
                 <action android:name="android.intent.action.DATE_CHANGED" />
@@ -152,7 +146,7 @@
         </receiver>
 
         <!-- Broadcast receiver for AccountManager#LOGIN_ACCOUNTS_CHANGED_ACTION. -->
-        <receiver android:name="io.github.ctrlaltdel.aosp.ime.latin.accounts.AccountsChangedReceiver">
+        <receiver android:name=".latin.accounts.AccountsChangedReceiver">
             <intent-filter>
                 <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED" />
             </intent-filter>
@@ -160,11 +154,23 @@
 
         <!-- Content providers -->
         <provider
-            android:name="io.github.ctrlaltdel.aosp.ime.dictionarypack.DictionaryProvider"
+            android:name=".dictionarypack.DictionaryProvider"
             android:authorities="@string/authority"
             android:exported="false"
             android:grantUriPermissions="true"
             android:label="@string/dictionary_provider_name"
             android:multiprocess="false" />
+
+        <activity
+            android:name="com.permoji.user.UserActivity"
+            android:label="@string/title_activity_user"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>

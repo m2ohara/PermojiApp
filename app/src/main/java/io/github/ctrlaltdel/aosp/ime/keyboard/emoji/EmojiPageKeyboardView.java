@@ -23,6 +23,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.permoji.keyboard.KeyboardContact;
+
 import io.github.ctrlaltdel.aosp.ime.accessibility.AccessibilityUtils;
 import io.github.ctrlaltdel.aosp.ime.accessibility.KeyboardAccessibilityDelegate;
 import io.github.ctrlaltdel.aosp.ime.keyboard.Key;
@@ -69,6 +71,8 @@ final class EmojiPageKeyboardView extends KeyboardView implements
         mGestureDetector.setIsLongpressEnabled(false /* isLongpressEnabled */);
         mHandler = new Handler();
     }
+
+
 
     public void setOnKeyEventListener(final OnKeyEventListener listener) {
         mListener = listener;
@@ -151,6 +155,7 @@ final class EmojiPageKeyboardView extends KeyboardView implements
         pressedKey.onPressed();
         invalidateKey(pressedKey);
         mListener.onPressKey(pressedKey);
+        KeyboardContact.get().setEmojiToContactFrame(pressedKey, this.getContext());
     }
 
     public void releaseCurrentKey(final boolean withKeyRegistering) {

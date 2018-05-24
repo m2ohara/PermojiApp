@@ -32,6 +32,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.permoji.keyboard.KeyboardContact;
+
 import io.github.ctrlaltdel.aosp.ime.keyboard.internal.KeyDrawParams;
 import io.github.ctrlaltdel.aosp.ime.keyboard.internal.KeyVisualAttributes;
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -587,4 +589,5 @@ public class KeyboardView extends View {
     public void deallocateMemory() {
         freeOffscreenBuffer();
     }
+
 }
