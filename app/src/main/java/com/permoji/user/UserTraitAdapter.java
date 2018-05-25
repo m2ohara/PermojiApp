@@ -3,7 +3,6 @@ package com.permoji.user;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.permoji.api.trait.Trait;
 import com.permoji.cache.Images;
 import com.permoji.model.UserTrait;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.List;

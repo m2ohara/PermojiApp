@@ -1,16 +1,24 @@
 package com.permoji.api.trait;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import javax.annotation.Nonnull;
 
 /**
  * Created by michael on 22/05/18.
  */
 
+@Entity(tableName = "trait")
 public class Trait {
 
     @SerializedName("id")
     @Expose
+    @PrimaryKey
+    @Nonnull
     private Integer id;
     @SerializedName("userId")
     @Expose

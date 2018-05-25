@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,12 +32,12 @@
             android:background="@drawable/traiticon" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/user_trait_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_trait_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </ListView>
+        android:layout_weight="1"
+        tools:listitem="@layout/user_trait_list" />
 
     <LinearLayout
         android:id="@+id/user_notification"
