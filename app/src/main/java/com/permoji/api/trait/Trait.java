@@ -6,6 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -35,6 +38,9 @@ public class Trait {
     @SerializedName("codepoint")
     @Expose
     private int codepoint;
+    @SerializedName("imageNames")
+    @Expose
+    private ArrayList<String> voucherImageNames;
 
     public Integer getId() {
         return id;
@@ -82,5 +88,13 @@ public class Trait {
 
     public void setCodepoint(int codepoint) {
         this.codepoint = codepoint;
+    }
+
+    public ArrayList<String> getVoucherImageNames() {
+        return voucherImageNames;
+    }
+
+    public void setVoucherImageNames(ArrayList<String> voucherImageNames) {
+        this.voucherImageNames = voucherImageNames;
     }
 }

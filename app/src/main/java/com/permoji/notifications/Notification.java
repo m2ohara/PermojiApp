@@ -1,4 +1,6 @@
-package com.permoji.user.notifications;
+package com.permoji.notifications;
+
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by michael on 25/05/18.
@@ -8,7 +10,7 @@ public class Notification {
 
     private int id;
 
-    private String contactImagePath;
+    private Drawable notifierImage;
 
     private int traitCodepoint;
 
@@ -22,14 +24,6 @@ public class Notification {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getContactImagePath() {
-        return contactImagePath;
-    }
-
-    public void setContactImagePath(String contactImagePath) {
-        this.contactImagePath = contactImagePath;
     }
 
     public int getTraitCodepoint() {
@@ -54,5 +48,13 @@ public class Notification {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Drawable getNotifierImage() {
+        return notifierImage;
+    }
+
+    public void setNotifierImage(Drawable notifierImage) {
+        this.notifierImage = notifierImage;
     }
 }

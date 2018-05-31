@@ -3,7 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/user_profile_layout"
+        android:elevation="4dp"
+        android:textColor="#FFFFFFFF"
+        android:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <RelativeLayout
         android:id="@+id/user_profile"
@@ -39,13 +50,12 @@
         android:layout_weight="1"
         tools:listitem="@layout/user_trait_list" />
 
-    <LinearLayout
-        android:id="@+id/user_notification"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_notification_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/user_profile_layout">
+        tools:listitem="@layout/user_notification_list"
+        android:background="@color/user_profile_layout" />
 
-    </LinearLayout>
 </LinearLayout>

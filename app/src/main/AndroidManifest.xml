@@ -53,6 +53,14 @@
             android:name=".dictionarypack.DictionaryService"
             android:label="@string/dictionary_service_name" />
 
+        <service android:name="com.permoji.broadcast.FacebookNotificationListenerService"
+            android:label="Permoji Notification Service"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
+            </intent-filter>
+        </service>
+
         <!-- Activities -->
         <activity
             android:name=".latin.setup.SetupActivity"

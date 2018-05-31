@@ -1,4 +1,4 @@
-package com.permoji.user.notifications;
+package com.permoji.notifications;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -20,7 +20,11 @@ public class NotificationViewModel extends AndroidViewModel {
         super(application);
 
         notificationsRepository = new NotificationsRepository(application);
+        notifications = notificationsRepository.getNotifications();
     }
 
+    public LiveData<List<Notification>> getNotifications() {
+        return notifications;
+    }
 
 }

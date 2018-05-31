@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,11 +25,13 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
     class UserTraitViewHolder extends RecyclerView.ViewHolder {
         private final TextView traitEmoji;
         private final TextView traitName;
+        private final LinearLayout traitContacts;
 
         private UserTraitViewHolder(View itemView) {
             super(itemView);
             traitEmoji = (TextView) itemView.findViewById(R.id.user_trait_emoji);
             traitName = (TextView) itemView.findViewById(R.id.user_trait_name);
+            traitContacts = itemView.findViewById(R.id.user_trait_voters);
 
         }
     }
@@ -51,6 +54,20 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
         if(trait != null) {
             holder.traitEmoji.setText(new String(Character.toChars(trait.getCodepoint())));
             holder.traitName.setText(trait.getDescription());
+
+            holder.traitContacts.removeAllViews();
+
+            for(String imageName : trait.getVoucherImageNames()) {
+
+                ImageView imageView = (ImageView) mInflater.inflate(R.layout.user_trait_voter, null, false);
+
+                imageView.setImageResource(holder.traitContacts.getResources().getIdentifier(imageName, "drawable", holder.traitContacts.getContext().getPackageName()));
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                        100,
+                        100));
+
+                holder.traitContacts.addView(imageView);
+            }
         }
         else {
             holder.traitEmoji.setText("NA");

@@ -578,4 +578,6 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <!-- This resource is corresponding to msgid="5433275485499039199" -->
     <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="title_activity_user">UserActivity</string>
+    <string name="action_trait_activity">Add Trait</string>
+    <string name="action_settings">Settings</string>
 </resources>
