@@ -2,7 +2,9 @@ package com.permoji.cache;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.permoji.api.trait.Trait;
 
@@ -17,6 +19,12 @@ public interface TraitDao extends BaseDAO<Trait> {
 
     @Query("Select * from trait")
     LiveData<List<Trait>> getAll();
+
+    @Insert
+    void insert(Trait trait);
+
+    @Update
+    void update(Trait trait);
 
     @Query("Delete from trait")
     void deleteAll();

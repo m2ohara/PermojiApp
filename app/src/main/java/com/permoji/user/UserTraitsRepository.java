@@ -2,6 +2,7 @@ package com.permoji.user;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.permoji.api.trait.Trait;
@@ -26,12 +27,23 @@ public class UserTraitsRepository {
         traitsByUserId = traitDao.getAll();
     }
 
+    public UserTraitsRepository(Context context) {
+
+        LocalDatabase db = LocalDatabase.getInstance(context);
+        traitDao = db.traitDao();
+        traitsByUserId = traitDao.getAll();
+    }
+
     public LiveData<List<Trait>> getTraitsByUserId(int id) {
         return traitsByUserId;
     }
 
     public void insert(Trait trait) {
         new insertTraitAsync(traitDao).execute(trait);
+    }
+
+    public void update(Trait trait) {
+        new updateTraitAsync(traitDao).execute(trait);
     }
 
     private static class insertTraitAsync extends AsyncTask<Trait, Void, Void> {
@@ -45,6 +57,21 @@ public class UserTraitsRepository {
         @Override
         protected Void doInBackground(Trait... traits) {
             asyncTraitDao.insert(traits[0]);
+            return null;
+        }
+    }
+
+    private static class updateTraitAsync extends AsyncTask<Trait, Void, Void> {
+
+        private TraitDao asyncTraitDao;
+
+        public updateTraitAsync(TraitDao asyncTraitDao) {
+            this.asyncTraitDao = asyncTraitDao;
+        }
+
+        @Override
+        protected Void doInBackground(Trait... traits) {
+            asyncTraitDao.update(traits[0]);
             return null;
         }
     }

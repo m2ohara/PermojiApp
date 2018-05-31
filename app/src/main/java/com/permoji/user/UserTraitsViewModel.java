@@ -29,7 +29,4 @@ public class UserTraitsViewModel extends AndroidViewModel {
         return getUserTraits;
     }
 
-    public void insertUserTrait(Trait trait) {
-        userTraitsRepository.insert(trait);
-    }
 }
