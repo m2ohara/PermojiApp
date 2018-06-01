@@ -14,17 +14,17 @@ public class Notification {
 
     private int traitCodepoint;
 
-    private String time;
+    private String timePassed;
 
     private String detail;
+
+    private String traitName;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public int getTraitCodepoint() {
         return traitCodepoint;
@@ -34,12 +34,12 @@ public class Notification {
         this.traitCodepoint = traitCodepoint;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimePassed() {
+        return timePassed;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimePassed(String timePassed) {
+        this.timePassed = timePassed;
     }
 
     public String getDetail() {
@@ -57,4 +57,8 @@ public class Notification {
     public void setNotifierImage(Drawable notifierImage) {
         this.notifierImage = notifierImage;
     }
+
+    public String getTraitName() { return traitName; }
+
+    public void setTraitName(String traitName) { this.traitName = traitName; }
 }

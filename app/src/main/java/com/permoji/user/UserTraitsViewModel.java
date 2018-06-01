@@ -22,7 +22,7 @@ public class UserTraitsViewModel extends AndroidViewModel {
         super(application);
 
         userTraitsRepository = new UserTraitsRepository(application);
-        getUserTraits = userTraitsRepository.getTraitsByUserId(1);
+        getUserTraits = userTraitsRepository.getLiveTraitsByUserId(1);
     }
 
     public LiveData<List<Trait>> getGetUserTraits() {

@@ -93,7 +93,7 @@
         <attr name="keyHysteresisDistance" format="dimension" />
         <!-- Key detection hysteresis distance for shift/symbols sliding input. -->
         <attr name="keyHysteresisDistanceForSlidingModifier" format="dimension" />
-        <!-- Touch noise threshold time in millisecond -->
+        <!-- Touch noise threshtimePassedtime in millisecond -->
         <attr name="touchNoiseThresholdTime" format="integer" />
         <!-- Touch noise threshold distance in millimeter -->
         <attr name="touchNoiseThresholdDistance" format="dimension" />

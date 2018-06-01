@@ -24,19 +24,21 @@ public class UserTraitsRepository {
 
         LocalDatabase db = LocalDatabase.getInstance(application);
         traitDao = db.traitDao();
-        traitsByUserId = traitDao.getAll();
+        traitsByUserId = traitDao.getAllLive();
     }
 
     public UserTraitsRepository(Context context) {
 
         LocalDatabase db = LocalDatabase.getInstance(context);
         traitDao = db.traitDao();
-        traitsByUserId = traitDao.getAll();
+        traitsByUserId = traitDao.getAllLive();
     }
 
-    public LiveData<List<Trait>> getTraitsByUserId(int id) {
+    public LiveData<List<Trait>> getLiveTraitsByUserId(int id) {
         return traitsByUserId;
     }
+
+    public List<Trait> getAllTraits() { return traitDao.getAll(); }
 
     public void insert(Trait trait) {
         new insertTraitAsync(traitDao).execute(trait);

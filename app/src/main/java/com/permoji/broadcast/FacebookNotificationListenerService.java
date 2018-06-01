@@ -1,6 +1,7 @@
 package com.permoji.broadcast;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -73,31 +74,17 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         }
 
 
+        //Store notification icon if exists
+        if(extras.get(Notification.EXTRA_LARGE_ICON) != null) {
 
-        if(sbn.getNotification().icon != 0) {
-
-            Context context = null;
-            try {
-                context = createPackageContext(sbn.getPackageName(), 0);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            Drawable drawable = context.getResources().getDrawable(sbn.getNotification().icon);
+            Bitmap bigIcon = (Bitmap) extras.get(Notification.EXTRA_LARGE_ICON);
 
             name = "User";
             if(androidText != null) {
-
-                if(sbn.getPackageName().contains("facebook.orca")) {
-                    name = "" + extras.getString("android.title");
-                }
-                if(sbn.getPackageName().contains("whatsapp")) {
-                    name = "" + extras.getString("android.text");
-                    name = name.substring(0, name.indexOf(':'));
-                }
+                name = "" + extras.getString("android.title");
             }
 
-            filePath = writeImageToCache(drawable, name);
+            filePath = writeImageToCache(bigIcon, name);
         }
 
 
@@ -132,16 +119,20 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         }
     }
 
-    private String writeImageToCache(Drawable drawable, String name) {
-
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+    private String writeImageToCache(Bitmap bigIcon, String name) {
 
         File outFile = null;
+        String externalDirectory = "Permoji";
         OutputStream stream = null;
 
         try {
 
-            outFile = new File(Environment.getExternalStorageDirectory(),
+            File dir = new File(Environment.getExternalStorageDirectory(), externalDirectory);
+            if(!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            outFile = new File(Environment.getExternalStorageDirectory() + "/" + externalDirectory + "/",
                     name + ".png");
             if (outFile.exists()) {
                 outFile.delete();
@@ -149,7 +140,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
 
             stream = new FileOutputStream(outFile);
 
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            bigIcon.compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.flush();
             stream.close();
         }

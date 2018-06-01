@@ -53,7 +53,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
         holder.notifierImage.setImageDrawable(notification.getNotifierImage());
         holder.detail.setText(notification.getDetail() + " " + new String(Character.toChars(notification.getTraitCodepoint())));
-        holder.time.setText(notification.getTime());
+        holder.time.setText(notification.getTimePassed());
 
     }
 

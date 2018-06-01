@@ -1,11 +1,7 @@
 package com.permoji.user;
 
-import android.app.Application;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,23 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.permoji.api.trait.Trait;
-import com.permoji.broadcast.FacebookNotificationListenerService;
-import com.permoji.model.UserTrait;
+import com.permoji.broadcast.NotificationReceiver;
 import com.permoji.notifications.Notification;
 import com.permoji.notifications.NotificationListAdapter;
 import com.permoji.notifications.NotificationViewModel;
-import com.permoji.notifications.NotificationsRepository;
+import com.permoji.notifications.MockNotificationRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 
@@ -66,7 +57,7 @@ public class UserActivity extends AppCompatActivity {
 
     private void setUserTraitsObserver() {
 
-        final List<Notification> notifications = new NotificationsRepository(this).generateNotificationsList();
+        final List<Notification> notifications = new MockNotificationRepository(this).generateNotificationsList();
 
         userTraitsViewModel.getGetUserTraits().observe(this, new Observer<List<Trait>>() {
             @Override
@@ -137,68 +128,6 @@ public class UserActivity extends AppCompatActivity {
     private void registerFbReceiver() {
         nReceiver = new NotificationReceiver();
         registerReceiver(nReceiver,new IntentFilter("io.github.ctrlaltdel.aosp.ime"));
-    }
-
-
-    class NotificationReceiver extends BroadcastReceiver {
-
-        private UserTraitsRepository userTraitsRepository;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            userTraitsRepository = new UserTraitsRepository(context);
-
-            List<Trait> cachedTraits = userTraitsRepository.getTraitsByUserId(0).getValue();
-
-            Bundle bundle = intent.getExtras();
-            Log.d(this.getClass().getSimpleName(), "Received broadcast");
-            if (bundle != null) {
-
-                ArrayList<Integer> emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
-
-                for(int codepoint : emojiCodepoints) {
-
-                    writeTraitToCache(codepoint, cachedTraits);
-                }
-            }
-        }
-
-        private void writeTraitToCache(int traitCodepoint, List<Trait> cachedTraits) {
-            Trait traitToWrite = null;
-
-            //TODO: Implement actual voter images
-            ArrayList<String> voters = new ArrayList<>(); voters.addAll(Arrays.asList("contactimage1", "contactimage2", "contactimage3",
-                    "contactimage4", "contactimage5", "contactimage6","contactimage7", "contactimage8", "contactimage9", "contactimage10"));
-            Random random = new Random();
-
-            for(Trait cachedTrait : cachedTraits) {
-                if(cachedTrait.getCodepoint() == traitCodepoint) {
-
-                    //TODO: Implement actual voter image retrieval
-                    ArrayList<String> v = cachedTrait.getVoucherImageNames();
-                    v.add(voters.get(random.nextInt(10)));
-                    cachedTrait.setVoucherImageNames(v);
-
-                    cachedTrait.setAmount(cachedTrait.getAmount() + 1);
-
-                    userTraitsRepository.update(cachedTrait);
-                    return;
-                }
-            }
-
-
-            traitToWrite = new Trait();
-            traitToWrite.setCodepoint(traitCodepoint);
-
-            //TODO: Implement actual trait generation
-            traitToWrite.setDescription("New Emoji");
-            ArrayList<String> v = new ArrayList<>(); v.add(voters.get(random.nextInt(10)));
-            traitToWrite.setVoucherImageNames(v);
-
-            userTraitsRepository.insert(traitToWrite);
-
-        }
     }
 
 }

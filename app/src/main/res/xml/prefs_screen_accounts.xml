@@ -38,7 +38,7 @@
         android:disableDependentsState="false"
         android:enabled="false" />
 
-    <!-- This preference (acts like a button) enables the user to initiate an one time sync. -->
+    <!-- This preference (acts like a button) enables the user to initiate an timePassedtime sync. -->
     <Preference android:key="pref_sync_now"
         android:persistent="false"
         android:title="@string/sync_now_title"

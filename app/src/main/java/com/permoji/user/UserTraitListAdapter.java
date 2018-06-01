@@ -2,6 +2,8 @@ package com.permoji.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,10 @@ import android.widget.TextView;
 
 import com.permoji.api.trait.Trait;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 
@@ -56,17 +61,28 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
             holder.traitName.setText(trait.getDescription());
 
             holder.traitContacts.removeAllViews();
+            ArrayList<String> existingImages = new ArrayList<>();
+            for(final String imageName : trait.getVoucherImageNames()) {
 
-            for(String imageName : trait.getVoucherImageNames()) {
+                if(existingImages.contains(imageName)) {
+                    //TODO: add counter
+                }
+                else {
+                    File imageFile = new File(imageName);
 
-                ImageView imageView = (ImageView) mInflater.inflate(R.layout.user_trait_voter, null, false);
+                    if(imageFile.exists()) {
 
-                imageView.setImageResource(holder.traitContacts.getResources().getIdentifier(imageName, "drawable", holder.traitContacts.getContext().getPackageName()));
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                        100,
-                        100));
+                        ImageView imageView = (ImageView) mInflater.inflate(R.layout.user_trait_voter, null, false);
+                        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                        imageView.setImageBitmap(imageBitmap);
+                        imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                                100,
+                                100));
 
-                holder.traitContacts.addView(imageView);
+                        holder.traitContacts.addView(imageView);
+                        existingImages.add(imageName);
+                    }
+                }
             }
         }
         else {

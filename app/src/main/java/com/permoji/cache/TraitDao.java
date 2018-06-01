@@ -18,7 +18,10 @@ import java.util.List;
 public interface TraitDao extends BaseDAO<Trait> {
 
     @Query("Select * from trait")
-    LiveData<List<Trait>> getAll();
+    LiveData<List<Trait>> getAllLive();
+
+    @Query("Select * from trait")
+    List<Trait> getAll();
 
     @Insert
     void insert(Trait trait);
