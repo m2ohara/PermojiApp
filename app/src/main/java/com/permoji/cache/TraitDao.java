@@ -17,10 +17,10 @@ import java.util.List;
 @Dao
 public interface TraitDao extends BaseDAO<Trait> {
 
-    @Query("Select * from trait")
+    @Query("Select * from Trait")
     LiveData<List<Trait>> getAllLive();
 
-    @Query("Select * from trait")
+    @Query("Select * from Trait")
     List<Trait> getAll();
 
     @Insert
@@ -29,7 +29,7 @@ public interface TraitDao extends BaseDAO<Trait> {
     @Update
     void update(Trait trait);
 
-    @Query("Delete from trait")
+    @Query("Delete from Trait")
     void deleteAll();
 
 }

@@ -5,17 +5,21 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.FontRequestEmojiCompatConfig;
+import android.support.v4.provider.FontRequest;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.permoji.api.trait.Trait;
 import com.permoji.broadcast.NotificationReceiver;
-import com.permoji.notifications.Notification;
+import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.NotificationListAdapter;
 import com.permoji.notifications.NotificationViewModel;
 import com.permoji.notifications.MockNotificationRepository;
@@ -32,6 +36,8 @@ public class UserActivity extends AppCompatActivity {
     private NotificationListAdapter notificationListAdapter;
 
     private NotificationReceiver nReceiver;
+
+    private String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +59,38 @@ public class UserActivity extends AppCompatActivity {
         setNotificationsObserver();
 
         registerFbReceiver();
+
+        initializeDeviceEmojiSupport();
+    }
+
+    private void initializeDeviceEmojiSupport() {
+        FontRequest fontRequest = new FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Noto Color Emoji Compat",
+                R.array.com_google_android_gms_fonts_certs);
+        EmojiCompat.Config config = new FontRequestEmojiCompatConfig(this, fontRequest)
+                .setReplaceAll(true)
+                .registerInitCallback(new EmojiCompat.InitCallback() {
+                    @Override
+                    public void onInitialized() {
+                        Log.i(TAG, "EmojiCompat initialized");
+                    }
+
+                    @Override
+                    public void onFailed(@Nullable Throwable throwable) {
+                        Log.e(TAG, "EmojiCompat initialization failed", throwable);
+                    }
+                });
+        EmojiCompat.init(config);
     }
 
     private void setUserTraitsObserver() {
-
-        final List<Notification> notifications = new MockNotificationRepository(this).generateNotificationsList();
 
         userTraitsViewModel.getGetUserTraits().observe(this, new Observer<List<Trait>>() {
             @Override
             public void onChanged(@Nullable List<Trait> traits) {
                 userTraitListAdapter.setTraits(traits);
-
-                notificationListAdapter.setNotifications(notifications);
             }
         });
     }
@@ -77,10 +103,10 @@ public class UserActivity extends AppCompatActivity {
 
     private void setNotificationsObserver() {
 
-        notificationViewModel.getNotifications().observe(this, new Observer<List<Notification>>() {
+        notificationViewModel.getNotifications().observe(this, new Observer<List<UserNotification>>() {
             @Override
-            public void onChanged(@Nullable List<Notification> notifications) {
-                notificationListAdapter.setNotifications(notifications);
+            public void onChanged(@Nullable List<UserNotification> userNotifications) {
+                notificationListAdapter.setUserNotifications(userNotifications);
             }
         });
     }

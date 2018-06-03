@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.text.emoji.EmojiCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.compatability.EmojiInitCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,32 +59,23 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
 
         Trait trait = userTraits.get(position);
         if(trait != null) {
-            holder.traitEmoji.setText(new String(Character.toChars(trait.getCodepoint())));
+//            holder.traitEmoji.setText(new String(Character.toChars(trait.getCodepoint())));
+            EmojiCompat.get().registerInitCallback(new EmojiInitCallback(holder.traitEmoji, new String(Character.toChars(trait.getCodepoint()))));
             holder.traitName.setText(trait.getDescription());
 
             holder.traitContacts.removeAllViews();
-            ArrayList<String> existingImages = new ArrayList<>();
-            for(final String imageName : trait.getVoucherImageNames()) {
+            for(final String imagePath : trait.getVoucherImageNames()) {
 
-                if(existingImages.contains(imageName)) {
-                    //TODO: add counter
-                }
-                else {
-                    File imageFile = new File(imageName);
+                File imageFile = new File(imagePath);
 
-                    if(imageFile.exists()) {
+                ImageView imageView = (ImageView) mInflater.inflate(R.layout.user_trait_voter, null, false);
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                imageView.setImageBitmap(imageBitmap);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                        100,
+                        100));
 
-                        ImageView imageView = (ImageView) mInflater.inflate(R.layout.user_trait_voter, null, false);
-                        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                        imageView.setImageBitmap(imageBitmap);
-                        imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                                100,
-                                100));
-
-                        holder.traitContacts.addView(imageView);
-                        existingImages.add(imageName);
-                    }
-                }
+                holder.traitContacts.addView(imageView);
             }
         }
         else {

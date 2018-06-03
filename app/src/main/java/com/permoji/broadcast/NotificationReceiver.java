@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.notifications.UserNotification;
+import com.permoji.notifications.UserNotificationRepository;
 import com.permoji.user.UserTraitsRepository;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +43,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         private WeakReference<NotificationReceiver> notificationReceiverWeakReference;
         private UserTraitsRepository userTraitsRepository;
+        private UserNotificationRepository userNotificationRepository;
 
         public AccessCacheAsyncTask(NotificationReceiver notificationReceiver) {
             notificationReceiverWeakReference = new WeakReference<>(notificationReceiver);
@@ -47,25 +52,29 @@ public class NotificationReceiver extends BroadcastReceiver {
         @Override
         protected Void doInBackground(String... strings) {
 
+            if(notificationReceiverWeakReference.get() != null) {
+                userTraitsRepository = new UserTraitsRepository(notificationReceiverWeakReference.get().context);
+                userNotificationRepository = new UserNotificationRepository(notificationReceiverWeakReference.get().context);
 
-            userTraitsRepository = new UserTraitsRepository(notificationReceiverWeakReference.get().context);
+                List<Trait> cachedTraits = userTraitsRepository.getAllTraits();
 
-            List<Trait> cachedTraits = userTraitsRepository.getAllTraits();
+                Bundle bundle = notificationReceiverWeakReference.get().intent.getExtras();
+                Log.d(this.getClass().getSimpleName(), "Received broadcast");
+                if (bundle != null) {
 
-            Bundle bundle = notificationReceiverWeakReference.get().intent.getExtras();
-            Log.d(this.getClass().getSimpleName(), "Received broadcast");
-            if (bundle != null) {
+                    String notificationImagePath = bundle.getString("filePath");
+                    ArrayList<Integer> emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
 
-                String notificationImagePath = bundle.getString("filePath");
-                ArrayList<Integer> emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
+                    for (int codepoint : emojiCodepoints) {
 
-                for(int codepoint : emojiCodepoints) {
-
-                    writeTraitToCache(codepoint, cachedTraits, notificationImagePath);
+                        writeTraitToCache(codepoint, cachedTraits, notificationImagePath);
+                        writeNotificationToCache(codepoint, notificationImagePath);
+                    }
                 }
-            }
 
-            notificationReceiverWeakReference.get().pendingResult.finish();
+
+                notificationReceiverWeakReference.get().pendingResult.finish();
+            }
             return null;
         }
 
@@ -75,16 +84,16 @@ public class NotificationReceiver extends BroadcastReceiver {
             for(Trait cachedTrait : cachedTraits) {
                 if(cachedTrait.getCodepoint() == traitCodepoint) {
                     //Update existing trait
-                    ArrayList<String> v = cachedTrait.getVoucherImageNames();
-                    v.add(notificationImagePath);
-                    cachedTrait.setVoucherImageNames(v);
+                    ArrayList<String> imagePaths = cachedTrait.getVoucherImageNames();
+                    if(!imagePaths.contains(notificationImagePath)) {
+                        imagePaths.add(notificationImagePath);
+                        cachedTrait.setVoucherImageNames(imagePaths);
+                    }
                     cachedTrait.setAmount(cachedTrait.getAmount() + 1);
-
                     userTraitsRepository.update(cachedTrait);
                     return;
                 }
             }
-
 
             //Otherwise add new trait
             traitToWrite = new Trait();
@@ -100,8 +109,16 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         }
 
-        private void writeNotificationToCache() {
+        private void writeNotificationToCache(int TraitCodepoint, String notificationImagePath) {
 
+            UserNotification userNotification = new UserNotification();
+            userNotification.setDetail("reacted with");
+            userNotification.setImagePath(notificationImagePath);
+            userNotification.setTimeStamp(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            userNotification.setTraitName("Cheerful");
+            userNotification.setTraitCodepoint(TraitCodepoint);
+
+            userNotificationRepository.insertUserNotificationAsync(userNotification);
         }
     };
 }

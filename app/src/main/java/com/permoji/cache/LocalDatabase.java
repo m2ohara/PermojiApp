@@ -8,6 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.notifications.UserNotification;
 
 import javax.annotation.Nonnull;
 
@@ -15,7 +16,7 @@ import javax.annotation.Nonnull;
  * Created by michael on 24/05/18.
  */
 
-@Database(entities = {Trait.class}, version = 1)
+@Database(entities = {Trait.class, UserNotification.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class LocalDatabase extends RoomDatabase {
 
@@ -26,7 +27,7 @@ public abstract class LocalDatabase extends RoomDatabase {
         if(instance == null) {
             instance =
                     Room.databaseBuilder(context.getApplicationContext(), LocalDatabase.class, "local_database")
-                            .addCallback(localDatabaseCallback)
+//                            .addCallback(localDatabaseCallback)
                             .build();
         }
         return instance;
@@ -34,13 +35,15 @@ public abstract class LocalDatabase extends RoomDatabase {
 
     public abstract TraitDao traitDao();
 
+    public abstract UserNotificationDao userNotificationDao();
+
     private static LocalDatabase.Callback localDatabaseCallback =
             new LocalDatabase.Callback() {
                 @Override
                 public void onOpen(@Nonnull SupportSQLiteDatabase db) {
                     super.onOpen(db);
 
-                    new PopulateDbAsync(instance).execute();
+                    new CleanDbAsync(instance).execute();
                 }
             };
 }

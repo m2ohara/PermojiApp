@@ -13,27 +13,27 @@ import java.util.List;
 public class MockNotificationRepository {
 
     private Context context;
-    private LiveData<List<Notification>> notifications;
+    private LiveData<List<UserNotification>> notifications;
 
     public MockNotificationRepository(Context context) {
         this.context = context;
         notifications = generateLiveNotificationList();
     }
 
-    public LiveData<List<Notification>> getNotifications() {
+    public LiveData<List<UserNotification>> getNotifications() {
         return notifications;
     }
 
-    private LiveData<List<Notification>> generateLiveNotificationList() {
+    private LiveData<List<UserNotification>> generateLiveNotificationList() {
 
-        final List<Notification> notificationList = generateNotificationsList();
+        final List<UserNotification> userNotificationList = generateNotificationsList();
 
-        LiveData liveNotifications = new LiveData<Notification>() {
+        LiveData liveNotifications = new LiveData<UserNotification>() {
             @Override
-            protected void setValue(Notification value) {
+            protected void setValue(UserNotification value) {
                 super.setValue(value);
 
-                for(Notification notification : notificationList) {
+                for(UserNotification notification : userNotificationList) {
                     super.setValue(notification);
                 }
 
@@ -43,34 +43,34 @@ public class MockNotificationRepository {
         return liveNotifications;
     }
 
-    public List<Notification> generateNotificationsList() {
-        Notification notification1 = new Notification();
-        notification1.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage1", "drawable", context.getPackageName())));
-        notification1.setDetail("influenced by Cheerful");
-        notification1.setTimePassed("1 hour ago");
-        notification1.setTraitCodepoint(0x1F601);
-        notification1.setId(1);
+    public List<UserNotification> generateNotificationsList() {
+        UserNotification userNotification1 = new UserNotification();
+//        userNotification1.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage1", "drawable", context.getPackageName())));
+        userNotification1.setDetail("influenced by Cheerful");
+        userNotification1.setTimeStamp("1 hour ago");
+        userNotification1.setTraitCodepoint(0x1F601);
+        userNotification1.setId(1);
 
-        Notification notification2 = new Notification();
-        notification2.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage2", "drawable", context.getPackageName())));
-        notification2.setDetail("influenced by Joker");
-        notification2.setTimePassed("2 hours ago");
-        notification2.setTraitCodepoint(0x1F602);
-        notification2.setId(2);
+        UserNotification userNotification2 = new UserNotification();
+//        userNotification2.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage2", "drawable", context.getPackageName())));
+        userNotification2.setDetail("influenced by Joker");
+        userNotification2.setTimeStamp("2 hours ago");
+        userNotification2.setTraitCodepoint(0x1F602);
+        userNotification2.setId(2);
 
-        Notification notification3 = new Notification();
-        notification3.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage3", "drawable", context.getPackageName())));
-        notification3.setDetail("influenced by Cheerful");
-        notification3.setTimePassed("1 hour ago");
-        notification3.setTraitCodepoint(0x1F601);
-        notification3.setId(3);
+        UserNotification userNotification3 = new UserNotification();
+//        userNotification3.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage3", "drawable", context.getPackageName())));
+        userNotification3.setDetail("influenced by Cheerful");
+        userNotification3.setTimeStamp("1 hour ago");
+        userNotification3.setTraitCodepoint(0x1F601);
+        userNotification3.setId(3);
 
-        final List<Notification> notifications = new ArrayList<Notification>();
-        notifications.add(notification1);
-        notifications.add(notification2);
-        notifications.add(notification3);
+        final List<UserNotification> userNotifications = new ArrayList<UserNotification>();
+        userNotifications.add(userNotification1);
+        userNotifications.add(userNotification2);
+        userNotifications.add(userNotification3);
 
-        return  notifications;
+        return userNotifications;
     }
 
 }

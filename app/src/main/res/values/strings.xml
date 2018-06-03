@@ -504,9 +504,9 @@ If you are not sure which data plan you have, we recommend finding a Wi-Fi conne
 Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&amp; input&lt;/b> in the &lt;b>Settings&lt;/b> menu of your mobile device.</string>
     <string name="download_over_metered">Download now (<xliff:g example="0.7" id="SIZE_IN_MEGABYTES">%1$.1f</xliff:g>MB)</string>
     <string name="do_not_download_over_metered">Download over Wi-Fi</string>
-    <!-- The text of the "dictionary available" notification. -->
+    <!-- The text of the "dictionary availabuserNotificationtion. -->
     <string name="dict_available_notification_title">A dictionary is available for <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g></string>
-    <!-- The small subtext in the "dictionary available" notification. -->
+    <!-- The small subtext in the "dictionary availabuserNotificationtion. -->
     <string name="dict_available_notification_description">Press to review and download</string>
 
     <!-- The text of the toast warning a download is starting automatically to enable suggestions for the selected language [CHAR LIMIT=100] -->

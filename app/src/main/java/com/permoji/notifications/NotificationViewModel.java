@@ -13,17 +13,17 @@ import java.util.List;
 
 public class NotificationViewModel extends AndroidViewModel {
 
-    private MockNotificationRepository mockNotificationRepository;
-    private LiveData<List<Notification>> notifications;
+    private UserNotificationRepository userNotificationRepository;
+    private LiveData<List<UserNotification>> notifications;
 
     public NotificationViewModel(@NonNull Application application) {
         super(application);
 
-        mockNotificationRepository = new MockNotificationRepository(application);
-        notifications = mockNotificationRepository.getNotifications();
+        userNotificationRepository = new UserNotificationRepository(application);
+        notifications = userNotificationRepository.getLiveNotificationsOrdered();
     }
 
-    public LiveData<List<Notification>> getNotifications() {
+    public LiveData<List<UserNotification>> getNotifications() {
         return notifications;
     }
 

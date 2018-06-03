@@ -24,7 +24,7 @@ public class KeyboardContact {
 
     private FrameLayout contactFrameLayout;
 
-    private boolean isSelected = false;
+    private boolean isEmojiPresent = false;
 
     private KeyboardContact() {};
 
@@ -44,17 +44,33 @@ public class KeyboardContact {
         contactFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((FrameLayout)view).removeAllViews();
+                if(isEmojiPresent) {
+                    broadcastEmoji(view);
+                }
+                else {
+                    startUserActivity();
+                }
 
+
+            }
+
+            private void startUserActivity() {
                 Intent startUserActivity = new Intent(context, UserActivity.class);
                 startUserActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(startUserActivity);
             }
+
+            private void broadcastEmoji(View view) {
+                ((FrameLayout)view).removeAllViews();
+                isEmojiPresent = false;
+                //TODO: Broadcast emoji
+            }
         });
+
+
     }
 
     public void setEmojiToContactFrame(Key key, Context context) {
-
         contactFrameLayout.removeAllViews();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -67,7 +83,7 @@ public class KeyboardContact {
         ImageView addIcon = (ImageView) view.findViewById(R.id.add_icon);
         addIcon.setImageDrawable(drawable);
 
-
         contactFrameLayout.addView(view);
+        isEmojiPresent = true;
     }
 }

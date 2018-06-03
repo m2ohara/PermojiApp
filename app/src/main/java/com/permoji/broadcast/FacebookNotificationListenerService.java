@@ -66,7 +66,9 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             Log.d(TAG, extras.toString());
 
             try {
-                androidText = extras.getString("android.text");
+                androidText = "" + extras.getString("android.text"); //Concatenation needed for spannable strings
+
+                //Group message whatsapp: Bundle[{android.title=Leanna @ Boys and Girls Social, android.subText=null,
             }
             catch (Exception e) {
                 Log.e(TAG, e.getMessage());
@@ -166,15 +168,5 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
     public void onNotificationRemoved(StatusBarNotification sbn) {
 
     }
-//
-//
-//
-//
-//    class NotificationReceiver extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//
-//        }
-//    }
+
 }

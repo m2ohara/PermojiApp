@@ -15,12 +15,12 @@ import javax.annotation.Nonnull;
  * Created by michael on 22/05/18.
  */
 
-@Entity(tableName = "trait")
+@Entity(tableName = "Trait")
 public class Trait {
 
     @SerializedName("id")
     @Expose
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @Nonnull
     private Integer id;
     @SerializedName("userId")

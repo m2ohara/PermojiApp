@@ -99,7 +99,7 @@
     <!-- Description of the keyboard mode for entering dates. -->
     <string name="keyboard_mode_date">date</string>
     <!-- Description of the keyboard mode for entering dates and times. -->
-    <string name="keyboard_mode_date_time">date and timePassed</string>
+    <string name="keyboard_mode_date_time">date and timeStamp</string>
     <!-- Description of the keyboard mode for entering email addresses. -->
     <string name="keyboard_mode_email">email</string>
     <!-- Description of the keyboard mode for entering text messages. -->
@@ -111,7 +111,7 @@
     <!-- Description of the keyboard mode for entering generic text. -->
     <string name="keyboard_mode_text">text</string>
     <!-- Description of the keyboard mode for entering times. -->
-    <string name="keyboard_mode_time">timePassed</string>
+    <string name="keyboard_mode_time">timeStamp</string>
     <!-- Description of the keyboard mode for entering URLs. -->
     <string name="keyboard_mode_url">URL</string>
 

@@ -60,7 +60,7 @@
                     latin:keyWidth="fillRight" />
             </case>
             <case
-                latin:mode="timePassed|datetime"
+                latin:mode="timeStamp|datetime"
             >
                 <Key
                     latin:keySpec="."
@@ -103,7 +103,7 @@
                     latin:keyStyle="numKeyStyle" />
             </case>
             <case
-                latin:mode="timePassed"
+                latin:mode="timeStamp"
             >
                 <Key
                     latin:keySpec=":"

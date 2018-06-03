@@ -161,6 +161,13 @@
             </intent-filter>
         </receiver>
 
+        <!-- Broadcast receiver for receiving emoji notifications -->
+        <receiver android:name="com.permoji.broadcast.NotificationReceiver">
+            <intent-filter>
+                <action android:name="io.github.ctrlaltdel.aosp.ime" />
+            </intent-filter>
+        </receiver>
+
         <!-- Content providers -->
         <provider
             android:name=".dictionarypack.DictionaryProvider"
