@@ -3,12 +3,8 @@ package com.permoji.notifications;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
-import android.support.text.emoji.FontRequestEmojiCompatConfig;
-import android.support.v4.provider.FontRequest;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,58 +44,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         }
     }
 
-//    private static class InitCallback extends EmojiCompat.InitCallback {
-//
-//        private final WeakReference<TextView> mRegularTextViewRef;
-//        private final String text;
-//
-//        InitCallback(TextView regularTextView, String text) {
-//            mRegularTextViewRef = new WeakReference<>(regularTextView);
-//            this.text = text;
-//        }
-//
-//        @Override
-//        public void onInitialized() {
-//            final TextView regularTextView = mRegularTextViewRef.get();
-//            if (regularTextView != null) {
-//                final EmojiCompat compat = EmojiCompat.get();
-//                regularTextView.setText(
-//                        compat.process(text));
-//            }
-//        }
-//
-//    }
-
     private String TAG = this.getClass().getSimpleName();
     LayoutInflater inflater;
     List<UserNotification> userNotifications;
 
     public NotificationListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
-//        initializeDeviceEmojiSupport(context);
     }
 
-//    private void initializeDeviceEmojiSupport(Context context) {
-//        FontRequest fontRequest = new FontRequest(
-//                "com.google.android.gms.fonts",
-//                "com.google.android.gms",
-//                "Noto Color Emoji Compat",
-//                R.array.com_google_android_gms_fonts_certs);
-//        EmojiCompat.Config config = new FontRequestEmojiCompatConfig(context, fontRequest)
-//                .setReplaceAll(true)
-//                .registerInitCallback(new EmojiCompat.InitCallback() {
-//                    @Override
-//                    public void onInitialized() {
-//                        Log.i(TAG, "EmojiCompat initialized");
-//                    }
-//
-//                    @Override
-//                    public void onFailed(@Nullable Throwable throwable) {
-//                        Log.e(TAG, "EmojiCompat initialization failed", throwable);
-//                    }
-//                });
-//        EmojiCompat.init(config);
-//    }
 
     @Override
     public NotificationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

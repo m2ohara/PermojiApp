@@ -22,7 +22,6 @@ import com.permoji.broadcast.NotificationReceiver;
 import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.NotificationListAdapter;
 import com.permoji.notifications.NotificationViewModel;
-import com.permoji.notifications.MockNotificationRepository;
 
 import java.util.List;
 
@@ -48,17 +47,13 @@ public class UserActivity extends AppCompatActivity {
 
         userTraitListAdapter = new UserTraitListAdapter(this);
         userTraitsViewModel = ViewModelProviders.of(this).get(UserTraitsViewModel.class);
-
         setUserTraitsObserver();
         setUserTraitsRecyclerView();
 
         notificationListAdapter = new NotificationListAdapter(this);
         notificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel.class);
-
         setNotificationsRecyclerView();
         setNotificationsObserver();
-
-        registerFbReceiver();
 
         initializeDeviceEmojiSupport();
     }
@@ -144,14 +139,24 @@ public class UserActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected  void onResume() {
+        super.onResume();
+//        registerNotificationReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        unregisterReceiver(nReceiver);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(nReceiver);
     }
 
-    private void registerFbReceiver() {
+    private void registerNotificationReceiver() {
         nReceiver = new NotificationReceiver();
         registerReceiver(nReceiver,new IntentFilter("io.github.ctrlaltdel.aosp.ime"));
     }

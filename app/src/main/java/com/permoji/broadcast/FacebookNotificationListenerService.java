@@ -2,6 +2,7 @@ package com.permoji.broadcast;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.vdurmont.emoji.EmojiParser;
@@ -37,6 +39,7 @@ import java.util.List;
 public class FacebookNotificationListenerService extends NotificationListenerService {
 
     private String TAG = this.getClass().getSimpleName();
+    private String previousKey = "";
 //    private NotificationReceiver notificationReceiver;
     private static String NOTIFICATION = "io.github.ctrlaltdel.aosp.ime";
 
@@ -49,7 +52,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Log.i(TAG,"**********  onNotificationPosted");
-        Log.i(TAG,"ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
+        Log.i(TAG, "KEY :"+sbn.getKey() + " ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
 
         String filePath  = "";
         String name = "";
@@ -59,6 +62,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             return;
         }
 
+        previousKey = sbn.getKey();
         String androidText = null;
         Bundle extras = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -161,6 +165,8 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         extra.putString("filePath", filePath);
         extra.putString("name",name);
         intent.putExtras(extra);
+        Log.i(TAG,"Broadcasting intent " + intent.getAction() + " for notification " + name);
+
         sendBroadcast(intent);
     }
 

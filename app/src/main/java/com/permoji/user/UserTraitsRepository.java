@@ -20,6 +20,7 @@ public class UserTraitsRepository {
     private TraitDao traitDao;
     private LiveData<List<Trait>> traitsByUserId;
 
+    //TODO: Replace with context arg
     public UserTraitsRepository(Application application) {
 
         LocalDatabase db = LocalDatabase.getInstance(application);
@@ -39,6 +40,8 @@ public class UserTraitsRepository {
     }
 
     public List<Trait> getAllTraits() { return traitDao.getAll(); }
+
+    //TODO: Get recently sent traits
 
     public void insert(Trait trait) {
         new insertTraitAsync(traitDao).execute(trait);

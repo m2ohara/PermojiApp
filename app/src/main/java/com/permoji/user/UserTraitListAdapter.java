@@ -1,6 +1,5 @@
 package com.permoji.user;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,9 +16,7 @@ import com.permoji.api.trait.Trait;
 import com.permoji.compatability.EmojiInitCallback;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 
@@ -59,7 +56,6 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
 
         Trait trait = userTraits.get(position);
         if(trait != null) {
-//            holder.traitEmoji.setText(new String(Character.toChars(trait.getCodepoint())));
             EmojiCompat.get().registerInitCallback(new EmojiInitCallback(holder.traitEmoji, new String(Character.toChars(trait.getCodepoint()))));
             holder.traitName.setText(trait.getDescription());
 

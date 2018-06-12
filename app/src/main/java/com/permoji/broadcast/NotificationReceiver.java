@@ -10,6 +10,8 @@ import android.util.Log;
 import com.permoji.api.trait.Trait;
 import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.UserNotificationRepository;
+import com.permoji.trait.Notifier;
+import com.permoji.trait.TraitDefinitionBuilder;
 import com.permoji.user.UserTraitsRepository;
 
 import java.lang.ref.WeakReference;
@@ -34,47 +36,123 @@ public class NotificationReceiver extends BroadcastReceiver {
         this.context = context;
         this.intent = intent;
 
-        this.pendingResult = goAsync();
-        new AccessCacheAsyncTask(this).execute();
+        if(intent.getExtras().getString("broadcastType") != null) {
+            this.pendingResult = goAsync();
+
+            if (intent.getExtras().getString("broadcastType") == "keyboardBroadcast") {
+                new CreateTraitDefinitionAsyncTask(this).execute();
+            }
+            else {
+                new UpdateTraitDefinitionAsyncTask(this).execute();
+            }
+        }
+
+        new UpdateCacheAsyncTask(this).execute();
 
     }
 
-    private static class AccessCacheAsyncTask extends AsyncTask<String, Void, Void> {
+    private static class CreateTraitDefinitionAsyncTask extends AsyncTask<String, Void, Void> {
 
         private WeakReference<NotificationReceiver> notificationReceiverWeakReference;
-        private UserTraitsRepository userTraitsRepository;
-        private UserNotificationRepository userNotificationRepository;
+        private PendingResult pendingResult;
+        private Integer emojiCodepoint;
+        private TraitDefinitionBuilder traitDefinitionBuilder;
 
-        public AccessCacheAsyncTask(NotificationReceiver notificationReceiver) {
+        public CreateTraitDefinitionAsyncTask(NotificationReceiver notificationReceiver) {
             notificationReceiverWeakReference = new WeakReference<>(notificationReceiver);
+            Bundle bundle = notificationReceiverWeakReference.get().intent.getExtras();
+            pendingResult = notificationReceiverWeakReference.get().pendingResult;
+            emojiCodepoint = bundle.getInt("emojiCodepoint");
+            traitDefinitionBuilder = new TraitDefinitionBuilder(notificationReceiverWeakReference.get().context);
         }
 
         @Override
         protected Void doInBackground(String... strings) {
 
-            if(notificationReceiverWeakReference.get() != null) {
-                userTraitsRepository = new UserTraitsRepository(notificationReceiverWeakReference.get().context);
-                userNotificationRepository = new UserNotificationRepository(notificationReceiverWeakReference.get().context);
+            traitDefinitionBuilder.createTrait(emojiCodepoint);
 
-                List<Trait> cachedTraits = userTraitsRepository.getAllTraits();
+            pendingResult.finish();
+            return null;
+        }
+    }
 
-                Bundle bundle = notificationReceiverWeakReference.get().intent.getExtras();
-                Log.d(this.getClass().getSimpleName(), "Received broadcast");
-                if (bundle != null) {
+    private static class UpdateTraitDefinitionAsyncTask extends AsyncTask<String, Void, Void> {
 
-                    String notificationImagePath = bundle.getString("filePath");
-                    ArrayList<Integer> emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
+        private WeakReference<NotificationReceiver> notificationReceiverWeakReference;
+        private PendingResult pendingResult;
+        private String notificationImagePath;
+        private String notifierName;
+        private ArrayList<Integer> emojiCodepoints;
+        private TraitDefinitionBuilder traitDefinitionBuilder;
 
-                    for (int codepoint : emojiCodepoints) {
+        public UpdateTraitDefinitionAsyncTask(NotificationReceiver notificationReceiver) {
+            notificationReceiverWeakReference = new WeakReference<>(notificationReceiver);
+            Bundle bundle = notificationReceiverWeakReference.get().intent.getExtras();
+            pendingResult = notificationReceiverWeakReference.get().pendingResult;
+            notificationImagePath = bundle.getString("filePath");
+            emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
+            notifierName = bundle.getString("name");
 
-                        writeTraitToCache(codepoint, cachedTraits, notificationImagePath);
-                        writeNotificationToCache(codepoint, notificationImagePath);
-                    }
-                }
+            traitDefinitionBuilder = new TraitDefinitionBuilder(notificationReceiverWeakReference.get().context);
+        }
 
 
-                notificationReceiverWeakReference.get().pendingResult.finish();
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            addNotifierToRecentTrait();
+
+            pendingResult.finish();
+            return null;
+        }
+
+        private void addNotifierToRecentTrait() {
+            Notifier notifier = new Notifier();
+            notifier.setImagePath(notificationImagePath);
+            notifier.setName(notifierName);
+
+            for(Integer codepoint : emojiCodepoints) {
+                traitDefinitionBuilder.addNotifierToRecentTrait(codepoint, notifier);
             }
+        }
+    }
+
+    private static class UpdateCacheAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private WeakReference<NotificationReceiver> notificationReceiverWeakReference;
+        private UserTraitsRepository userTraitsRepository;
+        private UserNotificationRepository userNotificationRepository;
+        private Bundle bundle;
+        private PendingResult pendingResult;
+        private String notificationImagePath;
+        private ArrayList<Integer> emojiCodepoints;
+
+        public UpdateCacheAsyncTask(NotificationReceiver notificationReceiver) {
+            notificationReceiverWeakReference = new WeakReference<>(notificationReceiver);
+            bundle = notificationReceiverWeakReference.get().intent.getExtras();
+            pendingResult = notificationReceiverWeakReference.get().pendingResult;
+            notificationImagePath = bundle.getString("filePath");
+            emojiCodepoints = bundle.getIntegerArrayList("emojiCodepoints");
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            userTraitsRepository = new UserTraitsRepository(notificationReceiverWeakReference.get().context);
+            userNotificationRepository = new UserNotificationRepository(notificationReceiverWeakReference.get().context);
+
+            List<Trait> cachedTraits = userTraitsRepository.getAllTraits();
+
+            Log.d(this.getClass().getSimpleName(), "Processing broadcast");
+            if (bundle != null) {
+
+                for (int codepoint : emojiCodepoints) {
+
+                    writeTraitToCache(codepoint, cachedTraits, notificationImagePath);
+                    writeNotificationToCache(codepoint, notificationImagePath);
+                }
+            }
+            pendingResult.finish();
             return null;
         }
 

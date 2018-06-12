@@ -9,6 +9,8 @@ import android.content.Context;
 
 import com.permoji.api.trait.Trait;
 import com.permoji.notifications.UserNotification;
+import com.permoji.trait.TraitDefinition;
+import com.permoji.trait.TraitStatement;
 
 import javax.annotation.Nonnull;
 
@@ -16,7 +18,7 @@ import javax.annotation.Nonnull;
  * Created by michael on 24/05/18.
  */
 
-@Database(entities = {Trait.class, UserNotification.class}, version = 1)
+@Database(entities = {Trait.class, UserNotification.class, TraitDefinition.class, TraitStatement.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class LocalDatabase extends RoomDatabase {
 
@@ -34,8 +36,10 @@ public abstract class LocalDatabase extends RoomDatabase {
     }
 
     public abstract TraitDao traitDao();
-
     public abstract UserNotificationDao userNotificationDao();
+
+    public abstract TraitStatementDao traitStatementDao();
+    public abstract TraitFillerDao traitFillerDao();
 
     private static LocalDatabase.Callback localDatabaseCallback =
             new LocalDatabase.Callback() {
