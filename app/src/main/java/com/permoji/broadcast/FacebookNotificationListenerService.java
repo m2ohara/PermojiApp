@@ -164,6 +164,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         extra.putIntegerArrayList("emojiCodepoints", emojiCodepoints);
         extra.putString("filePath", filePath);
         extra.putString("name",name);
+        extra.putString("broadcastType", "notificationBroadcast");
         intent.putExtras(extra);
         Log.i(TAG,"Broadcasting intent " + intent.getAction() + " for notification " + name);
 
