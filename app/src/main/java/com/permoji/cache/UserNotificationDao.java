@@ -23,9 +23,6 @@ public interface UserNotificationDao extends BaseDAO<UserNotification> {
     @Query("Select * from UserNotification")
     List<UserNotification> getAll();
 
-    @Insert
-    void insert(UserNotification userNotification);
-
     @Update
     void update(UserNotification userNotification);
 
