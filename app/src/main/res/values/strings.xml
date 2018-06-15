@@ -580,4 +580,5 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="title_activity_user">UserActivity</string>
     <string name="action_trait_activity">Add Trait</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_user_trait">UserTraitActivity</string>
 </resources>

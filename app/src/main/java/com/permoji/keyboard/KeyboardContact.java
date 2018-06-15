@@ -3,6 +3,8 @@ package com.permoji.keyboard;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,6 +27,7 @@ public class KeyboardContact {
     private FrameLayout contactFrameLayout;
 
     private boolean isEmojiPresent = false;
+    private String emoji = null;
 
     private KeyboardContact() {};
 
@@ -42,6 +45,9 @@ public class KeyboardContact {
             contactFrameLayout.setForeground(contactFrameLayout.getContext().getResources().getDrawable( R.drawable.contact_circle_border_lxx_dark ));
 
         contactFrameLayout.setOnClickListener(new View.OnClickListener() {
+
+            private String NOTIFICATION = "io.github.ctrlaltdel.aosp.ime";
+
             @Override
             public void onClick(View view) {
                 if(isEmojiPresent) {
@@ -63,7 +69,20 @@ public class KeyboardContact {
             private void broadcastEmoji(View view) {
                 ((FrameLayout)view).removeAllViews();
                 isEmojiPresent = false;
-                //TODO: Broadcast emoji
+                if(emoji != null) {
+                    broadcastNotification(emoji.codePointAt(0));
+                }
+            }
+
+            private void broadcastNotification(int emojiCodepoint) {
+                Intent intent = new Intent(NOTIFICATION);
+                Bundle extra = new Bundle();
+                extra.putInt("emojiCodepoint", emojiCodepoint);
+                extra.putString("broadcastType", "keyboardBroadcast");
+                intent.putExtras(extra);
+                Log.i(this.getClass().getSimpleName(),"Broadcasting intent " + intent.getAction() + " for keyboard input "+emojiCodepoint );
+
+                context.sendBroadcast(intent);
             }
         });
 
@@ -78,6 +97,7 @@ public class KeyboardContact {
 
         TextView emojiView = (TextView) view.findViewById(R.id.emoji_holder);
         emojiView.setText(key.getLabel());
+        emoji = key.getLabel();
 
         Drawable drawable = context.getResources().getDrawable( R.drawable.addicon );
         ImageView addIcon = (ImageView) view.findViewById(R.id.add_icon);

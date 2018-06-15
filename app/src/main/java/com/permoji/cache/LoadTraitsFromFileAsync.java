@@ -1,21 +1,17 @@
 package com.permoji.cache;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.permoji.trait.TraitFiller;
-import com.permoji.trait.TraitStatement;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.permoji.trait.data.TraitFiller;
+import com.permoji.trait.data.TraitStatement;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import io.github.ctrlaltdel.aosp.ime.R;
 
 /**
  * Created by michael on 12/06/18.
@@ -23,35 +19,55 @@ import io.github.ctrlaltdel.aosp.ime.R;
 
 public class LoadTraitsFromFileAsync extends AsyncTask<Void, Void, Void> {
 
-    private LocalDatabase db;
     private TraitStatementDao traitStatementDao;
     private TraitFillerDao traitFillerDao;
-    private Context context;
+    private Resources resources;
+    private String resourcePackageName;
 
-    public LoadTraitsFromFileAsync(LocalDatabase db) {
-        this.db = db;
+    LoadTraitsFromFileAsync(LocalDatabase db, Resources resources, String resourcePackageName) {
         this.traitStatementDao = db.traitStatementDao();
         this.traitFillerDao = db.traitFillerDao();
+        this.resources = resources;
+        this.resourcePackageName = resourcePackageName;
+    }
+
+    public void setResources(Resources resources) {
+        this.resources = resources;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
 
-        Gson gson = new Gson();
+        if(traitStatementDao.getTraitStatementCount() > 0) {
+            return null;
+        }
 
-        List<TraitStatement> traitStatements = gson.fromJson(loadJsonFile(R.raw.trait_statements), new TypeToken<List<TraitStatement>>(){}.getType());
-        traitStatementDao.InsertAll(traitStatements);
+        Log.i(this.getClass().getSimpleName(), "Loading files to DB");
 
-        List<TraitFiller> traitFillers = gson.fromJson(loadJsonFile(R.raw.trait_fillers), new TypeToken<List<TraitFiller>>(){}.getType());
-        traitFillerDao.InsertAll(traitFillers);
+        try {
+
+            Gson gson = new Gson();
+
+            List<TraitStatement> traitStatements = gson.fromJson(loadJsonFile("trait_statements"), new TypeToken<List<TraitStatement>>() {
+            }.getType());
+            traitStatementDao.InsertAll(traitStatements);
+
+            List<TraitFiller> traitFillers = gson.fromJson(loadJsonFile("trait_fillers"), new TypeToken<List<TraitFiller>>() {
+            }.getType());
+            traitFillerDao.InsertAll(traitFillers);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "Error reading file to database "+e.getMessage());
+        }
 
         return null;
     }
 
-    private String loadJsonFile(int resourceId) {
+    private String loadJsonFile(String resourceName) {
 
         String json = null;
-        InputStream is = context.getResources().openRawResource(resourceId);
+        InputStream is = resources.openRawResource(resources.getIdentifier(resourceName, "raw", resourcePackageName));
         try {
 
             int size = is.available();
@@ -61,10 +77,11 @@ public class LoadTraitsFromFileAsync extends AsyncTask<Void, Void, Void> {
 
             is.close();
 
-            json = new String(buffer, "UTF-16");
+            json = new String(buffer, "UTF-8");
         }
         catch (IOException e) {
             e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "Error loading file "+e.getMessage());
         }
 
         return json;

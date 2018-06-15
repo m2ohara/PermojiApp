@@ -23,12 +23,6 @@ public interface TraitDao extends BaseDAO<Trait> {
     @Query("Select * from Trait")
     List<Trait> getAll();
 
-    @Insert
-    void insert(Trait trait);
-
-    @Update
-    void update(Trait trait);
-
     @Query("Delete from Trait")
     void deleteAll();
 

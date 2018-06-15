@@ -1,6 +1,14 @@
 package com.permoji.trait;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.permoji.trait.data.Notifier;
+import com.permoji.trait.data.TraitDefinition;
+import com.permoji.trait.data.TraitDefinitionRepository;
+import com.permoji.trait.data.TraitFiller;
+import com.permoji.trait.data.TraitNotifierFiller;
+import com.permoji.trait.data.TraitStatement;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,51 +29,55 @@ public class TraitDefinitionBuilder {
 
     public void createTrait(int codepoint) {
 
+        Log.d(this.getClass().getSimpleName(), "Processing keyboard broadcast for emoji "+codepoint);
+
         TraitDefinition traitDefinition = new TraitDefinition();
-        traitDefinition.setDatecreated(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        traitDefinition.setDateCreated(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
         List<TraitStatement> statementList = traitDefinitionRepository.getTraitStatementsByCodepoint(codepoint);
+        if(statementList.size() > 0) {
+            TraitStatement traitStatement = statementList.get(new Random().nextInt(statementList.size()));
 
-        TraitStatement traitStatement = statementList.get(new Random().nextInt(statementList.size()));
-        traitDefinition.setStatement(traitStatement);
-
-        traitDefinitionRepository.insert(traitDefinition);
+            traitDefinition.setStatementId(traitStatement.getId());
+            traitDefinitionRepository.insertAsync(traitDefinition);
+        }
     }
 
     public void addNotifierToRecentTrait(int codepoint, Notifier notifier) {
 
-        //Pick random trait from latest
-        List<TraitDefinition> traitDefinitions = traitDefinitionRepository.getLatestTraitDefinitionsByAmount(latestAmount);
-        TraitDefinition traitDefinition = traitDefinitions.get(new Random().nextInt(traitDefinitions.size()));
-
-        List<TraitFiller> traitFillers = traitDefinitionRepository.getTraitFillersByCodepoint(codepoint);
-        TraitFiller traitFiller = traitFillers.get(new Random().nextInt(traitFillers.size()));
+        Log.d(this.getClass().getSimpleName(), "Processing notifier broadcast");
 
         TraitNotifierFiller traitNotifierFiller = new TraitNotifierFiller();
-        traitNotifierFiller.setNotifier(checkNotifierExists(notifier));
-        traitNotifierFiller.setTraitFiller(traitFiller);
 
-        //TODO: Check for existing notifier filler
-        traitDefinitionRepository.insertNotifierFiller(traitNotifierFiller);
+        //Pick random trait from latest
+        List<TraitDefinition> traitDefinitions = traitDefinitionRepository.getLatestTraitDefinitionsByAmount(latestAmount);
+        if(traitDefinitions.size() > 0) {
+            TraitDefinition traitDefinition = traitDefinitions.get(new Random().nextInt(traitDefinitions.size()));
 
-        List<TraitNotifierFiller> currentTraitFillers = traitDefinition.getFillers();
-        currentTraitFillers.add(traitNotifierFiller);
-        traitDefinition.setFillers(currentTraitFillers);
+            List<TraitFiller> traitFillers = traitDefinitionRepository.getTraitFillersByCodepoint(codepoint);
+            TraitFiller traitFiller = traitFillers.get(new Random().nextInt(traitFillers.size()));
 
-        traitDefinitionRepository.update(traitDefinition);
+            traitNotifierFiller.setNotifierId(checkNotifierExists(notifier));
+            traitNotifierFiller.setFillerId(traitFiller.getId());
+            traitNotifierFiller.setTraitDefinitionId(traitDefinition.getId());
+
+            //TODO: Check for existing notifier filler
+            traitDefinitionRepository.insertTraitNotifierFiller(traitNotifierFiller);
+        }
     }
 
-    private Notifier checkNotifierExists(Notifier notifier) {
+    private int checkNotifierExists(Notifier notifier) {
         List<Notifier> notifierList = traitDefinitionRepository.getAllNotifiers();
 
-        for(Notifier existingNotifier : notifierList) {
-            if(existingNotifier.getImagePath().equals(notifier.getImagePath()) && existingNotifier.getName().equals(notifier.getName())) {
-                //TODO: Resolve updated images, duplicate notifier names
-                return existingNotifier;
+        if(notifierList.size() > 0) {
+            for (Notifier existingNotifier : notifierList) {
+                if (existingNotifier.getImagePath().equals(notifier.getImagePath()) && existingNotifier.getName().equals(notifier.getName())) {
+                    //TODO: Resolve updated images, duplicate notifier names
+                    return existingNotifier.getId();
+                }
             }
         }
 
-        traitDefinitionRepository.insertNotifier(notifier);
-        return  notifier;
+        return traitDefinitionRepository.insertNotifier(notifier);
     }
 }

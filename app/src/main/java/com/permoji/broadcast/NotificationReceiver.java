@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.cache.LocalDatabase;
 import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.UserNotificationRepository;
-import com.permoji.trait.Notifier;
+import com.permoji.trait.data.Notifier;
 import com.permoji.trait.TraitDefinitionBuilder;
 import com.permoji.user.UserTraitsRepository;
 
@@ -39,15 +40,15 @@ public class NotificationReceiver extends BroadcastReceiver {
         if(intent.getExtras().getString("broadcastType") != null) {
             this.pendingResult = goAsync();
 
-            if (intent.getExtras().getString("broadcastType") == "keyboardBroadcast") {
+            if (intent.getExtras().getString("broadcastType").equals("keyboardBroadcast")) {
                 new CreateTraitDefinitionAsyncTask(this).execute();
             }
             else {
+//                        new UpdateCacheAsyncTask(this).execute();
                 new UpdateTraitDefinitionAsyncTask(this).execute();
             }
         }
 
-        new UpdateCacheAsyncTask(this).execute();
 
     }
 
@@ -64,6 +65,12 @@ public class NotificationReceiver extends BroadcastReceiver {
             pendingResult = notificationReceiverWeakReference.get().pendingResult;
             emojiCodepoint = bundle.getInt("emojiCodepoint");
             traitDefinitionBuilder = new TraitDefinitionBuilder(notificationReceiverWeakReference.get().context);
+        }
+
+        @Override
+        protected  void onPreExecute() {
+            //Ensure db has built before executing
+            LocalDatabase.getInstance(notificationReceiverWeakReference.get().context);
         }
 
         @Override
@@ -94,6 +101,12 @@ public class NotificationReceiver extends BroadcastReceiver {
             notifierName = bundle.getString("name");
 
             traitDefinitionBuilder = new TraitDefinitionBuilder(notificationReceiverWeakReference.get().context);
+        }
+
+        @Override
+        protected  void onPreExecute() {
+            //Ensure db has built before executing
+            LocalDatabase.getInstance(notificationReceiverWeakReference.get().context);
         }
 
 

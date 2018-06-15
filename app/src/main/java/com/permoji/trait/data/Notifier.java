@@ -1,20 +1,25 @@
-package com.permoji.trait;
+package com.permoji.trait.data;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by michael on 11/06/18.
  */
 
+@Entity(tableName = "trait_notifier")
 public class Notifier {
 
-    private int id;
+    @PrimaryKey(autoGenerate = true)
+    private Integer id;
     private String name;
     private String imagePath;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
