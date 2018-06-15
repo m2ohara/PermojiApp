@@ -1,3 +1,3 @@
-Port AOSP LatinIME into Android Studio
+Permoji Keyboard app
 ======================================
-All features are working except the `swipe to type` feature because Google doesn't open source those code.
+An app to capture a user's personality with emoji usage.
