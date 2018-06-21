@@ -1,4 +1,4 @@
-package com.permoji.cache;
+package com.permoji.cache.tasks;
 
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -6,8 +6,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.permoji.trait.data.TraitFiller;
-import com.permoji.trait.data.TraitStatement;
+import com.permoji.cache.LocalDatabase;
+import com.permoji.cache.dao.TraitFillerDao;
+import com.permoji.cache.dao.TraitStatementDao;
+import com.permoji.model.TraitFiller;
+import com.permoji.model.TraitStatement;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +27,7 @@ public class LoadTraitsFromFileAsync extends AsyncTask<Void, Void, Void> {
     private Resources resources;
     private String resourcePackageName;
 
-    LoadTraitsFromFileAsync(LocalDatabase db, Resources resources, String resourcePackageName) {
+    public LoadTraitsFromFileAsync(LocalDatabase db, Resources resources, String resourcePackageName) {
         this.traitStatementDao = db.traitStatementDao();
         this.traitFillerDao = db.traitFillerDao();
         this.resources = resources;

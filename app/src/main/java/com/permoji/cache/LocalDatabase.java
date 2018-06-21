@@ -9,12 +9,23 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.cache.dao.NotifierDao;
+import com.permoji.cache.dao.NotifierFillerDao;
+import com.permoji.cache.dao.TraitDao;
+import com.permoji.cache.dao.TraitDefinitionDao;
+import com.permoji.cache.dao.TraitFillerDao;
+import com.permoji.cache.dao.TraitNotifierFillerDao;
+import com.permoji.cache.dao.TraitStatementDao;
+import com.permoji.cache.dao.UserNotificationDao;
+import com.permoji.cache.tasks.CleanDbAsync;
+import com.permoji.cache.tasks.LoadTraitsFromFileAsync;
+import com.permoji.model.NotifierFiller;
 import com.permoji.notifications.UserNotification;
-import com.permoji.trait.data.Notifier;
-import com.permoji.trait.data.TraitDefinition;
-import com.permoji.trait.data.TraitFiller;
-import com.permoji.trait.data.TraitNotifierFiller;
-import com.permoji.trait.data.TraitStatement;
+import com.permoji.model.Notifier;
+import com.permoji.model.TraitDefinition;
+import com.permoji.model.TraitFiller;
+import com.permoji.model.TraitNotifierFiller;
+import com.permoji.model.TraitStatement;
 
 import javax.annotation.Nonnull;
 
@@ -26,7 +37,7 @@ import javax.annotation.Nonnull;
         {
                 Trait.class, UserNotification.class,
                 TraitDefinition.class, TraitStatement.class,
-                TraitNotifierFiller.class, TraitFiller.class, Notifier.class
+                TraitNotifierFiller.class, NotifierFiller.class, TraitFiller.class, Notifier.class
         }, version = 1)
 @TypeConverters({Converters.class})
 public abstract class LocalDatabase extends RoomDatabase {
@@ -59,6 +70,7 @@ public abstract class LocalDatabase extends RoomDatabase {
     public abstract TraitDefinitionDao traitDefinitionDao();
     public abstract TraitStatementDao traitStatementDao();
     public abstract TraitFillerDao traitFillerDao();
+    public abstract NotifierFillerDao notifierFillerDao();
     public abstract NotifierDao notifierDao();
     public abstract TraitNotifierFillerDao traitNotifierFillerDao();
 

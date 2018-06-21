@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.permoji.notifiers.TraitNotifierActivity"
+    tools:showIn="@layout/activity_trait_notifier">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/user_trait_layout">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/notifier_trait_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:background="@color/user_trait_layout"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/notifier_trait_emoji"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:textSize="70dp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/notifier_trait_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:textSize="40dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_dark"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notifier_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            tools:listitem="@layout/trait_notifier_list_item"
+            android:background="@color/user_profile_layout"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -39,7 +39,8 @@ import java.util.List;
 public class FacebookNotificationListenerService extends NotificationListenerService {
 
     private String TAG = this.getClass().getSimpleName();
-    private String previousKey = "";
+//    private String previousKey = "";
+    private BroadcastType broadcastType;
 //    private NotificationReceiver notificationReceiver;
     private static String NOTIFICATION = "io.github.ctrlaltdel.aosp.ime";
 
@@ -62,7 +63,9 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             return;
         }
 
-        previousKey = sbn.getKey();
+        broadcastType = sbn.getPackageName().contains("whatsapp") ? BroadcastType.Whatsapp : BroadcastType.Facebook;
+
+//        previousKey = sbn.getKey();
         String androidText = null;
         Bundle extras = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -71,24 +74,18 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
 
             try {
                 androidText = "" + extras.getString("android.text"); //Concatenation needed for spannable strings
-
-                //Group message whatsapp: Bundle[{android.title=Leanna @ Boys and Girls Social, android.subText=null,
             }
             catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
         }
 
+        name = getNameFromBroadcast(extras.getString("android.title"), broadcastType);
 
         //Store notification icon if exists
         if(extras.get(Notification.EXTRA_LARGE_ICON) != null) {
 
             Bitmap bigIcon = (Bitmap) extras.get(Notification.EXTRA_LARGE_ICON);
-
-            name = "User";
-            if(androidText != null) {
-                name = "" + extras.getString("android.title");
-            }
 
             filePath = writeImageToCache(bigIcon, name);
         }
@@ -158,6 +155,24 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         return outFile.getPath();
     }
 
+    private String getNameFromBroadcast(String androidTitle, BroadcastType broadcastType) {
+        String name = "Notifier";
+        if(androidTitle != null) {
+            name = "" + androidTitle;
+        }
+
+        //If in group
+        if(broadcastType == BroadcastType.Whatsapp && name.contains("@")) {
+            name = name.substring(0, name.indexOf("@"));
+
+            if(name.contains("+")) {
+                name = "Unknown Group Member";
+            }
+        }
+
+        return name;
+    }
+
     private void broadcastNotification(String filePath, String name, ArrayList<Integer> emojiCodepoints) {
         Intent intent = new Intent(NOTIFICATION);
         Bundle extra = new Bundle();
@@ -175,5 +190,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
     public void onNotificationRemoved(StatusBarNotification sbn) {
 
     }
+
+    enum BroadcastType { Whatsapp, Facebook }
 
 }

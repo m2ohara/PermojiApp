@@ -1,14 +1,16 @@
-package com.permoji.trait.data;
+package com.permoji.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import java.io.Serializable;
 
 /**
  * Created by michael on 11/06/18.
  */
 
 @Entity(tableName = "trait_notifier")
-public class Notifier {
+public class Notifier implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;

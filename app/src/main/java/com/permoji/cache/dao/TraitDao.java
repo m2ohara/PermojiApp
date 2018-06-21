@@ -1,4 +1,4 @@
-package com.permoji.cache;
+package com.permoji.cache.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,6 +7,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.permoji.api.trait.Trait;
+import com.permoji.cache.BaseDAO;
 
 import java.util.List;
 

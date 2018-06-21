@@ -1,13 +1,15 @@
-package com.permoji.trait.data;
+package com.permoji.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import java.io.Serializable;
 
 /**
  * Created by michael on 11/06/18.
  */
 @Entity(tableName = "trait_statement")
-public class TraitStatement
+public class TraitStatement implements Serializable
 {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -15,6 +17,9 @@ public class TraitStatement
     private String traitName;
     private String statement;
     private int popularityWeight;
+    private String heading;
+    private int personaliseWeight;
+    private String placeholderType;
 
     public int getId() {
         return id;
@@ -29,8 +34,8 @@ public class TraitStatement
     }
 
     public int getCodePoint() {
-        String result = codepoint.replace("U+", "");
-        return  result.codePointAt(0);
+        int result=Integer.parseInt(codepoint.substring(2),16);
+        return  result;
     }
 
     public String getTraitName() {
@@ -60,5 +65,29 @@ public class TraitStatement
 
     public void setPopularityWeight(int popularityWeight) {
         this.popularityWeight = popularityWeight;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    public int getPersonaliseWeight() {
+        return personaliseWeight;
+    }
+
+    public void setPersonaliseWeight(int personaliseWeight) {
+        this.personaliseWeight = personaliseWeight;
+    }
+
+    public String getPlaceholderType() {
+        return placeholderType;
+    }
+
+    public void setPlaceholderType(String placeholderType) {
+        this.placeholderType = placeholderType;
     }
 }

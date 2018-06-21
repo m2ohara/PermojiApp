@@ -1,9 +1,10 @@
-package com.permoji.cache;
+package com.permoji.cache.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.permoji.trait.data.Notifier;
+import com.permoji.cache.BaseDAO;
+import com.permoji.model.Notifier;
 
 import java.util.List;
 

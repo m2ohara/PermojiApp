@@ -35,7 +35,7 @@ public class UserTraitListAdapter extends RecyclerView.Adapter<UserTraitListAdap
             super(itemView);
             traitEmoji = (TextView) itemView.findViewById(R.id.user_trait_emoji);
             traitName = (TextView) itemView.findViewById(R.id.user_trait_name);
-            traitContacts = itemView.findViewById(R.id.user_trait_voters);
+            traitContacts = itemView.findViewById(R.id.user_notifier_count);
 
         }
     }

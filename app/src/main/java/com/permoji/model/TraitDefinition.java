@@ -1,4 +1,4 @@
-package com.permoji.trait.data;
+package com.permoji.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -26,19 +26,6 @@ public class TraitDefinition {
     private Integer statementId;
     private Integer selectedFillerId;
     private String dateCreated;
-
-//    @Relation(parentColumn = "id", entityColumn = "traitDefinitionId") //TODO: Move to container class
-//    private List<TraitNotifierFiller> fillers;
-//    private TraitStatement statement;
-//    private TraitFiller selectedFiller;
-
-//    public void setFillers(List<TraitNotifierFiller> fillers) {
-//        this.fillers = fillers;
-//    }
-
-//    public List<TraitNotifierFiller> getFillers() {
-//        return fillers;
-//    }
 
     public String getDateCreated() {
         return dateCreated;
@@ -71,5 +58,4 @@ public class TraitDefinition {
     public void setSelectedFillerId(Integer selectedFillerId) {
         this.selectedFillerId = selectedFillerId;
     }
-
 }

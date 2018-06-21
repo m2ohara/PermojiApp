@@ -1,13 +1,15 @@
-package com.permoji.trait.data;
+package com.permoji.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import java.io.Serializable;
 
 /**
  * Created by michael on 11/06/18.
  */
 @Entity(tableName = "trait_filler")
-public class TraitFiller {
+public class TraitFiller implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -15,6 +17,7 @@ public class TraitFiller {
     private String text;
     private String personalisedText;
     private int popularityWeight;
+    private String placeholderType;
 
     public int getId() {
         return id;
@@ -54,5 +57,13 @@ public class TraitFiller {
 
     public void setPopularityWeight(int popularityWeight) {
         this.popularityWeight = popularityWeight;
+    }
+
+    public String getPlaceholderType() {
+        return placeholderType;
+    }
+
+    public void setPlaceholderType(String placeholderType) {
+        this.placeholderType = placeholderType;
     }
 }

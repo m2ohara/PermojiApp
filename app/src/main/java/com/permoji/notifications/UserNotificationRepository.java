@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.UserNotificationDao;
+import com.permoji.cache.dao.UserNotificationDao;
 
 import java.util.List;
 

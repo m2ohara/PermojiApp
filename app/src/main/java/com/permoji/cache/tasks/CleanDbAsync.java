@@ -1,13 +1,10 @@
-package com.permoji.cache;
+package com.permoji.cache.tasks;
 
 import android.os.AsyncTask;
 
-import com.permoji.api.trait.Trait;
-import com.permoji.notifications.UserNotification;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.permoji.cache.LocalDatabase;
+import com.permoji.cache.dao.TraitDao;
+import com.permoji.cache.dao.UserNotificationDao;
 
 /**
  * Created by michael on 25/05/18.
@@ -18,7 +15,7 @@ public class CleanDbAsync extends AsyncTask<Void, Void, Void> {
     private TraitDao traitDao;
     private UserNotificationDao userNotificationDao;
 
-    CleanDbAsync(LocalDatabase db) {
+    public CleanDbAsync(LocalDatabase db) {
         this.traitDao = db.traitDao();
         this.userNotificationDao = db.userNotificationDao();
     }

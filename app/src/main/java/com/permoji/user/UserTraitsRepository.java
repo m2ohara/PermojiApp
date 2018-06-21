@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 
 import com.permoji.api.trait.Trait;
 import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.TraitDao;
+import com.permoji.cache.dao.TraitDao;
 
 import java.util.List;
 

@@ -11,7 +11,7 @@ import com.permoji.api.trait.Trait;
 import com.permoji.cache.LocalDatabase;
 import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.UserNotificationRepository;
-import com.permoji.trait.data.Notifier;
+import com.permoji.model.Notifier;
 import com.permoji.trait.TraitDefinitionBuilder;
 import com.permoji.user.UserTraitsRepository;
 
@@ -44,7 +44,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 new CreateTraitDefinitionAsyncTask(this).execute();
             }
             else {
-//                        new UpdateCacheAsyncTask(this).execute();
+//                new UpdateCacheAsyncTask(this).execute();
                 new UpdateTraitDefinitionAsyncTask(this).execute();
             }
         }

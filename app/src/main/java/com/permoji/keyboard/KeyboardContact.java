@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.permoji.trait.UserTraitActivity;
 import com.permoji.user.UserActivity;
 
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -61,7 +62,7 @@ public class KeyboardContact {
             }
 
             private void startUserActivity() {
-                Intent startUserActivity = new Intent(context, UserActivity.class);
+                Intent startUserActivity = new Intent(context, UserTraitActivity.class);
                 startUserActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(startUserActivity);
             }

@@ -177,16 +177,16 @@
             android:label="@string/dictionary_provider_name"
             android:multiprocess="false" />
 
-        <activity
-            android:name="com.permoji.user.UserActivity"
-            android:label="@string/title_activity_user"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--<activity-->
+            <!--android:name="com.permoji.user.UserActivity"-->
+            <!--android:label="@string/title_activity_user"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name="com.permoji.trait.UserTraitActivity"
             android:label="@string/title_activity_user_trait"
@@ -197,6 +197,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.permoji.notifiers.TraitNotifierActivity"
+            android:label="@string/title_activity_trait_notifier"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

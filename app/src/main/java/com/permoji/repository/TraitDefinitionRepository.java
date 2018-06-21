@@ -1,14 +1,24 @@
-package com.permoji.trait.data;
+package com.permoji.repository;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.NotifierDao;
-import com.permoji.cache.TraitDefinitionDao;
-import com.permoji.cache.TraitFillerDao;
-import com.permoji.cache.TraitNotifierFillerDao;
-import com.permoji.cache.TraitStatementDao;
+import com.permoji.cache.dao.NotifierDao;
+import com.permoji.cache.dao.NotifierFillerDao;
+import com.permoji.cache.dao.TraitDefinitionDao;
+import com.permoji.cache.dao.TraitFillerDao;
+import com.permoji.cache.dao.TraitNotifierFillerDao;
+import com.permoji.cache.dao.TraitStatementDao;
+import com.permoji.model.Notifier;
+import com.permoji.model.NotifierFiller;
+import com.permoji.model.TraitDefinition;
+import com.permoji.model.TraitFiller;
+import com.permoji.model.TraitNotifierFiller;
+import com.permoji.model.TraitStatement;
+import com.permoji.model.result.TraitNotifierFillerResult;
+import com.permoji.model.result.TraitResult;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -24,16 +34,25 @@ public class TraitDefinitionRepository {
     private TraitDefinitionDao traitDefinitionDao;
     private TraitStatementDao traitStatementDao;
     private TraitFillerDao traitFillerDao;
+    private NotifierFillerDao notifierFillerDao;
     private NotifierDao notifierDao;
     private TraitNotifierFillerDao traitNotifierFillerDao;
+    private LiveData<List<TraitResult>> liveTraitEntities;
+    private LiveData<List<TraitNotifierFillerResult>> liveNotifierFillerEntities;
 
     public TraitDefinitionRepository(Context context) {
         localDatabase = LocalDatabase.getInstance(context);
         traitDefinitionDao = localDatabase.traitDefinitionDao();
         traitStatementDao = localDatabase.traitStatementDao();
         traitFillerDao = localDatabase.traitFillerDao();
+        notifierFillerDao = localDatabase.notifierFillerDao();
         notifierDao = localDatabase.notifierDao();
         traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
+        liveTraitEntities = traitDefinitionDao.getAllTraitViewModels();
+    }
+
+    public LiveData<List<TraitResult>> getLiveTraitEntities() {
+        return liveTraitEntities;
     }
 
     public List<TraitDefinition> getLatestTraitDefinitionsByAmount(int amount) {
@@ -70,6 +89,10 @@ public class TraitDefinitionRepository {
         }
     }
 
+    public TraitStatement getTraitStatementById(int id) {
+        return traitStatementDao.getById(id);
+    }
+
     public List<TraitStatement> getTraitStatementsByCodepoint(int codepoint) {
         String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
         return traitStatementDao.getByCodepoint(unicodeValue);
@@ -77,7 +100,8 @@ public class TraitDefinitionRepository {
 
     public List<TraitFiller> getTraitFillersByCodepoint(int codepoint) {
         String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
-        return traitFillerDao.getByCodepoint(unicodeValue);
+//        return traitFillerDao.getByCodepoint(unicodeValue); //TODO:Temporary
+        return traitFillerDao.getByPopularityWeight();
     }
 
     public List<Notifier> getAllNotifiers() {
@@ -126,6 +150,14 @@ public class TraitDefinitionRepository {
         protected Integer doInBackground(TraitNotifierFiller... traitNotifierFillers) {
             return (int)traitNotifierFillerDao.insert(traitNotifierFillers[0]);
         }
+    }
+
+    public LiveData<List<TraitNotifierFillerResult>> getLiveNotifierFillersByTraitDefinitionId(int id) {
+        return traitNotifierFillerDao.getNotificationFillersByTraitDefinitionId(id);
+    }
+
+    public int insertNotifierFiller(NotifierFiller notifierFiller) {
+        return (int) notifierFillerDao.insert(notifierFiller);
     }
 
 }
