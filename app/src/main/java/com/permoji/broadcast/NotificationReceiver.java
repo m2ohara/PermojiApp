@@ -11,8 +11,8 @@ import com.permoji.api.trait.Trait;
 import com.permoji.cache.LocalDatabase;
 import com.permoji.notifications.UserNotification;
 import com.permoji.notifications.UserNotificationRepository;
-import com.permoji.model.Notifier;
-import com.permoji.trait.TraitDefinitionBuilder;
+import com.permoji.model.entity.Notifier;
+import com.permoji.builder.TraitDefinitionBuilder;
 import com.permoji.user.UserTraitsRepository;
 
 import java.lang.ref.WeakReference;

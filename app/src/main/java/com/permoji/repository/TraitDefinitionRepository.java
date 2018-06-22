@@ -11,12 +11,12 @@ import com.permoji.cache.dao.TraitDefinitionDao;
 import com.permoji.cache.dao.TraitFillerDao;
 import com.permoji.cache.dao.TraitNotifierFillerDao;
 import com.permoji.cache.dao.TraitStatementDao;
-import com.permoji.model.Notifier;
-import com.permoji.model.NotifierFiller;
-import com.permoji.model.TraitDefinition;
-import com.permoji.model.TraitFiller;
-import com.permoji.model.TraitNotifierFiller;
-import com.permoji.model.TraitStatement;
+import com.permoji.model.entity.Notifier;
+import com.permoji.model.entity.NotifierFiller;
+import com.permoji.model.entity.TraitDefinition;
+import com.permoji.model.entity.TraitFiller;
+import com.permoji.model.entity.TraitNotifierFiller;
+import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
 
@@ -139,17 +139,6 @@ public class TraitDefinitionRepository {
 
     public int insertTraitNotifierFiller(TraitNotifierFiller traitNotifierFiller) {
         return (int)traitNotifierFillerDao.insert(traitNotifierFiller);
-    }
-
-    private static class CreateTraitNotifierFillerAsync extends AsyncTask<TraitNotifierFiller, Void, Integer> {
-
-        private TraitNotifierFillerDao traitNotifierFillerDao;
-        public CreateTraitNotifierFillerAsync(TraitNotifierFillerDao traitNotifierFillerDao) { this.traitNotifierFillerDao = traitNotifierFillerDao;}
-
-        @Override
-        protected Integer doInBackground(TraitNotifierFiller... traitNotifierFillers) {
-            return (int)traitNotifierFillerDao.insert(traitNotifierFillers[0]);
-        }
     }
 
     public LiveData<List<TraitNotifierFillerResult>> getLiveNotifierFillersByTraitDefinitionId(int id) {

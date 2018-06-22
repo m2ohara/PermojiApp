@@ -1,4 +1,4 @@
-package com.permoji.trait;
+package com.permoji.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;

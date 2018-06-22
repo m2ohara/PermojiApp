@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
 import com.permoji.cache.BaseDAO;
-import com.permoji.model.TraitNotifierFiller;
+import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 
 import java.util.List;

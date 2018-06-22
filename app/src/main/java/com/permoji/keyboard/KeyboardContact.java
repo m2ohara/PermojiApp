@@ -11,8 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.permoji.trait.UserTraitActivity;
-import com.permoji.user.UserActivity;
+import com.permoji.activity.UserTraitActivity;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 import io.github.ctrlaltdel.aosp.ime.keyboard.Key;

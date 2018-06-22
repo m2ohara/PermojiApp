@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.permoji.cache.BaseDAO;
-import com.permoji.model.TraitStatement;
+import com.permoji.model.entity.TraitStatement;
 
 import java.util.List;
 

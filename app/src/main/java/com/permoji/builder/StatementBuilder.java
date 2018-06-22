@@ -1,4 +1,4 @@
-package com.permoji.notifiers;
+package com.permoji.builder;
 
 import android.text.Html;
 import android.widget.TextView;
@@ -14,6 +14,7 @@ import java.util.Random;
 
 public class StatementBuilder {
 
+    //TODO: Encapsulate logic
     private static StatementBuilder instance;
 
     public static StatementBuilder get() {
@@ -33,10 +34,14 @@ public class StatementBuilder {
         if(fillerCount == 0) {
             fillerCount = 1;
         }
+        if(fillerCount > traitNotifierFillerResult.notifierFillerResultList.size()) {
+            fillerCount = traitNotifierFillerResult.notifierFillerResultList.size();
+        }
 
         //Personalise statement or filler
         int personaliseStatementWeight = traitResult.traitStatement.get(0).getPersonaliseWeight();
         Random random = new Random();
+        int personalisedFiller = random.nextInt(fillerCount); //TODO: Retrieve from DB
         //TODO: Implement weighted selector
         if (personaliseStatementWeight == 100) {
             statementText = statementText.replace("<name>", traitNotifierFillerResult.notifier.get(0).getName());
@@ -46,9 +51,6 @@ public class StatementBuilder {
         }
 
         for(int fillerIdx = 0; fillerIdx < fillerCount; fillerIdx++) {
-            if(fillerCount > traitNotifierFillerResult.notifierFillerResultList.size()) {
-                fillerCount = traitNotifierFillerResult.notifierFillerResultList.size();
-            }
 
             String fillerText = traitNotifierFillerResult.notifierFillerResultList.get(fillerIdx).traitFiller.get(0).getText();
             String fillerExtraText = traitNotifierFillerResult.notifierFillerResultList.get(fillerIdx).traitFiller.get(0).getPersonalisedText();
@@ -61,10 +63,12 @@ public class StatementBuilder {
                 fillerText = fillerText.replace(".", "");
             }
 
+            //TODO: Replace uppercase letter with lowercase after <personal>
             if (personaliseStatementWeight == 100) {
                 fillerText = fillerText.replace("<personal>", "");
             } else if (personaliseStatementWeight == 0) {
-                fillerText = fillerText.replace("<personal>", fillerExtraText);
+                if(fillerIdx == personalisedFiller)
+                    fillerText = fillerText.replace("<personal>", fillerExtraText);
             }
 
             fillerText = "<font color='red'>" + fillerText.replace("<name>", traitNotifierFillerResult.notifier.get(0).getName()) + "</font>";

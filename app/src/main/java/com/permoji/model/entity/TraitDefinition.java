@@ -1,4 +1,4 @@
-package com.permoji.model;
+package com.permoji.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -13,11 +13,7 @@ import android.arch.persistence.room.PrimaryKey;
         @ForeignKey(
                 entity=TraitStatement.class,
                 parentColumns="id",
-                childColumns="statementId"),
-        @ForeignKey(
-                entity=TraitFiller.class,
-                parentColumns="id",
-                childColumns="selectedFillerId")},
+                childColumns="statementId")},
         indices=@Index(value="statementId"))
 public class TraitDefinition {
 

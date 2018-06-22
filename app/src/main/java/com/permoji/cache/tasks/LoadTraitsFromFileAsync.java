@@ -9,8 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.permoji.cache.LocalDatabase;
 import com.permoji.cache.dao.TraitFillerDao;
 import com.permoji.cache.dao.TraitStatementDao;
-import com.permoji.model.TraitFiller;
-import com.permoji.model.TraitStatement;
+import com.permoji.model.entity.TraitFiller;
+import com.permoji.model.entity.TraitStatement;
 
 import java.io.IOException;
 import java.io.InputStream;

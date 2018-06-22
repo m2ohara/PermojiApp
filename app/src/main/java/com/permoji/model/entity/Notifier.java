@@ -1,4 +1,4 @@
-package com.permoji.model;
+package com.permoji.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

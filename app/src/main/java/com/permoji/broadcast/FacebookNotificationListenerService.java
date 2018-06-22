@@ -34,14 +34,12 @@ import java.util.List;
 /**
  * Created by michael on 30/05/18.
  */
-
+//TODO: Encapsulate logic, implement strategy pattern
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class FacebookNotificationListenerService extends NotificationListenerService {
 
     private String TAG = this.getClass().getSimpleName();
-//    private String previousKey = "";
     private BroadcastType broadcastType;
-//    private NotificationReceiver notificationReceiver;
     private static String NOTIFICATION = "io.github.ctrlaltdel.aosp.ime";
 
     @Override
@@ -65,7 +63,6 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
 
         broadcastType = sbn.getPackageName().contains("whatsapp") ? BroadcastType.Whatsapp : BroadcastType.Facebook;
 
-//        previousKey = sbn.getKey();
         String androidText = null;
         Bundle extras = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {

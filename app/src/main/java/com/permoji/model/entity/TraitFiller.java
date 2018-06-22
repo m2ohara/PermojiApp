@@ -1,4 +1,4 @@
-package com.permoji.model;
+package com.permoji.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -12,14 +12,14 @@ import java.io.Serializable;
 public class TraitFiller implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
     private String codepoint;
     private String text;
     private String personalisedText;
-    private int popularityWeight;
+    private Integer popularityWeight;
     private String placeholderType;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -35,11 +35,11 @@ public class TraitFiller implements Serializable {
         return personalisedText;
     }
 
-    public int getPopularityWeight() {
+    public Integer getPopularityWeight() {
         return popularityWeight;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,7 +55,7 @@ public class TraitFiller implements Serializable {
         this.personalisedText = personalisedText;
     }
 
-    public void setPopularityWeight(int popularityWeight) {
+    public void setPopularityWeight(Integer popularityWeight) {
         this.popularityWeight = popularityWeight;
     }
 

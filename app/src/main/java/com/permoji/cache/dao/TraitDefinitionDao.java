@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
 import com.permoji.cache.BaseDAO;
-import com.permoji.model.TraitDefinition;
+import com.permoji.model.entity.TraitDefinition;
 import com.permoji.model.result.TraitResult;
 
 import java.util.List;

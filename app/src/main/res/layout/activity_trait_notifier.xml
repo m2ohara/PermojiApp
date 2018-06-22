@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.permoji.notifiers.TraitNotifierActivity">
+    tools:context="com.permoji.activity.TraitNotifierActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,5 +21,15 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_trait_notifier" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/reset_fillers_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/dice_icon"
+        app:srcCompat="@drawable/num_2">
+    </android.support.design.widget.FloatingActionButton>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
 import com.permoji.cache.BaseDAO;
-import com.permoji.model.Notifier;
+import com.permoji.model.entity.Notifier;
 
 import java.util.List;
 

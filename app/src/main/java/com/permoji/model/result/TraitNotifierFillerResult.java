@@ -2,9 +2,8 @@ package com.permoji.model.result;
 
 import android.arch.persistence.room.Relation;
 
-import com.permoji.model.Notifier;
-import com.permoji.model.NotifierFiller;
-import com.permoji.model.TraitFiller;
+import com.permoji.model.entity.Notifier;
+import com.permoji.model.entity.NotifierFiller;
 
 import java.io.Serializable;
 import java.util.List;

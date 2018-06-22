@@ -188,7 +188,7 @@
             <!--</intent-filter>-->
         <!--</activity>-->
         <activity
-            android:name="com.permoji.trait.UserTraitActivity"
+            android:name="com.permoji.activity.UserTraitActivity"
             android:label="@string/title_activity_user_trait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -198,7 +198,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.permoji.notifiers.TraitNotifierActivity"
+            android:name="com.permoji.activity.TraitNotifierActivity"
             android:label="@string/title_activity_trait_notifier"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

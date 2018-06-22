@@ -1,4 +1,4 @@
-package com.permoji.model;
+package com.permoji.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -19,7 +19,8 @@ import java.io.Serializable;
         @ForeignKey(
                 entity=TraitNotifierFiller.class,
                 parentColumns="id",
-                childColumns="traitNotifierFillerId")},
+                childColumns="traitNotifierFillerId",
+                onDelete = ForeignKey.CASCADE)},
         indices={@Index(value="fillerId"),@Index(value = "traitNotifierFillerId")})
 public class NotifierFiller implements Serializable {
 
@@ -27,6 +28,7 @@ public class NotifierFiller implements Serializable {
     private int id;
     private int traitNotifierFillerId;
     private int fillerId;
+    private boolean isPersonalised; //TODO: Implement on next install
 
     public int getTraitNotifierFillerId() {
         return traitNotifierFillerId;
@@ -50,5 +52,13 @@ public class NotifierFiller implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isPersonalised() {
+        return isPersonalised;
+    }
+
+    public void setPersonalised(boolean personalised) {
+        isPersonalised = personalised;
     }
 }

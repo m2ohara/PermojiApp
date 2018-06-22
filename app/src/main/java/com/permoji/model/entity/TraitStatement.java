@@ -1,4 +1,4 @@
-package com.permoji.model;
+package com.permoji.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -12,16 +12,16 @@ import java.io.Serializable;
 public class TraitStatement implements Serializable
 {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private Integer id;
     private String codepoint;
     private String traitName;
     private String statement;
-    private int popularityWeight;
+    private Integer popularityWeight;
     private String heading;
-    private int personaliseWeight;
+    private Integer personaliseWeight;
     private String placeholderType;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -33,8 +33,8 @@ public class TraitStatement implements Serializable
         this.codepoint = codepoint;
     }
 
-    public int getCodePoint() {
-        int result=Integer.parseInt(codepoint.substring(2),16);
+    public Integer getCodePoint() {
+        Integer result=Integer.parseInt(codepoint.substring(2),16);
         return  result;
     }
 
@@ -46,11 +46,11 @@ public class TraitStatement implements Serializable
         return statement;
     }
 
-    public int getPopularityWeight() {
+    public Integer getPopularityWeight() {
         return popularityWeight;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,7 +63,7 @@ public class TraitStatement implements Serializable
         this.statement = statement;
     }
 
-    public void setPopularityWeight(int popularityWeight) {
+    public void setPopularityWeight(Integer popularityWeight) {
         this.popularityWeight = popularityWeight;
     }
 
@@ -75,11 +75,11 @@ public class TraitStatement implements Serializable
         this.heading = heading;
     }
 
-    public int getPersonaliseWeight() {
+    public Integer getPersonaliseWeight() {
         return personaliseWeight;
     }
 
-    public void setPersonaliseWeight(int personaliseWeight) {
+    public void setPersonaliseWeight(Integer personaliseWeight) {
         this.personaliseWeight = personaliseWeight;
     }
 

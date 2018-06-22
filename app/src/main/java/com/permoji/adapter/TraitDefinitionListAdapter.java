@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.permoji.compatability.EmojiInitCallback;
-import com.permoji.notifiers.TraitNotifierActivity;
+import com.permoji.activity.TraitNotifierActivity;
 import com.permoji.model.result.TraitResult;
 
 import java.util.List;

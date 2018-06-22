@@ -1,15 +1,16 @@
-package com.permoji.trait;
+package com.permoji.builder;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.permoji.model.Notifier;
-import com.permoji.model.NotifierFiller;
-import com.permoji.model.TraitDefinition;
+import com.permoji.model.entity.Notifier;
+import com.permoji.model.entity.NotifierFiller;
+import com.permoji.model.entity.TraitDefinition;
 import com.permoji.repository.TraitDefinitionRepository;
-import com.permoji.model.TraitFiller;
-import com.permoji.model.TraitNotifierFiller;
-import com.permoji.model.TraitStatement;
+import com.permoji.model.entity.TraitFiller;
+import com.permoji.model.entity.TraitNotifierFiller;
+import com.permoji.model.entity.TraitStatement;
+import com.permoji.repository.TraitNotifierFillerRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ import java.util.Random;
 
 public class TraitDefinitionBuilder {
     private TraitDefinitionRepository traitDefinitionRepository;
+    private TraitNotifierFillerRepository traitNotifierFillerRepository;
     private int latestAmount = 5;
-    private int maxFillerAmount = 2;
+    private int maxFillerAmount = 3;
 
     public TraitDefinitionBuilder(Context context) {
         traitDefinitionRepository = new TraitDefinitionRepository(context);
+        traitNotifierFillerRepository = new TraitNotifierFillerRepository(context);
     }
 
     public void createTrait(int codepoint) {
@@ -37,6 +40,7 @@ public class TraitDefinitionBuilder {
         TraitDefinition traitDefinition = new TraitDefinition();
         traitDefinition.setDateCreated(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
+        //TODO: Prioristise statements query by least amount of fillers
         List<TraitStatement> statementList = traitDefinitionRepository.getTraitStatementsByCodepoint(codepoint);
         if(statementList.size() > 0) {
             TraitStatement traitStatement = statementList.get(new Random().nextInt(statementList.size()));
@@ -66,7 +70,7 @@ public class TraitDefinitionBuilder {
 
             //TODO: Check for existing notifier filler
             int traitNotifierFillerId = -1;
-            traitNotifierFillerId = traitDefinitionRepository.insertTraitNotifierFiller(traitNotifierFiller);
+            traitNotifierFillerId = traitNotifierFillerRepository.insert(traitNotifierFiller);
 
             for(int idx = 0; idx < maxFillerAmount; idx++) {
                 TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
@@ -75,6 +79,8 @@ public class TraitDefinitionBuilder {
                 notifierFiller.setFillerId(traitFiller.getId());
 
                 traitDefinitionRepository.insertNotifierFiller(notifierFiller);
+
+
             }
         }
     }
