@@ -10,6 +10,7 @@ import com.permoji.repository.TraitDefinitionRepository;
 import com.permoji.model.entity.TraitFiller;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
+import com.permoji.repository.TraitFillerRepository;
 import com.permoji.repository.TraitNotifierFillerRepository;
 
 import java.text.SimpleDateFormat;
@@ -25,12 +26,14 @@ import java.util.Random;
 public class TraitDefinitionBuilder {
     private TraitDefinitionRepository traitDefinitionRepository;
     private TraitNotifierFillerRepository traitNotifierFillerRepository;
+    private TraitFillerRepository traitFillerRepository;
     private int latestAmount = 5;
     private int maxFillerAmount = 3;
 
     public TraitDefinitionBuilder(Context context) {
         traitDefinitionRepository = new TraitDefinitionRepository(context);
         traitNotifierFillerRepository = new TraitNotifierFillerRepository(context);
+        traitFillerRepository = new TraitFillerRepository(context);
     }
 
     public void createTrait(int codepoint) {
@@ -61,7 +64,7 @@ public class TraitDefinitionBuilder {
         if(traitDefinitions.size() > 0) {
             TraitDefinition traitDefinition = traitDefinitions.get(new Random().nextInt(traitDefinitions.size()));
 
-            List<TraitFiller> traitFillersUnfiltered = traitDefinitionRepository.getTraitFillersByCodepoint(codepoint);
+            List<TraitFiller> traitFillersUnfiltered = traitFillerRepository.getAll();
             String fillerType = traitDefinitionRepository.getTraitStatementById(traitDefinition.getStatementId()).getPlaceholderType();
             List<TraitFiller> traitFillers = filterTraitFillersByPlaceHolderType(fillerType, traitFillersUnfiltered);
 
@@ -104,7 +107,7 @@ public class TraitDefinitionBuilder {
 
         if(notifierList.size() > 0) {
             for (Notifier existingNotifier : notifierList) {
-                if (existingNotifier.getImagePath().equals(notifier.getImagePath()) && existingNotifier.getName().equals(notifier.getName())) {
+                if (!existingNotifier.getImagePath().isEmpty() && existingNotifier.getImagePath().equals(notifier.getImagePath()) && existingNotifier.getName().equals(notifier.getName())) {
                     //TODO: Resolve updated images, duplicate notifier names
                     return existingNotifier.getId();
                 }

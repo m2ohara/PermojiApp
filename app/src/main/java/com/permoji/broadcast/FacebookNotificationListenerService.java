@@ -1,24 +1,14 @@
 package com.permoji.broadcast;
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.vdurmont.emoji.EmojiParser;
@@ -26,8 +16,6 @@ import com.vdurmont.emoji.EmojiParser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,12 +67,16 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
 
         name = getNameFromBroadcast(extras.getString("android.title"), broadcastType);
 
+        if(name == null) {
+            return;
+        }
+
         //Store notification icon if exists
         if(extras.get(Notification.EXTRA_LARGE_ICON) != null) {
 
             Bitmap bigIcon = (Bitmap) extras.get(Notification.EXTRA_LARGE_ICON);
 
-            filePath = writeImageToCache(bigIcon, name);
+            filePath = writeImageToLocalDirectory(bigIcon, name);
         }
 
 
@@ -119,20 +111,20 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         }
     }
 
-    private String writeImageToCache(Bitmap bigIcon, String name) {
+    private String writeImageToLocalDirectory(Bitmap bigIcon, String name) {
 
         File outFile = null;
-        String externalDirectory = "Permoji";
+        String localDirectory = "/Permoji/";
         OutputStream stream = null;
 
         try {
 
-            File dir = new File(Environment.getExternalStorageDirectory(), externalDirectory);
+            File dir = new File(Environment.getExternalStorageDirectory(), localDirectory);
             if(!dir.exists()) {
                 dir.mkdirs();
             }
 
-            outFile = new File(Environment.getExternalStorageDirectory() + "/" + externalDirectory + "/",
+            outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
                     name + ".png");
             if (outFile.exists()) {
                 outFile.delete();
@@ -143,6 +135,10 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             bigIcon.compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.flush();
             stream.close();
+        }
+        catch (SecurityException e) {
+            Log.e(TAG,  e.getMessage());
+            return null;
         }
         catch (Exception e) {
             Log.e(TAG,  e.getMessage());
@@ -156,6 +152,12 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         String name = "Notifier";
         if(androidTitle != null) {
             name = "" + androidTitle;
+
+            if(name.contains("(")) {
+                name = name.substring(0, name.indexOf(" ("));
+            }
+
+            name = name.replaceAll("[^a-zA-Z0-9 ]", "");;
         }
 
         //If in group
@@ -163,7 +165,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             name = name.substring(0, name.indexOf("@"));
 
             if(name.contains("+")) {
-                name = "Unknown Group Member";
+                return null;
             }
         }
 
@@ -171,7 +173,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
     }
 
     private void broadcastNotification(String filePath, String name, ArrayList<Integer> emojiCodepoints) {
-        Intent intent = new Intent(NOTIFICATION);
+        Intent intent = new Intent(this.getBaseContext(), NotificationReceiver.class); //new Intent(NOTIFICATION);
         Bundle extra = new Bundle();
         extra.putIntegerArrayList("emojiCodepoints", emojiCodepoints);
         extra.putString("filePath", filePath);

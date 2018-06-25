@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.permoji.activity.UserTraitActivity;
+import com.permoji.broadcast.NotificationReceiver;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 import io.github.ctrlaltdel.aosp.ime.keyboard.Key;
@@ -75,7 +76,7 @@ public class KeyboardContact {
             }
 
             private void broadcastNotification(int emojiCodepoint) {
-                Intent intent = new Intent(NOTIFICATION);
+                Intent intent = new Intent(context, NotificationReceiver.class); // new Intent(NOTIFICATION);
                 Bundle extra = new Bundle();
                 extra.putInt("emojiCodepoint", emojiCodepoint);
                 extra.putString("broadcastType", "keyboardBroadcast");

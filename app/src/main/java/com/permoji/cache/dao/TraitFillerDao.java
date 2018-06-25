@@ -16,11 +16,15 @@ import java.util.List;
 @Dao
 public interface TraitFillerDao extends BaseDAO<TraitFiller> {
 
-    @Query("Select * from trait_filler where popularityWeight < 5 and popularityWeight >= 1")
-    List<TraitFiller> getByPopularityWeight();
+
+    @Query("Select * from trait_filler where id = :id")
+    List<TraitFiller> getById(int id);
 
     @Query("Select * from trait_filler where codepoint = :codepoint")
     List<TraitFiller> getByCodepoint(String codepoint);
+
+    @Query("Select * from trait_filler")
+    List<TraitFiller> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void InsertAll(List<TraitFiller> traitFillerList);

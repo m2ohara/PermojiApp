@@ -31,18 +31,18 @@ public class TraitNotifierFillerRepository {
         return (int)traitNotifierFillerDao.insert(traitNotifierFiller);
     }
 
-    public void removeAsync(TraitNotifierFiller traitNotifierFiller) {
-        new RemoveAsync(traitNotifierFillerDao).execute(traitNotifierFiller);
+    public void deleteAsync(TraitNotifierFiller traitNotifierFiller) {
+        new DeleteAsync(traitNotifierFillerDao).execute(traitNotifierFiller);
     }
 
     public void remove(TraitNotifierFiller traitNotifierFiller) {
         traitNotifierFillerDao.delete(traitNotifierFiller);
     }
 
-    private static class RemoveAsync extends AsyncTask<TraitNotifierFiller, Void, Void> {
+    private static class DeleteAsync extends AsyncTask<TraitNotifierFiller, Void, Void> {
 
         private TraitNotifierFillerDao traitNotifierFillerDao;
-        public RemoveAsync(TraitNotifierFillerDao traitNotifierFillerDao) { this.traitNotifierFillerDao = traitNotifierFillerDao; }
+        public DeleteAsync(TraitNotifierFillerDao traitNotifierFillerDao) { this.traitNotifierFillerDao = traitNotifierFillerDao; }
 
         @Override
         protected Void doInBackground(TraitNotifierFiller... traitNotifierFillers) {

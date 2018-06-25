@@ -98,11 +98,10 @@ public class TraitDefinitionRepository {
         return traitStatementDao.getByCodepoint(unicodeValue);
     }
 
-    public List<TraitFiller> getTraitFillersByCodepoint(int codepoint) {
-        String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
-//        return traitFillerDao.getByCodepoint(unicodeValue); //TODO:Temporary
-        return traitFillerDao.getByPopularityWeight();
-    }
+//    public List<TraitFiller> getTraitFillersByCodepoint(int codepoint) {
+//        String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
+//        return traitFillerDao.getAll();
+//    }
 
     public List<Notifier> getAllNotifiers() {
         return notifierDao.getAll();

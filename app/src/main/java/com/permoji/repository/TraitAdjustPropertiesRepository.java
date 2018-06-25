@@ -26,6 +26,10 @@ public class TraitAdjustPropertiesRepository {
         return  traitAdjustPropertiesDao.getLiveTraitAdjustProperties();
     }
 
+    public int getAdjustmentCount() {
+        return  traitAdjustPropertiesDao.getTraitAdjustProperties().get(0).getCount();
+    }
+
     public void increaseCountAsync(int increment) {
         new IncreaseCountAsync(traitAdjustPropertiesDao).execute(increment);
     }
@@ -40,8 +44,15 @@ public class TraitAdjustPropertiesRepository {
             TraitAdjustProperties traitAdjustProperties = traitAdjustPropertiesDao.getTraitAdjustProperties().get(0);
             traitAdjustProperties.setCount(traitAdjustProperties.getCount() + increment[0]);
 
-            traitAdjustPropertiesDao.insert(traitAdjustProperties);
+            traitAdjustPropertiesDao.update(traitAdjustProperties);
             return null;
         }
+    }
+
+    public void decreaseCount(int decrement) {
+        TraitAdjustProperties traitAdjustProperties = traitAdjustPropertiesDao.getTraitAdjustProperties().get(0);
+        traitAdjustProperties.setCount((traitAdjustProperties.getCount() - decrement) < 0 ? 0 : traitAdjustProperties.getCount() - decrement);
+
+        traitAdjustPropertiesDao.update(traitAdjustProperties);
     }
 }

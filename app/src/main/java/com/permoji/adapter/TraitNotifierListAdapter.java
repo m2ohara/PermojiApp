@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,15 +55,13 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
     private LayoutInflater inflater;
     private TraitResult traitResult;
     private List<TraitNotifierFillerResult> traitNotifierFillerResultList;
-    private FloatingActionButton adjustTraitButton;
     private TraitNotifierFillerRepository traitNotifierFillerRepository;
     private TraitAdjustPropertiesRepository traitAdjustPropertiesRepository;
 
-    public TraitNotifierListAdapter(Context context, TraitResult traitResult, FloatingActionButton adjustTraitButton) {
+    public TraitNotifierListAdapter(Context context, TraitResult traitResult) {
         this.traitResult = traitResult;
         inflater = LayoutInflater.from(context);
         resources = context.getResources();
-        this.adjustTraitButton = adjustTraitButton;
         this.traitNotifierFillerRepository = new TraitNotifierFillerRepository(context);
         this.traitAdjustPropertiesRepository = new TraitAdjustPropertiesRepository(context);
     }
@@ -79,21 +77,22 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
 
         final TraitNotifierFillerResult traitNotifierFillerResult = traitNotifierFillerResultList.get(position);
 
-        File imageFile = new File(traitNotifierFillerResult.notifier.get(0).getImagePath());
+        File imageFile =  null;
+        try {
+            imageFile = new File(traitNotifierFillerResult.notifier.get(0).getImagePath());
+        }
+        catch (Exception e) {
+            //TODO: add default image
+        }
         Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         holder.notifierImage.setImageBitmap(imageBitmap);
 
         holder.heading.setText(traitResult.traitStatement.get(0).getHeading().replace("<name>", traitNotifierFillerResult.notifier.get(0).getName() ));
         holder.tickButton.setImageDrawable(setDrawableSize(R.drawable.tick_icon, 80, 80));
+        ((View)holder.tickButton).setVisibility(View.INVISIBLE); //TODO: Temporarily hidden Remove on implementation
+        holder.removeButton.setImageDrawable(setDrawableSize(R.drawable.cross_icon, 80, 80));
 
         StatementBuilder.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
-
-//        adjustTraitButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
 
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +103,7 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
                 traitNotifierFiller.setNotifierId(traitNotifierFillerResult.getNotifierId());
                 traitNotifierFiller.setTraitDefinitionId(traitNotifierFillerResult.getTraitDefinitionId());
 
-                traitNotifierFillerRepository.removeAsync(traitNotifierFiller);
+                traitNotifierFillerRepository.deleteAsync(traitNotifierFiller);
                 traitAdjustPropertiesRepository.increaseCountAsync(1);
 
                 traitNotifierFillerResultList.remove(position);
@@ -127,6 +126,10 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
             return traitNotifierFillerResultList.size();
         }
         return 0;
+    }
+
+    public TraitNotifierFillerResult getItemAt(int position) {
+        return traitNotifierFillerResultList.get(position);
     }
 
     public void setTraitNotifierFillerResultList(List<TraitNotifierFillerResult> traitNotifierFillerResultList) {

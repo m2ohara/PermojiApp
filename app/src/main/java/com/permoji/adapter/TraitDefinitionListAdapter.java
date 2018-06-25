@@ -79,6 +79,7 @@ public class TraitDefinitionListAdapter extends RecyclerView.Adapter<TraitDefini
             //TODO: account for amount > 10
             imageView.setImageResource(holder.itemView.getContext().getResources().getIdentifier("num_"+amount, "drawable", holder.itemView.getContext().getPackageName()));
 
+            holder.traitNotifierCount.removeAllViews();
             holder.traitNotifierCount.addView(imageView);
         }
         else {

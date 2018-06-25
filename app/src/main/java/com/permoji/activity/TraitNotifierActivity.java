@@ -3,23 +3,31 @@ package com.permoji.activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.text.emoji.EmojiCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.permoji.LinearLayoutManagerWithSmoothScroller;
 import com.permoji.adapter.TraitNotifierListAdapter;
 import com.permoji.compatability.EmojiInitCallback;
 import com.permoji.model.entity.TraitAdjustProperties;
+import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
+import com.permoji.repository.TraitNotifierFillerRepository;
+import com.permoji.task.ReplaceFillersWithRandomAsync;
 import com.permoji.viewModel.NotifierFillerViewModel;
 import com.permoji.viewModel.TraitAdjustViewModel;
 
@@ -34,6 +42,7 @@ public class TraitNotifierActivity extends AppCompatActivity {
     private TraitNotifierListAdapter traitNotifierListAdapter;
     private TraitAdjustViewModel traitAdjustViewModel;
     private FloatingActionButton adjustTraitButton;
+    private RecyclerView notifierRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +64,20 @@ public class TraitNotifierActivity extends AppCompatActivity {
         traitAdjustViewModel = ViewModelProviders.of(this).get(TraitAdjustViewModel.class);
 
         adjustTraitButton = (FloatingActionButton) findViewById(R.id.reset_fillers_button);
+        adjustTraitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = ((LinearLayoutManager)notifierRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                if(position != -1) {
+                    TraitNotifierFillerResult traitNotifierFillerResult = ((TraitNotifierListAdapter) notifierRecyclerView.getAdapter()).getItemAt(position);
 
+                    new ReplaceFillersWithRandomAsync(view.getContext(), traitNotifierListAdapter).execute(traitNotifierFillerResult);
 
+                }
+            }
+        });
+
+        setTraitAdjustObserver();
     }
 
     private void setTraitAdjustObserver() {
@@ -68,6 +89,7 @@ public class TraitNotifierActivity extends AppCompatActivity {
                     adjustTraitButton.hide();
                 }
                 else {
+                    adjustTraitButton.show();
                     adjustTraitButton.setImageResource( context.getResources().getIdentifier(
                             "num_"+traitAdjustProperties.get(0).getCount(), "drawable", context.getPackageName()));
                 }
@@ -86,14 +108,15 @@ public class TraitNotifierActivity extends AppCompatActivity {
 
     private void setRecyclerView() {
 
-        RecyclerView recyclerView = findViewById(R.id.notifier_recyclerView);
+        notifierRecyclerView = findViewById(R.id.notifier_recyclerView);
 
-        traitNotifierListAdapter = new TraitNotifierListAdapter(this, traitResult, adjustTraitButton);
-        recyclerView.setAdapter(traitNotifierListAdapter);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayout.HORIZONTAL, false);
-        //TODO: Enable smooth scroll
+        LinearLayoutManager manager = new LinearLayoutManagerWithSmoothScroller(this);
+        notifierRecyclerView.setLayoutManager(manager);
+
         manager.setSmoothScrollbarEnabled(true);
-        recyclerView.setLayoutManager(manager);
+
+        traitNotifierListAdapter = new TraitNotifierListAdapter(this, traitResult);
+        notifierRecyclerView.setAdapter(traitNotifierListAdapter);
 
     }
 
