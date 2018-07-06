@@ -148,6 +148,21 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         return outFile.getPath();
     }
 
+    private String getNameFromTextBroadcast(String androidText, BroadcastType broadcastType) {
+        String name = "Notifier";
+        if(androidText != null) {
+            name = "" + androidText;
+
+            if(name.contains(":")) {
+                name = name.substring(0, name.indexOf(" :"));
+            }
+
+            name = name.replaceAll("[^a-zA-Z0-9 ]", "");;
+        }
+
+        return name;
+    }
+
     private String getNameFromBroadcast(String androidTitle, BroadcastType broadcastType) {
         String name = "Notifier";
         if(androidTitle != null) {
@@ -164,7 +179,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         if(broadcastType == BroadcastType.Whatsapp && name.contains("@")) {
             name = name.substring(0, name.indexOf("@"));
 
-            if(name.contains("+")) {
+            if(name.contains("+") || name.replaceAll("[0-9 ]", "").contains("")) {
                 return null;
             }
         }
@@ -173,7 +188,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
     }
 
     private void broadcastNotification(String filePath, String name, ArrayList<Integer> emojiCodepoints) {
-        Intent intent = new Intent(this.getBaseContext(), NotificationReceiver.class); //new Intent(NOTIFICATION);
+        Intent intent = new Intent(this.getBaseContext(), NotificationReceiver.class);
         Bundle extra = new Bundle();
         extra.putIntegerArrayList("emojiCodepoints", emojiCodepoints);
         extra.putString("filePath", filePath);

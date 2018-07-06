@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.repository.TraitDefinitionRepository;
+import com.permoji.repository.TraitNotifierFillerRepository;
 
 import java.util.List;
 
@@ -16,15 +17,15 @@ import java.util.List;
 
 public class NotifierFillerViewModel extends AndroidViewModel {
 
-    private TraitDefinitionRepository traitDefinitionRepository;
+    private TraitNotifierFillerRepository traitNotifierFillerRepository;
 
     public NotifierFillerViewModel(@NonNull Application application) {
         super(application);
 
-        traitDefinitionRepository = new TraitDefinitionRepository(application);
+        traitNotifierFillerRepository = new TraitNotifierFillerRepository(application);
     }
 
     public LiveData<List<TraitNotifierFillerResult>> getLiveNotifierFillersByTraitDefinitionId(int id) {
-        return traitDefinitionRepository.getLiveNotifierFillersByTraitDefinitionId(id);
+        return traitNotifierFillerRepository.getLiveByTraitDefinitionId(id);
     }
 }

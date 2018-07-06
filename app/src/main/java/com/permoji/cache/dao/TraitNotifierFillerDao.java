@@ -17,6 +17,6 @@ import java.util.List;
 public interface TraitNotifierFillerDao extends BaseDAO<TraitNotifierFiller> {
 
     @Query("Select * from trait_notifier_filler where traitDefinitionId = :id")
-    public LiveData<List<TraitNotifierFillerResult>> getNotificationFillersByTraitDefinitionId(int id);
+    public LiveData<List<TraitNotifierFillerResult>> getLiveDataById(int id);
 
 }

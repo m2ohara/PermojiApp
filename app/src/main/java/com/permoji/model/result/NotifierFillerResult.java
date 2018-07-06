@@ -47,4 +47,6 @@ public class NotifierFillerResult implements Serializable {
     public TraitFiller getNotifierFiller() {
         return traitFiller.get(0);
     }
+
+    //TODO: Add isPersonalised property
 }

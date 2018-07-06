@@ -14,7 +14,6 @@ import com.permoji.cache.dao.TraitStatementDao;
 import com.permoji.model.entity.Notifier;
 import com.permoji.model.entity.NotifierFiller;
 import com.permoji.model.entity.TraitDefinition;
-import com.permoji.model.entity.TraitFiller;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.result.TraitNotifierFillerResult;
@@ -67,6 +66,11 @@ public class TraitDefinitionRepository {
         new UpdateTraitDefinitionAsync(traitDefinitionDao).execute(traitDefinition);
     }
 
+    //TODO: Add foreign key cascade delete
+    public void removeAsync(TraitDefinition traitDefinition) {
+        new RemoveTraitDefinitionAsync(traitDefinitionDao).execute(traitDefinition);
+    }
+
     private static class CreateTraitDefinitionAsync extends AsyncTask<TraitDefinition, Void, Void> {
 
         private TraitDefinitionDao traitDefinitionDao;
@@ -89,6 +93,17 @@ public class TraitDefinitionRepository {
         }
     }
 
+    private static class RemoveTraitDefinitionAsync extends AsyncTask<TraitDefinition, Void, Void> {
+
+        private TraitDefinitionDao traitDefinitionDao;
+        public RemoveTraitDefinitionAsync(TraitDefinitionDao traitDefinitionDao) { this.traitDefinitionDao = traitDefinitionDao; }
+        @Override
+        protected Void doInBackground(TraitDefinition... traitDefinitions) {
+            traitDefinitionDao.delete(traitDefinitions[0]);
+            return null;
+        }
+    }
+
     public TraitStatement getTraitStatementById(int id) {
         return traitStatementDao.getById(id);
     }
@@ -98,11 +113,6 @@ public class TraitDefinitionRepository {
         return traitStatementDao.getByCodepoint(unicodeValue);
     }
 
-//    public List<TraitFiller> getTraitFillersByCodepoint(int codepoint) {
-//        String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
-//        return traitFillerDao.getAll();
-//    }
-
     public List<Notifier> getAllNotifiers() {
         return notifierDao.getAll();
     }
@@ -111,38 +121,6 @@ public class TraitDefinitionRepository {
         return (int)notifierDao.insert(notifier);
     }
 
-    public int insertNotifierAsync(Notifier notifier) {
-
-        try {
-           return new CreateNotifierAsync(notifierDao).execute(notifier).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    private static class CreateNotifierAsync extends AsyncTask<Notifier, Void, Integer> {
-
-        //Will not return if in async invoked by async task
-        private NotifierDao notifierDao;
-        public CreateNotifierAsync(NotifierDao notifierDao) { this.notifierDao = notifierDao; }
-        @Override
-        protected Integer doInBackground(Notifier... notifiers) {
-            int id = (int)notifierDao.insert(notifiers[0]);
-            return id;
-        }
-
-    }
-
-    public int insertTraitNotifierFiller(TraitNotifierFiller traitNotifierFiller) {
-        return (int)traitNotifierFillerDao.insert(traitNotifierFiller);
-    }
-
-    public LiveData<List<TraitNotifierFillerResult>> getLiveNotifierFillersByTraitDefinitionId(int id) {
-        return traitNotifierFillerDao.getNotificationFillersByTraitDefinitionId(id);
-    }
 
     public int insertNotifierFiller(NotifierFiller notifierFiller) {
         return (int) notifierFillerDao.insert(notifierFiller);

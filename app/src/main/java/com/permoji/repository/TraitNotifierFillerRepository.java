@@ -24,7 +24,7 @@ public class TraitNotifierFillerRepository {
     }
 
     public LiveData<List<TraitNotifierFillerResult>> getLiveByTraitDefinitionId(int id) {
-        return traitNotifierFillerDao.getNotificationFillersByTraitDefinitionId(id);
+        return traitNotifierFillerDao.getLiveDataById(id);
     }
 
     public int insert(TraitNotifierFiller traitNotifierFiller) {

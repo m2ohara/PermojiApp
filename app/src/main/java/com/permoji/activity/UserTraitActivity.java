@@ -2,6 +2,7 @@ package com.permoji.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
@@ -12,11 +13,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.permoji.adapter.TraitDefinitionListAdapter;
+import com.permoji.builder.TraitItemClickBuilder;
+import com.permoji.clickListener.TraitItemClickListener;
 import com.permoji.model.result.TraitResult;
 import com.permoji.viewModel.TraitViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -25,17 +30,20 @@ public class UserTraitActivity extends AppCompatActivity {
 
     TraitViewModel traitViewModel;
     TraitDefinitionListAdapter traitDefinitionListAdapter;
+    RecyclerView traitRecyclerView;
+    TraitItemClickBuilder traitItemClickBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_trait);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("TODAY YOU ARE...");
         setSupportActionBar(toolbar);
 
         traitViewModel = ViewModelProviders.of(this).get(TraitViewModel.class);
         traitDefinitionListAdapter = new TraitDefinitionListAdapter(this);
+
+        traitItemClickBuilder = new TraitItemClickBuilder(this, toolbar, traitDefinitionListAdapter);
 
         setObserver();
         setRecyclerView();
@@ -75,9 +83,10 @@ public class UserTraitActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView() {
-        RecyclerView view = findViewById(R.id.user_trait_definition_recyclerView);
-        view.setAdapter(traitDefinitionListAdapter);
-        view.setLayoutManager(new LinearLayoutManager(this));
+        traitRecyclerView = findViewById(R.id.user_trait_definition_recyclerView);
+        traitRecyclerView.setAdapter(traitDefinitionListAdapter);
+        traitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        traitItemClickBuilder.setRecyclerOnClick(traitRecyclerView);
     }
 
 }

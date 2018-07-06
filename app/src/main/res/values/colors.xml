@@ -19,7 +19,7 @@
 -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-	<color name="colorPrimary">#3F51B5</color>
+	<color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <!-- Color resources for IceCreamSandwich theme. Base color = 33B5E5 -->

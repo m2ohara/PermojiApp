@@ -1,12 +1,12 @@
 package com.permoji.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.permoji.builder.StatementBuilder;
+import com.permoji.activity.TraitSelectedActivity;
+import com.permoji.builder.StatementView;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
@@ -23,6 +24,7 @@ import com.permoji.repository.TraitAdjustPropertiesRepository;
 import com.permoji.repository.TraitNotifierFillerRepository;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -89,10 +91,9 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
 
         holder.heading.setText(traitResult.traitStatement.get(0).getHeading().replace("<name>", traitNotifierFillerResult.notifier.get(0).getName() ));
         holder.tickButton.setImageDrawable(setDrawableSize(R.drawable.tick_icon, 80, 80));
-        ((View)holder.tickButton).setVisibility(View.INVISIBLE); //TODO: Temporarily hidden Remove on implementation
         holder.removeButton.setImageDrawable(setDrawableSize(R.drawable.cross_icon, 80, 80));
 
-        StatementBuilder.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
+        StatementView.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
 
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +109,20 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
 
                 traitNotifierFillerResultList.remove(position);
                 notifyDataSetChanged();
+            }
+        });
+
+        holder.tickButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                traitResult.setSelectedFillerId(traitNotifierFillerResult.getId());
+                traitResult.setSelectedTraitNotifierFillerResult(Arrays.asList(traitNotifierFillerResultList.get(position)));
+
+                Intent startUserActivity = new Intent(v.getContext(), TraitSelectedActivity.class);
+                startUserActivity.putExtra("TraitResult", traitResult);
+                startUserActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.getContext().startActivity(startUserActivity);
             }
         });
 
@@ -135,4 +150,6 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
     public void setTraitNotifierFillerResultList(List<TraitNotifierFillerResult> traitNotifierFillerResultList) {
         this.traitNotifierFillerResultList = traitNotifierFillerResultList;
     }
+
+    public void clear() { traitNotifierFillerResultList.clear(); }
 }

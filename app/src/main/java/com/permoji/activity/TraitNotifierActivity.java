@@ -90,8 +90,9 @@ public class TraitNotifierActivity extends AppCompatActivity {
                 }
                 else {
                     adjustTraitButton.show();
+                    Integer amount = traitAdjustProperties.get(0).getCount();
                     adjustTraitButton.setImageResource( context.getResources().getIdentifier(
-                            "num_"+traitAdjustProperties.get(0).getCount(), "drawable", context.getPackageName()));
+                            "white_num_"+ (amount > 9 ? "10_plus" : amount), "drawable", context.getPackageName()));
                 }
             }
         });
@@ -130,4 +131,10 @@ public class TraitNotifierActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        traitNotifierListAdapter.clear();
+        notifierRecyclerView.clearOnChildAttachStateChangeListeners();
+    }
 }

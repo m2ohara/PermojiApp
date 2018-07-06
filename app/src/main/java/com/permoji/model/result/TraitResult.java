@@ -1,5 +1,6 @@
 package com.permoji.model.result;
 
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Relation;
 
 import com.permoji.model.entity.TraitNotifierFiller;
@@ -22,6 +23,10 @@ public class TraitResult implements Serializable {
     public List<TraitStatement> traitStatement;
     @Relation(parentColumn = "id", entityColumn = "traitDefinitionId", entity = TraitNotifierFiller.class)
     public List<TraitNotifierFillerResult> traitNotifierFillerResultList;
+    @Relation(parentColumn = "selectedFillerId", entityColumn = "traitDefinitionId", entity = TraitNotifierFiller.class)
+    private List<TraitNotifierFillerResult> selectedTraitNotifierFillerResult;
+    @Ignore
+    public boolean isSelected;
 
     public Integer getId() {
         return id;
@@ -53,5 +58,13 @@ public class TraitResult implements Serializable {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public List<TraitNotifierFillerResult> getSelectedTraitNotifierFillerResult() {
+        return selectedTraitNotifierFillerResult;
+    }
+
+    public void setSelectedTraitNotifierFillerResult(List<TraitNotifierFillerResult> selectedTraitNotifierFillerResult) {
+        this.selectedTraitNotifierFillerResult = selectedTraitNotifierFillerResult;
     }
 }
