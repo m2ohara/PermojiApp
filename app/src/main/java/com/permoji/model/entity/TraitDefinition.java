@@ -22,6 +22,7 @@ public class TraitDefinition {
     private Integer statementId;
     private Integer selectedFillerId;
     private String dateCreated;
+    private Integer personalisedIndex;
 
     public String getDateCreated() {
         return dateCreated;
@@ -53,5 +54,13 @@ public class TraitDefinition {
 
     public void setSelectedFillerId(Integer selectedFillerId) {
         this.selectedFillerId = selectedFillerId;
+    }
+
+    public Integer getPersonalisedIndex() {
+        return personalisedIndex;
+    }
+
+    public void setPersonalisedIndex(Integer personalisedIndex) {
+        this.personalisedIndex = personalisedIndex;
     }
 }

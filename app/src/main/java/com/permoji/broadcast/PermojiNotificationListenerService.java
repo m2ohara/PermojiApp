@@ -24,7 +24,7 @@ import java.util.List;
  */
 //TODO: Encapsulate logic, implement strategy pattern
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class FacebookNotificationListenerService extends NotificationListenerService {
+public class PermojiNotificationListenerService extends NotificationListenerService {
 
     private String TAG = this.getClass().getSimpleName();
     private BroadcastType broadcastType;
@@ -65,11 +65,13 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
             }
         }
 
-        name = getNameFromBroadcast(extras.getString("android.title"), broadcastType);
+        name = getNameFromBroadcast(extras.getString("android.title"), broadcastType, extras.containsKey("android.textLines"));
 
         if(name == null) {
             return;
         }
+
+        Log.e(TAG, "Valid user: "+name);
 
         //Store notification icon if exists
         if(extras.get(Notification.EXTRA_LARGE_ICON) != null) {
@@ -85,7 +87,7 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
 
             String text = null;
 
-            text = "" + extras.getString("android.text");
+            text = "" + extras.get("android.text");
 
             List<String> emojis = EmojiParser.extractEmojis(text);
 
@@ -163,25 +165,32 @@ public class FacebookNotificationListenerService extends NotificationListenerSer
         return name;
     }
 
-    private String getNameFromBroadcast(String androidTitle, BroadcastType broadcastType) {
-        String name = "Notifier";
+    private String getNameFromBroadcast(String androidTitle, BroadcastType broadcastType, boolean hasTextLines) {
+        String name = null;
+
         if(androidTitle != null) {
             name = "" + androidTitle;
 
-            if(name.contains("(")) {
+            //If in whatsapp group
+            if (broadcastType == BroadcastType.Whatsapp && androidTitle.contains("@")) {
+
+                if(hasTextLines) {
+                    return null;
+                }
+
+                name = name.substring(0, name.indexOf("@"));
+
+                if (name.contains("+") || name.replaceAll("[0-9 ]", "").contains("")) {
+                    return null;
+                }
+            }
+
+
+            if (name.contains("(")) {
                 name = name.substring(0, name.indexOf(" ("));
             }
 
-            name = name.replaceAll("[^a-zA-Z0-9 ]", "");;
-        }
-
-        //If in group
-        if(broadcastType == BroadcastType.Whatsapp && name.contains("@")) {
-            name = name.substring(0, name.indexOf("@"));
-
-            if(name.contains("+") || name.replaceAll("[0-9 ]", "").contains("")) {
-                return null;
-            }
+            name = name.replaceAll("[^a-zA-Z0-9 ]", "");
         }
 
         return name;

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.text.emoji.EmojiCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.permoji.builder.StatementView;
+import com.permoji.builder.StatementViewBuilder;
 import com.permoji.compatability.EmojiInitCallback;
-import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
@@ -41,6 +39,7 @@ public class TraitSelectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trait_selected);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Express your personality");
         setSupportActionBar(toolbar);
 
         traitResult = (TraitResult)getIntent().getSerializableExtra("TraitResult");
@@ -64,13 +63,13 @@ public class TraitSelectedActivity extends AppCompatActivity {
             TraitNotifierFillerResult traitNotifierFiller = traitResult.getSelectedTraitNotifierFillerResult().get(0);
 
             TextView userEmotionView = findViewById(R.id.user_emotion_text);
-            userEmotionView.setText("Right now Michael is "+traitStatement.getTraitName().toLowerCase());
+            userEmotionView.setText("Right now Michael is "+traitStatement.getTraitName().toLowerCase()); //TODO: store user's name
 
             TextView emojiHeadText = findViewById(R.id.emoji_head_image);
             EmojiCompat.get().registerInitCallback(new EmojiInitCallback(emojiHeadText, new String(Character.toChars(traitStatement.getCodePoint()))));
 
             TextView statementText = findViewById(R.id.statement_text);
-            StatementView.get().setExistingView(traitResult, statementText);
+            StatementViewBuilder.get().setExistingView(traitResult, statementText);
 
             TextView notifierText = findViewById(R.id.notifier_text);
             notifierText.setText(traitStatement.getHeading().replace("<name>", traitNotifierFiller.notifier.get(0).getName()));

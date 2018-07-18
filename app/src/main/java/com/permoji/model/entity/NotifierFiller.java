@@ -28,7 +28,7 @@ public class NotifierFiller implements Serializable {
     private int id;
     private int traitNotifierFillerId;
     private int fillerId;
-    private boolean isPersonalised; //TODO: Implement on next install
+    private boolean isPersonalised;
 
     public int getTraitNotifierFillerId() {
         return traitNotifierFillerId;

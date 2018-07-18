@@ -44,7 +44,6 @@ public class NotificationReceiver extends BroadcastReceiver {
                 new CreateTraitDefinitionAsyncTask(this).execute();
             }
             else {
-//                new UpdateCacheAsyncTask(this).execute();
                 new UpdateTraitDefinitionAsyncTask(this).execute();
             }
         }

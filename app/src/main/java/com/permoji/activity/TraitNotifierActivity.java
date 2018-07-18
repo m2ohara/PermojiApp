@@ -11,7 +11,9 @@ import android.support.text.emoji.EmojiCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
@@ -111,10 +113,11 @@ public class TraitNotifierActivity extends AppCompatActivity {
 
         notifierRecyclerView = findViewById(R.id.notifier_recyclerView);
 
-        LinearLayoutManager manager = new LinearLayoutManagerWithSmoothScroller(this);
-        notifierRecyclerView.setLayoutManager(manager);
+        notifierRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        manager.setSmoothScrollbarEnabled(true);
+
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(notifierRecyclerView);
 
         traitNotifierListAdapter = new TraitNotifierListAdapter(this, traitResult);
         notifierRecyclerView.setAdapter(traitNotifierListAdapter);

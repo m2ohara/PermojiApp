@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.permoji.activity.TraitSelectedActivity;
-import com.permoji.builder.StatementView;
+import com.permoji.builder.StatementViewBuilder;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
@@ -93,7 +93,7 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
         holder.tickButton.setImageDrawable(setDrawableSize(R.drawable.tick_icon, 80, 80));
         holder.removeButton.setImageDrawable(setDrawableSize(R.drawable.cross_icon, 80, 80));
 
-        StatementView.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
+        StatementViewBuilder.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
 
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override

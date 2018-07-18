@@ -65,7 +65,8 @@ public class TraitDefinitionBuilder {
             TraitDefinition traitDefinition = traitDefinitions.get(new Random().nextInt(traitDefinitions.size()));
 
             List<TraitFiller> traitFillersUnfiltered = traitFillerRepository.getAll();
-            String fillerType = traitDefinitionRepository.getTraitStatementById(traitDefinition.getStatementId()).getPlaceholderType();
+            TraitStatement statement = traitDefinitionRepository.getTraitStatementById(traitDefinition.getStatementId());
+            String fillerType = statement.getPlaceholderType();
             List<TraitFiller> traitFillers = filterTraitFillersByPlaceHolderType(fillerType, traitFillersUnfiltered);
 
             traitNotifierFiller.setNotifierId(checkNotifierExists(notifier));
@@ -75,14 +76,26 @@ public class TraitDefinitionBuilder {
             int traitNotifierFillerId = -1;
             traitNotifierFillerId = traitNotifierFillerRepository.insert(traitNotifierFiller);
 
+            int fillerCount = statement.getStatement().split("<"+fillerType+">").length - 1;
+
+            //Default to at least 1 if none detected due to human error
+            if(fillerCount == 0) {
+                fillerCount = 1;
+            }
+
+            Random random = new Random();
+            int personalisedFiller = random.nextInt(fillerCount);
+
             for(int idx = 0; idx < maxFillerAmount; idx++) {
                 TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
                 NotifierFiller notifierFiller = new NotifierFiller();
                 notifierFiller.setTraitNotifierFillerId(traitNotifierFillerId);
                 notifierFiller.setFillerId(traitFiller.getId());
+                if(idx == personalisedFiller) {
+                    notifierFiller.setPersonalised(true);
+                }
 
                 traitDefinitionRepository.insertNotifierFiller(notifierFiller);
-
 
             }
         }

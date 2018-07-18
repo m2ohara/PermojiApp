@@ -29,7 +29,7 @@
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_menu_share"
+        app:srcCompat="@drawable/share_icon"
         android:actionProviderClass="android.widget.ShareActionProvider"/>
 
 </android.support.design.widget.CoordinatorLayout>

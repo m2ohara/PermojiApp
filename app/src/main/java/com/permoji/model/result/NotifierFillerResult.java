@@ -16,6 +16,7 @@ public class NotifierFillerResult implements Serializable {
     private int id;
     private int traitNotifierFillerId;
     private int fillerId;
+    private boolean isPersonalised;
 
     @Relation(parentColumn = "fillerId", entityColumn = "id", entity = TraitFiller.class)
     public List<TraitFiller> traitFiller;
@@ -48,5 +49,11 @@ public class NotifierFillerResult implements Serializable {
         return traitFiller.get(0);
     }
 
-    //TODO: Add isPersonalised property
+    public boolean isPersonalised() {
+        return isPersonalised;
+    }
+
+    public void setPersonalised(boolean personalised) {
+        isPersonalised = personalised;
+    }
 }
