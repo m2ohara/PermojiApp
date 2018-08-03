@@ -142,7 +142,7 @@
                         android:layout_alignBottom="@+id/frameLayout3"
                         android:layout_marginLeft="15dp"
                         android:layout_marginStart="65dp"
-                        android:layout_marginTop="70dp"
+                        android:layout_marginTop="82dp"
                         android:layout_toEndOf="@+id/emoji_head_image"
                         android:layout_toRightOf="@+id/emoji_head_image"
                         android:gravity="center_vertical"
