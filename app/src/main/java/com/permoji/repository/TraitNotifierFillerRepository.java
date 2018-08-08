@@ -4,8 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.dao.TraitNotifierFillerDao;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.TraitNotifierFillerDao;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 

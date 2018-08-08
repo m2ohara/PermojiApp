@@ -112,8 +112,9 @@ public class TraitNotifierActivity extends AppCompatActivity {
     private void setRecyclerView() {
 
         notifierRecyclerView = findViewById(R.id.notifier_recyclerView);
-
-        notifierRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        layoutManager.setReverseLayout(true);
+        notifierRecyclerView.setLayoutManager(layoutManager);
 
 
         SnapHelper snapHelper = new PagerSnapHelper();

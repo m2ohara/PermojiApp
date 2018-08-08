@@ -18,9 +18,6 @@ public class NotifierFillerResult implements Serializable {
     private int fillerId;
     private boolean isPersonalised;
 
-    @Relation(parentColumn = "fillerId", entityColumn = "id", entity = TraitFiller.class)
-    public List<TraitFiller> traitFiller;
-
     public int getTraitNotifierFillerId() {
         return traitNotifierFillerId;
     }
@@ -45,15 +42,18 @@ public class NotifierFillerResult implements Serializable {
         this.id = id;
     }
 
-    public TraitFiller getNotifierFiller() {
-        return traitFiller.get(0);
-    }
-
     public boolean isPersonalised() {
         return isPersonalised;
     }
 
     public void setPersonalised(boolean personalised) {
         isPersonalised = personalised;
+    }
+
+    @Relation(parentColumn = "fillerId", entityColumn = "id", entity = TraitFiller.class)
+    public List<TraitFiller> traitFiller;
+
+    public TraitFiller getNotifierFiller() {
+        return traitFiller.get(0);
     }
 }

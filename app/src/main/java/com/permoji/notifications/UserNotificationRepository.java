@@ -4,8 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.dao.UserNotificationDao;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.UserNotificationDao;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package com.permoji.repository;
 
 import android.content.Context;
 
-import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.dao.TraitFillerDao;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.TraitFillerDao;
 import com.permoji.model.entity.TraitFiller;
 
 import java.util.List;

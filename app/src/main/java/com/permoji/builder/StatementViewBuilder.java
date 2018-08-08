@@ -4,8 +4,6 @@ import android.content.Context;
 import android.text.Html;
 import android.widget.TextView;
 
-import com.permoji.model.entity.TraitDefinition;
-import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
 import com.permoji.repository.TraitDefinitionRepository;

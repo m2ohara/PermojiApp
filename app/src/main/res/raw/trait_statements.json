@@ -1,0 +1,1109 @@
+[
+ {
+   "codepoint": "U+1F602",
+   "traitName": "In tears",
+   "statement": "What's <name>'s best friend? <any>",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "In stitches",
+   "statement": "<name> gave me a gift, instead of <object> the package contained <object>. I do not trust <name> anymore",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "Pissing my pants",
+   "statement": "If <name> could, he would call down a plague of <object>.",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "Laughing out loud",
+   "statement": "If <name> could add a sport to the Olympics, it would be <act>",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "act"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "Laughing",
+   "statement": "<name> bought me the latest Happy Meal toy. It was <object>.",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "Joking",
+   "statement": "What is <name>'s guilty pleasure? <any>",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F602",
+   "traitName": "Lewd",
+   "statement": "During sex, <name> likes to think about <any>.",
+   "popularityWeight": 1,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60D",
+   "traitName": "Love struck",
+   "statement": "During sex, I like to think about <any>.",
+   "popularityWeight": 2,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60D",
+   "traitName": "Loving it",
+   "statement": "<any>: <name> tested, and I approved.",
+   "popularityWeight": 2,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60D",
+   "traitName": "Favouring",
+   "statement": "<name>'s new favorite game is Strip <object>.",
+   "popularityWeight": 2,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F62D",
+   "traitName": "Emotionally destroyed",
+   "statement": "Football has banned <any> for giving <name> an unfair advantage.",
+   "popularityWeight": 3,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62D",
+   "traitName": "Hating the world",
+   "statement": "I want the world to end, not with a bang but with <object>.",
+   "popularityWeight": 3,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F62D",
+   "traitName": "Crying",
+   "statement": "<name> found a great shop where they bought the last <object>",
+   "popularityWeight": 3,
+   "heading": "Because of <name>",
+   "personaliseWeight": 100,
+   "placeholderType": "object"
+ },
+ {
+   "codepoint": "U+1F60A",
+   "traitName": "Feelin' Good",
+   "statement": "I don't actually care about <any>, I just like <any>.",
+   "popularityWeight": 4,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60A",
+   "traitName": "Feeling great",
+   "statement": "<any>. High five, bro.",
+   "popularityWeight": 4,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60A",
+   "traitName": "Thinking positive",
+   "statement": "<any> is just applied <any>.",
+   "popularityWeight": 4,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F612",
+   "traitName": "Not impressed",
+   "statement": "What are my parents hiding from me?",
+   "popularityWeight": 5,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F612",
+   "traitName": "Frustrated",
+   "statement": "Ebay review: Instead of <any>, package contained <any>. Would not buy again.",
+   "popularityWeight": 5,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F612",
+   "traitName": "Unamused",
+   "statement": "How did I lose my virginity?",
+   "popularityWeight": 5,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F618",
+   "traitName": "Charming",
+   "statement": "A romantic, candlelit dinner would be incomplete without <any>.",
+   "popularityWeight": 6,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F618",
+   "traitName": "Loving",
+   "statement": "During sex, I like to think about <any>.",
+   "popularityWeight": 6,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F618",
+   "traitName": "A Romancer",
+   "statement": "Tonight's romance show presents <any>, the story of <any>.",
+   "popularityWeight": 6,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F629",
+   "traitName": "Feeling weary",
+   "statement": "<any> linked to Acne! 95% confidence.",
+   "popularityWeight": 7,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F629",
+   "traitName": "Regretful",
+   "statement": "My health declined when I realized I could eat <any> whenever I wanted.",
+   "popularityWeight": 7,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+263A",
+   "traitName": "Feeling positive",
+   "statement": "Coming to Broadway this season, <any>: The Musical.",
+   "popularityWeight": 8,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+263A",
+   "traitName": "Anything's possible",
+   "statement": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on <any>.",
+   "popularityWeight": 8,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F614",
+   "traitName": "Concerned",
+   "statement": "In a world ravaged by <any>, our only solace is <any>.",
+   "popularityWeight": 9,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F614",
+   "traitName": "Apalled",
+   "statement": "University Researchers create life in lab! <any> blamed!",
+   "popularityWeight": 9,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60F",
+   "traitName": "Smirking",
+   "statement": "For my next trick, I will pull <any> out of <any>.",
+   "popularityWeight": 10,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60F",
+   "traitName": "Know it all",
+   "statement": "The #1 Programmer's excuse for legitimately slacking off: <any>.",
+   "popularityWeight": 10,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60F",
+   "traitName": "Being insighful",
+   "statement": "What never fails to liven up the party?",
+   "popularityWeight": 10,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F604",
+   "traitName": "Funny",
+   "statement": "What does Dick Cheney prefer?",
+   "popularityWeight": 11,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F604",
+   "traitName": "Sniggering",
+   "statement": "What did the U.S. airdrop to the children of Afghanistan?",
+   "popularityWeight": 11,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F604",
+   "traitName": "Smiling",
+   "statement": "In his new movie, Bruce Willis discovers that <any> had really been <any> all along.",
+   "popularityWeight": 11,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F609",
+   "traitName": "Savvy",
+   "statement": "What's the Educational System using to inspire inner city students to succeed?",
+   "popularityWeight": 12,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F609",
+   "traitName": "In the know",
+   "statement": "<any> + <any> = <any>.",
+   "popularityWeight": 12,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F609",
+   "traitName": "Giving advice",
+   "statement": "In the County Jail, word is you can trade 200 cigarettes for <any>.",
+   "popularityWeight": 12,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60C",
+   "traitName": "Relieved",
+   "statement": "What gets better with age?",
+   "popularityWeight": 13,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60C",
+   "traitName": "Relaxed",
+   "statement": "I like alter songs by replacing <any> with <any>.",
+   "popularityWeight": 13,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F622",
+   "traitName": "Emotional",
+   "statement": "I drink to forget <any>.",
+   "popularityWeight": 14,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F605",
+   "traitName": "Cheeky",
+   "statement": "What ended my last relationship?",
+   "popularityWeight": 15,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F605",
+   "traitName": "Laughing nervously",
+   "statement": "What gives me uncontrollable gas?",
+   "popularityWeight": 15,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F605",
+   "traitName": "Saying too much",
+   "statement": "I'm going to name my child <any>.",
+   "popularityWeight": 15,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60E",
+   "traitName": "Too cool",
+   "statement": "I got 99 problems but <any> ain't one.",
+   "popularityWeight": 16,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60E",
+   "traitName": "The boss",
+   "statement": "When I am the President of the United States, I will create the Department of <any>.",
+   "popularityWeight": 16,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F929",
+   "traitName": "Star struck",
+   "statement": "MTV's new reality show features eight washed-up celebrities living with <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F929",
+   "traitName": "",
+   "statement": "And the Academy Award for <any> goes to <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F914",
+   "traitName": "Ponderer",
+   "statement": "What would grandma find disturbing, yet oddly charming?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F914",
+   "traitName": "Thinking",
+   "statement": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F644",
+   "traitName": "At their limit",
+   "statement": "Now I have to live my whole life pretending <any> never happened. It's going to be a fun 70 years.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61B",
+   "traitName": "Hungry",
+   "statement": "<any>. Betcha can't have just one!",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61B",
+   "traitName": "Craving",
+   "statement": "What did Vin Diesel eat for dinner?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F615",
+   "traitName": "Confused",
+   "statement": "Here is the church<br>Here is the steeple<br>Open the doors<br>And there is <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F615",
+   "traitName": "Confounded",
+   "statement": "After finding Higgs-Boson, I can always use the LHC for <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F911",
+   "traitName": "Money mad",
+   "statement": "When I am a billionaire, I shall erect a 50-foot statue to commemorate <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F911",
+   "traitName": "Looking for profit",
+   "statement": "Step 1: <any>. Step 2: <any>. Step 3: Profit.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61F",
+   "traitName": "Worried",
+   "statement": "I do not know with which weapons World War III will be fought, but World War IV will be fought with <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61F",
+   "traitName": "Fearful",
+   "statement": "How many Google results are there for \"Died in a <any> accident?\"",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F627",
+   "traitName": "Anguished",
+   "statement": "What's my anti-drug?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F627",
+   "traitName": "Worried",
+   "statement": "2009 called? Did you warn them about <any>?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F9D0",
+   "traitName": "Inspecting",
+   "statement": "What's that sound?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F9D0",
+   "traitName": "Being opinionated",
+   "statement": "Real Programmers use <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F913",
+   "traitName": "Nerdy",
+   "statement": "Studies show that lab rats navigate mazes 50% faster after being exposed to <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F913",
+   "traitName": "Odd",
+   "statement": "What's my favorite unit of measurement?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F913",
+   "traitName": "Geeky",
+   "statement": "During his childhood, Salvador Dal&iacute; produced hundreds of paintings of <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F608",
+   "traitName": "Pure evil",
+   "statement": "But before I kill you, Mr. Bond, I must show you <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F608",
+   "traitName": "Going to hell",
+   "statement": "If you really hate someone, teach them to recognize <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F600",
+   "traitName": "Happy",
+   "statement": "Next from J.K. Rowling: Harry Potter and the Chamber of <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F601",
+   "traitName": "Funny",
+   "statement": "TSA guidelines now prohibit <any> on airplanes.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F923",
+   "traitName": "Too funny",
+   "statement": "What helps Trump unwind?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F603",
+   "traitName": "Cheerful",
+   "statement": "What's the most emo?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F60B",
+   "traitName": "Savoring",
+   "statement": "<any>: Good to the last drop.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F617",
+   "traitName": "Puckering Up",
+   "statement": "What will always get you laid?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F619",
+   "traitName": "Kissing",
+   "statement": "How am I maintaining my relationship status?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61A",
+   "traitName": "A Smoocher",
+   "statement": "Hey baby, wanna come back to my sex <any>?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F642",
+   "traitName": "Delightful",
+   "statement": "What's the next superhero/sidekick duo?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F917",
+   "traitName": "Expressing",
+   "statement": "Take me down to the <any>, where the <any> is green and the <any> are pretty.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F928",
+   "traitName": "Suspicious",
+   "statement": "What's that smell?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F610",
+   "traitName": "Coming to a realisation",
+   "statement": "<any>. So it has come to this.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F611",
+   "traitName": "Unbiased",
+   "statement": "Until I see more data, I'm going to assume <any> causes <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F636",
+   "traitName": "Not saying it",
+   "statement": "Did you know November is <any> Awareness Month?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F623",
+   "traitName": "Patient",
+   "statement": "3D printers sound great until you receive spam containing actual <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F625",
+   "traitName": "Disappointed",
+   "statement": "It's a pity that kids these days are all getting involved with <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62E",
+   "traitName": "Shocked",
+   "statement": "White people like <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F910",
+   "traitName": "Not telling",
+   "statement": "<any>'s fetish: <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62F",
+   "traitName": "Awed",
+   "statement": "What's my secret power?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62A",
+   "traitName": "Exhausted",
+   "statement": "Why can't I sleep at night?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62B",
+   "traitName": "Giving up",
+   "statement": "<any> makes terrible pillow talk.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F634",
+   "traitName": "Sleeping",
+   "statement": "Dreaming about <any> in Cirque du Soleil.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61C",
+   "traitName": "A Joker",
+   "statement": "In the new Disney Channel Original Movie, Hannah Montana struggles with <any> for the first time.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61D",
+   "traitName": "A Prankster",
+   "statement": "What do old people smell like?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F924",
+   "traitName": "Special",
+   "statement": "It's fun to mentally replace the word <any> with <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F613",
+   "traitName": "Nervous",
+   "statement": "Why am I sticky?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F643",
+   "traitName": "Non plussed",
+   "statement": "Maybe she's born with it. Maybe it's <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F632",
+   "traitName": "Astonished",
+   "statement": "What will I bring back in time to convince people that I am a powerful wizard?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+2639",
+   "traitName": "Not happy",
+   "statement": "<any> is a slippery slope that leads to <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F641",
+   "traitName": "Unhappy",
+   "statement": "The class field trip was completely ruined by <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F616",
+   "traitName": "Not right",
+   "statement": "<any>. That's how I want to die.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F61E",
+   "traitName": "Feeling bad",
+   "statement": "What am I giving up for Lent?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F624",
+   "traitName": "Frustrated",
+   "statement": "War!<br><br>What is it good for?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F626",
+   "traitName": "Speechless",
+   "statement": "After the earthquake, Sean Penn brought <any> to the people of Haiti.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F628",
+   "traitName": "Freaking out",
+   "statement": "<any>. It's a trap!",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92F",
+   "traitName": "Mind blown",
+   "statement": "I never truly understood <any> until I encountered <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F62C",
+   "traitName": "Pensive",
+   "statement": "In Michael Jackson's final moments, he thought about <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F630",
+   "traitName": "Anxious",
+   "statement": "Dear Abby,<br><br>I'm having some trouble with <any> and would like your advice.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F631",
+   "traitName": "Shocked",
+   "statement": "Life for American Indians was forever changed when the White Man introduced them to <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F633",
+   "traitName": "Feeling awkward",
+   "statement": "Daddy, why is Mommy crying? ",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92A",
+   "traitName": "Insane",
+   "statement": "When I was tripping on acid, <any> turned into <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F635",
+   "traitName": "Lacking social skills",
+   "statement": "My Social rule 99.1: If friends spend more than 60 minutes deciding what to do, they must default to <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F621",
+   "traitName": "Annoyed",
+   "statement": "Just because I have <any> doesn't mean you could milk me now. I'd have to be lactating.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F620",
+   "traitName": "Angry",
+   "statement": "<any>. That's right. Shit just got REAL.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92C",
+   "traitName": "Furious",
+   "statement": "<any>. That's right. Shit just got REAL.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F637",
+   "traitName": "Quite Ill",
+   "statement": "What's the new fad diet?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F912",
+   "traitName": "Not well",
+   "statement": "My health declined when I realized I could eat <any> whenever I wanted.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F915",
+   "traitName": "Injured",
+   "statement": "Why do I hurt all over?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F922",
+   "traitName": "Nausious",
+   "statement": "Alternative medicine is now embracing the curative powers of <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92E",
+   "traitName": "Very sick",
+   "statement": "What don't you want to find in your Kung Pao chicken?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F927",
+   "traitName": "Feeling off",
+   "statement": "Why do I hurt all over?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F607",
+   "traitName": "Innocent",
+   "statement": "What's there a ton of in heaven?",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F925",
+   "traitName": "Fibbing",
+   "statement": "I'm sorry, Professor, but I couldn't complete my homework because of <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92B",
+   "traitName": "Secretive",
+   "statement": "Rumor has it that Vladimir Putin's favorite delicacy is <any> stuffed with <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F92D",
+   "traitName": "Shouldn't say that",
+   "statement": "Instead of coal, Santa now gives the bad children <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F47F",
+   "traitName": "Filled with hatred",
+   "statement": "That's right, I killed <any>. How, you ask? <any>.",
+   "popularityWeight": 99,
+   "heading": "Because of <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "any"
+ }
+]

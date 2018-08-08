@@ -2,10 +2,9 @@ package com.permoji.repository;
 
 import android.content.Context;
 
-import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.dao.NotifierFillerDao;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.NotifierFillerDao;
 import com.permoji.model.entity.NotifierFiller;
-import com.permoji.model.result.NotifierFillerResult;
 
 /**
  * Created by michael on 22/06/18.

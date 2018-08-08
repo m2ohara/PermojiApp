@@ -23,7 +23,7 @@ public class TraitViewModel extends AndroidViewModel {
     public TraitViewModel(@Nonnull Application application) {
         super(application);
         this.traitDefinitionRepository = new TraitDefinitionRepository(application.getApplicationContext());
-        this.liveTraitEntities = traitDefinitionRepository.getLiveTraitEntities();
+        this.liveTraitEntities = traitDefinitionRepository.getAllLive();
     }
 
     public LiveData<List<TraitResult>> getLiveTraitEntities() {

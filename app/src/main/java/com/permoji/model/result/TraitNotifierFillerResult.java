@@ -18,11 +18,6 @@ public class TraitNotifierFillerResult implements Serializable {
     private int traitDefinitionId;
     private int notifierId;
 
-    @Relation(parentColumn = "id", entityColumn = "traitNotifierFillerId", entity = NotifierFiller.class)
-    public List<NotifierFillerResult> notifierFillerResultList;
-    @Relation(parentColumn = "notifierId", entityColumn = "id", entity = Notifier.class)
-    public List<Notifier> notifier;
-
     public int getId() {
         return id;
     }
@@ -46,5 +41,10 @@ public class TraitNotifierFillerResult implements Serializable {
     public void setNotifierId(int notifierId) {
         this.notifierId = notifierId;
     }
+
+    @Relation(parentColumn = "id", entityColumn = "traitNotifierFillerId", entity = NotifierFiller.class)
+    public List<NotifierFillerResult> notifierFillerResultList;
+    @Relation(parentColumn = "notifierId", entityColumn = "id", entity = Notifier.class)
+    public List<Notifier> notifier;
 }
 

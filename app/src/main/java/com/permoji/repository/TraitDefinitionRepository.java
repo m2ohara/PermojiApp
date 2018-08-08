@@ -4,23 +4,17 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.permoji.cache.LocalDatabase;
-import com.permoji.cache.dao.NotifierDao;
-import com.permoji.cache.dao.NotifierFillerDao;
-import com.permoji.cache.dao.TraitDefinitionDao;
-import com.permoji.cache.dao.TraitFillerDao;
-import com.permoji.cache.dao.TraitNotifierFillerDao;
-import com.permoji.cache.dao.TraitStatementDao;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.NotifierDao;
+import com.permoji.database.dao.NotifierFillerDao;
+import com.permoji.database.dao.TraitDefinitionDao;
 import com.permoji.model.entity.Notifier;
 import com.permoji.model.entity.NotifierFiller;
-import com.permoji.model.entity.TraitDefinition;
-import com.permoji.model.entity.TraitNotifierFiller;
-import com.permoji.model.entity.TraitStatement;
+import com.permoji.model.entity.Trait;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by michael on 11/06/18.
@@ -31,86 +25,77 @@ public class TraitDefinitionRepository {
     //TODO: Separate into individual repos based on tables
     private LocalDatabase localDatabase;
     private TraitDefinitionDao traitDefinitionDao;
-    private TraitStatementDao traitStatementDao;
-    private TraitFillerDao traitFillerDao;
-    private NotifierFillerDao notifierFillerDao;
+//    private TraitFillerDao traitFillerDao;
+//    private NotifierFillerDao notifierFillerDao;
     private NotifierDao notifierDao;
-    private TraitNotifierFillerDao traitNotifierFillerDao;
+//    private TraitNotifierFillerDao traitNotifierFillerDao;
     private LiveData<List<TraitResult>> liveTraitEntities;
     private LiveData<List<TraitNotifierFillerResult>> liveNotifierFillerEntities;
 
     public TraitDefinitionRepository(Context context) {
         localDatabase = LocalDatabase.getInstance(context);
         traitDefinitionDao = localDatabase.traitDefinitionDao();
-        traitStatementDao = localDatabase.traitStatementDao();
-        traitFillerDao = localDatabase.traitFillerDao();
-        notifierFillerDao = localDatabase.notifierFillerDao();
+//        traitFillerDao = localDatabase.traitFillerDao();
+//        notifierFillerDao = localDatabase.notifierFillerDao();
         notifierDao = localDatabase.notifierDao();
-        traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
-        liveTraitEntities = traitDefinitionDao.getAllTraitViewModels();
+//        traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
+        liveTraitEntities = traitDefinitionDao.getAllLive();
     }
 
-    public LiveData<List<TraitResult>> getLiveTraitEntities() {
+    public LiveData<List<TraitResult>> getAllLive() {
         return liveTraitEntities;
     }
 
-    public List<TraitDefinition> getLatestTraitDefinitionsByAmount(int amount) {
+    public List<Trait> getAll() { return traitDefinitionDao.getAll(); }
+
+    public List<Trait> getLatestByAmount(int amount) {
         return traitDefinitionDao.getLatestByCount(amount);
     }
 
-    public void insertAsync(TraitDefinition traitDefinition) {
-        new CreateTraitDefinitionAsync(traitDefinitionDao).execute(traitDefinition);
+    public void insertAsync(Trait trait) {
+        new CreateTraitDefinitionAsync(traitDefinitionDao).execute(trait);
     }
 
-    public void updateAsync(TraitDefinition traitDefinition) {
-        new UpdateTraitDefinitionAsync(traitDefinitionDao).execute(traitDefinition);
+    public void updateAsync(Trait trait) {
+        new UpdateTraitDefinitionAsync(traitDefinitionDao).execute(trait);
     }
 
     //TODO: Add foreign key cascade delete
-    public void removeAsync(TraitDefinition traitDefinition) {
-        new RemoveTraitDefinitionAsync(traitDefinitionDao).execute(traitDefinition);
+    public void removeAsync(Trait trait) {
+        new RemoveTraitDefinitionAsync(traitDefinitionDao).execute(trait);
     }
 
-    private static class CreateTraitDefinitionAsync extends AsyncTask<TraitDefinition, Void, Void> {
+    private static class CreateTraitDefinitionAsync extends AsyncTask<Trait, Void, Void> {
 
         private TraitDefinitionDao traitDefinitionDao;
         public CreateTraitDefinitionAsync(TraitDefinitionDao traitDefinitionDao) { this.traitDefinitionDao = traitDefinitionDao; }
         @Override
-        protected Void doInBackground(TraitDefinition... traitDefinitions) {
-            traitDefinitionDao.insert(traitDefinitions[0]);
+        protected Void doInBackground(Trait... traits) {
+            traitDefinitionDao.insert(traits[0]);
             return null;
         }
     }
 
-    private static class UpdateTraitDefinitionAsync extends AsyncTask<TraitDefinition, Void, Void> {
+    private static class UpdateTraitDefinitionAsync extends AsyncTask<Trait, Void, Void> {
 
         private TraitDefinitionDao traitDefinitionDao;
         public UpdateTraitDefinitionAsync(TraitDefinitionDao traitDefinitionDao) { this.traitDefinitionDao = traitDefinitionDao; }
         @Override
-        protected Void doInBackground(TraitDefinition... traitDefinitions) {
-            traitDefinitionDao.update(traitDefinitions[0]);
+        protected Void doInBackground(Trait... traits) {
+            traitDefinitionDao.update(traits[0]);
             return null;
         }
     }
 
-    private static class RemoveTraitDefinitionAsync extends AsyncTask<TraitDefinition, Void, Void> {
+    private static class RemoveTraitDefinitionAsync extends AsyncTask<Trait, Void, Void> {
 
         private TraitDefinitionDao traitDefinitionDao;
         public RemoveTraitDefinitionAsync(TraitDefinitionDao traitDefinitionDao) { this.traitDefinitionDao = traitDefinitionDao; }
         @Override
-        protected Void doInBackground(TraitDefinition... traitDefinitions) {
-            traitDefinitionDao.delete(traitDefinitions[0]);
+        protected Void doInBackground(Trait... traits) {
+            traitDefinitionDao.delete(traits[0]);
             return null;
         }
-    }
-
-    public TraitStatement getTraitStatementById(int id) {
-        return traitStatementDao.getById(id);
-    }
-
-    public List<TraitStatement> getTraitStatementsByCodepoint(int codepoint) {
-        String unicodeValue = "U+"+Long.toHexString(codepoint).toUpperCase();
-        return traitStatementDao.getByCodepoint(unicodeValue);
     }
 
     public List<Notifier> getAllNotifiers() {
@@ -122,8 +107,8 @@ public class TraitDefinitionRepository {
     }
 
 
-    public int insertNotifierFiller(NotifierFiller notifierFiller) {
-        return (int) notifierFillerDao.insert(notifierFiller);
-    }
+//    public int insertNotifierFiller(NotifierFiller notifierFiller) {
+//        return (int) notifierFillerDao.insert(notifierFiller);
+//    }
 
 }

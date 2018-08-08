@@ -8,7 +8,17 @@ import android.arch.persistence.room.PrimaryKey;
 /**
  * Created by michael on 12/06/18.
  */
-@Entity(tableName = "trait_notifier_filler")
+@Entity(
+        tableName = "trait_notifier_filler",
+        foreignKeys = {
+        @ForeignKey(
+                entity = Trait.class,
+                parentColumns = "id",
+                childColumns = "traitDefinitionId",
+                onDelete = ForeignKey.CASCADE
+        )},
+        indices = { @Index(value = "traitDefinitionId")}
+)
 public class TraitNotifierFiller {
 
     @PrimaryKey(autoGenerate = true)

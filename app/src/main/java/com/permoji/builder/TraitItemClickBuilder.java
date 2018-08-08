@@ -9,7 +9,7 @@ import android.view.View;
 import com.permoji.activity.TraitNotifierActivity;
 import com.permoji.adapter.TraitDefinitionListAdapter;
 import com.permoji.clickListener.TraitItemClickListener;
-import com.permoji.model.entity.TraitDefinition;
+import com.permoji.model.entity.Trait;
 import com.permoji.model.result.TraitResult;
 import com.permoji.repository.TraitDefinitionRepository;
 
@@ -143,13 +143,13 @@ public class TraitItemClickBuilder {
 
         for(TraitResult traitResult : traitResultsToRemove) {
 
-            TraitDefinition traitDefinition = new TraitDefinition();
-            traitDefinition.setId(traitResult.getId());
-            traitDefinition.setDateCreated(traitResult.getDateCreated());
-            traitDefinition.setSelectedFillerId(traitResult.getSelectedFillerId());
-            traitDefinition.setStatementId(traitResult.getStatementId());
+            Trait trait = new Trait();
+            trait.setId(traitResult.getId());
+            trait.setDateCreated(traitResult.getDateCreated());
+            trait.setSelectedFillerId(traitResult.getSelectedFillerId());
+            trait.setStatementId(traitResult.getStatementId());
 
-            traitDefinitionRepository.removeAsync(traitDefinition);
+            traitDefinitionRepository.removeAsync(trait);
         }
 
         cancelToolbarEdit();
