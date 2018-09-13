@@ -25,21 +25,15 @@ public class TraitDefinitionRepository {
     //TODO: Separate into individual repos based on tables
     private LocalDatabase localDatabase;
     private TraitDefinitionDao traitDefinitionDao;
-//    private TraitFillerDao traitFillerDao;
-//    private NotifierFillerDao notifierFillerDao;
     private NotifierDao notifierDao;
-//    private TraitNotifierFillerDao traitNotifierFillerDao;
     private LiveData<List<TraitResult>> liveTraitEntities;
-    private LiveData<List<TraitNotifierFillerResult>> liveNotifierFillerEntities;
 
     public TraitDefinitionRepository(Context context) {
         localDatabase = LocalDatabase.getInstance(context);
         traitDefinitionDao = localDatabase.traitDefinitionDao();
-//        traitFillerDao = localDatabase.traitFillerDao();
-//        notifierFillerDao = localDatabase.notifierFillerDao();
-        notifierDao = localDatabase.notifierDao();
-//        traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
         liveTraitEntities = traitDefinitionDao.getAllLive();
+
+        notifierDao = localDatabase.notifierDao();
     }
 
     public LiveData<List<TraitResult>> getAllLive() {
@@ -60,7 +54,6 @@ public class TraitDefinitionRepository {
         new UpdateTraitDefinitionAsync(traitDefinitionDao).execute(trait);
     }
 
-    //TODO: Add foreign key cascade delete
     public void removeAsync(Trait trait) {
         new RemoveTraitDefinitionAsync(traitDefinitionDao).execute(trait);
     }
@@ -106,9 +99,5 @@ public class TraitDefinitionRepository {
         return (int)notifierDao.insert(notifier);
     }
 
-
-//    public int insertNotifierFiller(NotifierFiller notifierFiller) {
-//        return (int) notifierFillerDao.insert(notifierFiller);
-//    }
 
 }
