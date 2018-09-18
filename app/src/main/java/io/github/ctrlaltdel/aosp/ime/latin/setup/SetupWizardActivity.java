@@ -18,7 +18,6 @@ package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -76,8 +75,8 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private static final int STEP_WELCOME = 0;
     private static final int STEP_1 = 1;
     private static final int STEP_2 = 2;
-    private static final int STEP_NOTIFIER = 3;
-    private static final int STEP_3 = 4;
+    private static final int STEP_3 = 3;
+    private static final int STEP_4 = 4;
     private static final int STEP_LAUNCHING_IME_SETTINGS = 5;
     private static final int STEP_BACK_FROM_IME_SETTINGS = 6;
 
@@ -240,33 +239,33 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         });
         mSetupStepGroup.addStep(step2);
 
-        final SetupStep stepNotifier = new SetupStep(STEP_NOTIFIER, applicationName,
+        final SetupStep step3 = new SetupStep(STEP_3, applicationName,
                 (TextView)findViewById(R.id.setup_step3_bullet), findViewById(R.id.setup_step3),
-                R.string.setup_step4_title, R.string.setup_step4_instruction,
+                R.string.setup_step3_title, R.string.setup_step3_instruction,
                 0 /* finishedInstruction */, R.drawable.ic_setup_step2,
-                R.string.setup_step4_action);
-        final NotificationAccessHandler nHandler = notificationAccessHandler;
-        stepNotifier.setAction(new Runnable() {
+                R.string.setup_step3_action);
+        final NotificationAccessHandler notificationHandler = notificationAccessHandler;
+        step3.setAction(new Runnable() {
             @Override
             public void run() {
                 invokeNotificationAccess();
-                nHandler.startPollingImeSettings();
+                notificationHandler.startPollingImeSettings();
             }
         });
-        mSetupStepGroup.addStep(stepNotifier);
+        mSetupStepGroup.addStep(step3);
 
-        final SetupStep step3 = new SetupStep(STEP_3, applicationName,
+        final SetupStep step4 = new SetupStep(STEP_4, applicationName,
                 (TextView)findViewById(R.id.setup_step4_bullet), findViewById(R.id.setup_step4),
-                R.string.setup_step3_title, R.string.setup_step3_instruction,
+                R.string.setup_step4_title, R.string.setup_step4_instruction,
                 0 /* finishedInstruction */, R.drawable.ic_setup_step3,
-                R.string.setup_step3_action);
-        step3.setAction(new Runnable() {
+                R.string.setup_step4_action);
+        step4.setAction(new Runnable() {
             @Override
             public void run() {
                 invokeSubtypeEnablerOfThisIme();
             }
         });
-        mSetupStepGroup.addStep(step3);
+        mSetupStepGroup.addStep(step4);
 
         mWelcomeVideoUri = new Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
@@ -387,7 +386,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         if (stepNumber == STEP_1) {
             return STEP_WELCOME;
         }
-        if (stepNumber == STEP_3) {
+        if (stepNumber == STEP_4) {
             return STEP_LAUNCHING_IME_SETTINGS;
         }
         return stepNumber;
@@ -406,9 +405,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             return STEP_2;
         }
         if (!notificationAccessHandler.isServiceRunning()) {
-            return STEP_NOTIFIER;
+            return STEP_3;
         }
-        return STEP_3;
+        return STEP_4;
     }
 
     @Override
@@ -424,7 +423,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     }
 
     private static boolean isInSetupSteps(final int stepNumber) {
-        return stepNumber >= STEP_1 && stepNumber <= STEP_3;
+        return stepNumber >= STEP_1 && stepNumber <= STEP_4;
     }
 
     @Override
@@ -515,7 +514,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         final boolean isStepActionAlreadyDone = mStepNumber < determineSetupStepNumber();
         mSetupStepGroup.enableStep(mStepNumber, isStepActionAlreadyDone);
         mActionNext.setVisibility(isStepActionAlreadyDone ? View.VISIBLE : View.GONE);
-        mActionFinish.setVisibility((mStepNumber == STEP_3) ? View.VISIBLE : View.GONE);
+        mActionFinish.setVisibility((mStepNumber == STEP_4) ? View.VISIBLE : View.GONE);
     }
 
     static final class SetupStep implements View.OnClickListener {
