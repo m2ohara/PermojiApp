@@ -429,6 +429,14 @@ mobile devices. [CHAR LIMIT=25] -->
     <string name="setup_step3_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
     <!-- The label of the button that triggers the screen for configuaring additional languages of the keyboard. [CHAR_LIMIT=64] -->
     <string name="setup_step3_action">Configure additional languages</string>
+    <!-- Ordinal number of the 4th step in the setup wizard. [CHAR LIMIT=5] -->
+    <string name="setup_step4_bullet" translatable="false">4</string>
+    <!-- Title of the 4th step in the setup wizard. [CHAR LIMIT=64] -->
+    <string name="setup_step4_title">"Enable notification access"</string>
+    <!-- The label of the button that triggers the notification access settings. [CHAR_LIMIT=64] -->
+    <string name="setup_step4_action">Enable in Notification Settings</string>
+    <!-- Detailed instruction of the 4th step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step4_instruction">"Next, enable Permoji Notification Service."</string>
     <!-- The label of the button that finishes the setup wizard. [CHAR_LIMIT=64] -->
     <string name="setup_finish_action">Finished</string>
     <!-- Option to show setup wizard icon. [CHAR LIMIT=30]-->

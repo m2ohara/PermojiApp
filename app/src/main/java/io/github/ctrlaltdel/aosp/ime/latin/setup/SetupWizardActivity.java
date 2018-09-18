@@ -17,7 +17,10 @@
 package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
@@ -32,6 +35,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.permoji.broadcast.PermojiNotificationListenerService;
 
 import io.github.ctrlaltdel.aosp.ime.compat.TextViewCompatUtils;
 import io.github.ctrlaltdel.aosp.ime.compat.ViewCompatUtils;
@@ -71,11 +76,13 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private static final int STEP_WELCOME = 0;
     private static final int STEP_1 = 1;
     private static final int STEP_2 = 2;
-    private static final int STEP_3 = 3;
-    private static final int STEP_LAUNCHING_IME_SETTINGS = 4;
-    private static final int STEP_BACK_FROM_IME_SETTINGS = 5;
+    private static final int STEP_NOTIFIER = 3;
+    private static final int STEP_3 = 4;
+    private static final int STEP_LAUNCHING_IME_SETTINGS = 5;
+    private static final int STEP_BACK_FROM_IME_SETTINGS = 6;
 
     private SettingsPoolingHandler mHandler;
+    private NotificationAccessHandler notificationAccessHandler;
 
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
@@ -118,6 +125,58 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         }
     }
 
+    private static final class NotificationAccessHandler
+            extends LeakGuardHandlerWrapper<SetupWizardActivity> {
+
+        private final ActivityManager manager;
+
+        public NotificationAccessHandler(@Nonnull final SetupWizardActivity ownerInstance) {
+            super(ownerInstance);
+
+            manager = (ActivityManager) ownerInstance.getSystemService(Context.ACTIVITY_SERVICE);
+        }
+
+        @Override
+        public void handleMessage(final Message msg) {
+            final SetupWizardActivity setupWizardActivity = getOwnerInstance();
+            if (setupWizardActivity == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case 0:
+                    if (isServiceRunning()) {
+                        setupWizardActivity.invokeSetupWizardOfThisIme();
+                        return;
+                    }
+                    startPollingImeSettings();
+                    break;
+            }
+        }
+
+        public boolean isServiceRunning() {
+
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if (PermojiNotificationListenerService.class.getName().equals(service.service.getClassName())) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public void startPollingImeSettings() {
+            sendMessageDelayed(obtainMessage(0),
+                    200);
+        }
+
+        public void cancelPollingImeSettings() {
+            removeMessages(0);
+        }
+
+    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         setTheme(android.R.style.Theme_Translucent_NoTitleBar);
@@ -125,6 +184,8 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
         mImm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         mHandler = new SettingsPoolingHandler(this, mImm);
+        notificationAccessHandler = new NotificationAccessHandler(this);
+
 
         setContentView(R.layout.setup_wizard);
         mSetupWizard = findViewById(R.id.setup_wizard);
@@ -174,12 +235,28 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             @Override
             public void run() {
                 invokeInputMethodPicker();
+
             }
         });
         mSetupStepGroup.addStep(step2);
 
-        final SetupStep step3 = new SetupStep(STEP_3, applicationName,
+        final SetupStep stepNotifier = new SetupStep(STEP_NOTIFIER, applicationName,
                 (TextView)findViewById(R.id.setup_step3_bullet), findViewById(R.id.setup_step3),
+                R.string.setup_step4_title, R.string.setup_step4_instruction,
+                0 /* finishedInstruction */, R.drawable.ic_setup_step2,
+                R.string.setup_step4_action);
+        final NotificationAccessHandler nHandler = notificationAccessHandler;
+        stepNotifier.setAction(new Runnable() {
+            @Override
+            public void run() {
+                invokeNotificationAccess();
+                nHandler.startPollingImeSettings();
+            }
+        });
+        mSetupStepGroup.addStep(stepNotifier);
+
+        final SetupStep step3 = new SetupStep(STEP_3, applicationName,
+                (TextView)findViewById(R.id.setup_step4_bullet), findViewById(R.id.setup_step4),
                 R.string.setup_step3_title, R.string.setup_step3_instruction,
                 0 /* finishedInstruction */, R.drawable.ic_setup_step3,
                 R.string.setup_step3_action);
@@ -284,6 +361,14 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mNeedsToAdjustStepNumberToSystemState = true;
     }
 
+    void invokeNotificationAccess() {
+        final Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        startActivity(intent);
+        mNeedsToAdjustStepNumberToSystemState = true;
+    }
+
     void invokeSubtypeEnablerOfThisIme() {
         final InputMethodInfo imi =
                 UncachedInputMethodManagerUtils.getInputMethodInfoOf(getPackageName(), mImm);
@@ -310,6 +395,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     private int determineSetupStepNumber() {
         mHandler.cancelPollingImeSettings();
+        notificationAccessHandler.cancelPollingImeSettings();
         if (FORCE_TO_SHOW_WELCOME_SCREEN) {
             return STEP_1;
         }
@@ -318,6 +404,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         }
         if (!UncachedInputMethodManagerUtils.isThisImeCurrent(this, mImm)) {
             return STEP_2;
+        }
+        if (!notificationAccessHandler.isServiceRunning()) {
+            return STEP_NOTIFIER;
         }
         return STEP_3;
     }
