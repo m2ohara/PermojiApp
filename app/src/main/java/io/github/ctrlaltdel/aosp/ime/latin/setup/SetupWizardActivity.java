@@ -35,18 +35,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.permoji.broadcast.PermojiNotificationListenerService;
-
-import io.github.ctrlaltdel.aosp.ime.compat.TextViewCompatUtils;
-import io.github.ctrlaltdel.aosp.ime.compat.ViewCompatUtils;
-import io.github.ctrlaltdel.aosp.ime.R;
-import io.github.ctrlaltdel.aosp.ime.latin.settings.SettingsActivity;
-import io.github.ctrlaltdel.aosp.ime.latin.utils.LeakGuardHandlerWrapper;
-import io.github.ctrlaltdel.aosp.ime.latin.utils.UncachedInputMethodManagerUtils;
+import com.permoji.broadcast.MessageNotificationListenerService;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
+
+import io.github.ctrlaltdel.aosp.ime.R;
+import io.github.ctrlaltdel.aosp.ime.compat.TextViewCompatUtils;
+import io.github.ctrlaltdel.aosp.ime.compat.ViewCompatUtils;
+import io.github.ctrlaltdel.aosp.ime.latin.settings.SettingsActivity;
+import io.github.ctrlaltdel.aosp.ime.latin.utils.LeakGuardHandlerWrapper;
+import io.github.ctrlaltdel.aosp.ime.latin.utils.UncachedInputMethodManagerUtils;
 
 // TODO: Use Fragment to implement welcome screen and setup steps.
 public final class SetupWizardActivity extends Activity implements View.OnClickListener {
@@ -156,7 +156,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         public boolean isServiceRunning() {
 
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (PermojiNotificationListenerService.class.getName().equals(service.service.getClassName())) {
+                if (MessageNotificationListenerService.class.getName().equals(service.service.getClassName())) {
                     return true;
                 }
             }

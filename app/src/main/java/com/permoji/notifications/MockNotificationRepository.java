@@ -45,21 +45,21 @@ public class MockNotificationRepository {
 
     public List<UserNotification> generateNotificationsList() {
         UserNotification userNotification1 = new UserNotification();
-//        userNotification1.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage1", "drawable", context.getPackageName())));
+//        userNotification1.setNotifierImagePath(context.getDrawable(context.getResources().getIdentifier("contactimage1", "drawable", context.getPackageName())));
         userNotification1.setDetail("influenced by Cheerful");
         userNotification1.setTimeStamp("1 hour ago");
         userNotification1.setTraitCodepoint(0x1F601);
         userNotification1.setId(1);
 
         UserNotification userNotification2 = new UserNotification();
-//        userNotification2.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage2", "drawable", context.getPackageName())));
+//        userNotification2.setNotifierImagePath(context.getDrawable(context.getResources().getIdentifier("contactimage2", "drawable", context.getPackageName())));
         userNotification2.setDetail("influenced by Joker");
         userNotification2.setTimeStamp("2 hours ago");
         userNotification2.setTraitCodepoint(0x1F602);
         userNotification2.setId(2);
 
         UserNotification userNotification3 = new UserNotification();
-//        userNotification3.setNotifierImage(context.getDrawable(context.getResources().getIdentifier("contactimage3", "drawable", context.getPackageName())));
+//        userNotification3.setNotifierImagePath(context.getDrawable(context.getResources().getIdentifier("contactimage3", "drawable", context.getPackageName())));
         userNotification3.setDetail("influenced by Cheerful");
         userNotification3.setTimeStamp("1 hour ago");
         userNotification3.setTraitCodepoint(0x1F601);
