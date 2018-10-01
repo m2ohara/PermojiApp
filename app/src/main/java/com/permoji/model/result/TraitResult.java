@@ -3,6 +3,7 @@ package com.permoji.model.result;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Relation;
 
+import com.permoji.api.trait.Trait;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
 

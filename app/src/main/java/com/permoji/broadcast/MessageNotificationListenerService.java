@@ -38,7 +38,14 @@ public class MessageNotificationListenerService extends NotificationListenerServ
 
             if(notificationExtraction != null) {
                 ArrayList<Integer> emojiCodepoints = extractEmojis(notificationExtraction.getNotifierTextMessage());
-                broadcastNotification(notificationExtraction.getNotifierImagePath(), notificationExtraction.getNotifierName(), emojiCodepoints);
+                if(emojiCodepoints.size() == 0) {
+                    Log.i(this.getClass().getSimpleName(), "No extracted emojis");
+                    return;
+                }
+                else {
+                    WhatsappExtractor.get().updateProcessedMessage(notificationExtraction);
+                    broadcastNotification(notificationExtraction.getNotifierImagePath(), notificationExtraction.getNotifierName(), emojiCodepoints);
+                }
             }
         }
 
@@ -77,7 +84,7 @@ public class MessageNotificationListenerService extends NotificationListenerServ
         extra.putString("name",name);
         extra.putString("broadcastType", "notificationBroadcast");
         intent.putExtras(extra);
-        Log.i(this.getClass().getSimpleName(),"Broadcasting intent " + intent.getAction() + " for notification " + name);
+        Log.i(this.getClass().getSimpleName(),"Broadcasting intent for notification " + name);
 
         sendBroadcast(intent);
     }

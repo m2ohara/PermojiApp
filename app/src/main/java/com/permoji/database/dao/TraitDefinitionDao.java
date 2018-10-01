@@ -18,11 +18,19 @@ import java.util.List;
 public interface TraitDefinitionDao extends BaseDAO<Trait> {
 
     @Query("Select * from trait_definition order by datecreated desc LIMIT :count")
-    List<Trait> getLatestByCount(int count);
+    List<TraitResult> getLatestByCount(int count);
 
     @Query("Select * from trait_definition")
     LiveData<List<TraitResult>> getAllLive();
 
     @Query("Select * from trait_definition")
-    List<Trait> getAll();
+    List<TraitResult> getAll();
+
+    @Query("Select * from trait_definition")
+    List<Trait> getAllTraits();
+
+    @Query("Select * from trait_definition order by datecreated desc LIMIT :count")
+    List<Trait> getLatestTraitsByCount(int count);
 }
+
+

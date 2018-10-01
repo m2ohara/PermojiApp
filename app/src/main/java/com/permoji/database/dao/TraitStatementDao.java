@@ -19,8 +19,11 @@ public interface TraitStatementDao extends BaseDAO<TraitStatement> {
     @Query("Select * from trait_statement")
     List<TraitStatement> getAll();
 
-    @Query("Select * from trait_statement where codepoint = :codepoint")
+    @Query("Select * from trait_statement where codepoint = :codepoint and popularityWeight != -1")
     List<TraitStatement> getByCodepoint(String codepoint);
+
+    @Query("Select * from trait_statement where popularityWeight == -1")
+    List<TraitStatement> getDefault();
 
     @Query("Select * from trait_statement where id = :id")
     TraitStatement getById(int id);

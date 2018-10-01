@@ -434,7 +434,8 @@ mobile devices. [CHAR LIMIT=25] -->
     <!-- Title of the 4th step in the setup wizard. [CHAR LIMIT=64] -->
     <string name="setup_step4_title">"Congratulations, you're all set!"</string>
     <!-- The label of the button that triggers the screen for configuaring additional languages of the keyboard. [CHAR_LIMIT=64] -->
-    <string name="setup_step4_action">Configure additional languages</string>
+    <string name="setup_step4_action">See your Permojis!</string>
+    <!--<string name="setup_step4_action">Configure additional languages</string>-->
     <!-- Detailed instruction of the 4th step in the setup wizard. [CHAR LIMIT=120] -->
     <string name="setup_step4_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
     <!-- The label of the button that finishes the setup wizard. [CHAR_LIMIT=64] -->

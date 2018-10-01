@@ -122,7 +122,7 @@
    "codepoint": "U+1F602",
    "popularityWeight": 1,
    "text": "Friends with benefits <personal>",
-   "personalisedText": "excluding <name> because <name> has no friends",
+   "personalisedText": "excluding that loser <name> ",
    "placeholderType": "object"
  },
  {
@@ -171,7 +171,7 @@
    "codepoint": "U+1F602",
    "popularityWeight": 1,
    "text": "Sweet, sweet vengeance <personal>.",
-   "personalisedText": "on <name>, that bitch",
+   "personalisedText": "on <name>, that bitch,",
    "placeholderType": "object"
  },
  {
@@ -1069,5 +1069,12 @@
    "text": "Christopher Walken.",
    "personalisedText": "",
    "placeholderType": "person"
+ },
+ {
+   "codepoint": "U+1F601",
+   "popularityWeight": null,
+   "text": "share them with my friends!",
+   "personalisedText": "",
+   "placeholderType": "default"
  }
 ]

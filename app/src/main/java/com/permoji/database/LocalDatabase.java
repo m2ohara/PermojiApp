@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
+import com.permoji.builder.TraitDefinitionBuilder;
 import com.permoji.database.dao.NotifierDao;
 import com.permoji.database.dao.NotifierFillerDao;
 import com.permoji.database.dao.TraitAdjustPropertiesDao;
@@ -19,6 +20,7 @@ import com.permoji.database.dao.TraitNotifierFillerDao;
 import com.permoji.database.dao.TraitStatementDao;
 import com.permoji.database.dao.UserNotificationDao;
 import com.permoji.database.tasks.CleanDbAsync;
+import com.permoji.database.tasks.InsertDefaultTraitAsync;
 import com.permoji.database.tasks.LoadTraitsFromFileAsync;
 import com.permoji.database.tasks.PopulatePropertiesAsync;
 import com.permoji.model.entity.NotifierFiller;
@@ -64,6 +66,7 @@ public abstract class LocalDatabase extends RoomDatabase {
 //                            .addCallback(cleanDBCallback)
                             .addCallback(loadFilesToDBCallback)
                             .addCallback(populatePropertiesCallback)
+//                            .addCallback(insertDefaultTraitCallback)
                             .build();
 
         }
@@ -106,6 +109,15 @@ public abstract class LocalDatabase extends RoomDatabase {
                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                     super.onCreate(db);
                     new PopulatePropertiesAsync(instance).execute();
+                }
+            };
+
+    private  static LocalDatabase.Callback insertDefaultTraitCallback =
+            new LocalDatabase.Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                    new InsertDefaultTraitAsync(instance, packageName).execute();
                 }
             };
 }

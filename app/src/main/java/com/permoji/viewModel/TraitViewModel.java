@@ -4,6 +4,9 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.permoji.builder.TraitDefinitionBuilder;
+import com.permoji.database.tasks.InsertDefaultTraitAsync;
+import com.permoji.model.entity.Notifier;
 import com.permoji.model.result.TraitResult;
 import com.permoji.repository.TraitDefinitionRepository;
 
@@ -24,6 +27,7 @@ public class TraitViewModel extends AndroidViewModel {
         super(application);
         this.traitDefinitionRepository = new TraitDefinitionRepository(application.getApplicationContext());
         this.liveTraitEntities = traitDefinitionRepository.getAllLive();
+
     }
 
     public LiveData<List<TraitResult>> getLiveTraitEntities() {

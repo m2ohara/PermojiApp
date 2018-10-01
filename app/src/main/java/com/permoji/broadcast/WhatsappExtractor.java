@@ -10,6 +10,11 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.RegEx;
 
 /**
  * Created by michael on 18/09/18.
@@ -18,8 +23,10 @@ import java.io.OutputStream;
 public class WhatsappExtractor {
 
     private static WhatsappExtractor instance;
+    private static List<NotificationExtraction> processedMessages = new ArrayList<>();
+    private int processedMessagesLimit = 100;
 
-    public String previousProcessedMessage;
+    private String previousProcessedMessage;
     private String TITLE = "android.title";
     private String MESSAGE = "android.text";
 
@@ -47,11 +54,14 @@ public class WhatsappExtractor {
             return null;
         }
 
-        if(isDuplicate() || isStatusNotification()) {
+        title = cleanLastCharacterStringValue(title);
+
+        if(isStatusNotification()) {
             return null;
         }
 
         if(isGroupChat()) {
+            Log.i(this.getClass().getSimpleName(), "Ignoring group message");
             //TODO: populate from group chat
             return null;
         }
@@ -59,34 +69,46 @@ public class WhatsappExtractor {
             result = populateValuesFromSingleChat(result, title, message);
         }
 
-        previousProcessedMessage = message;
         return result;
 
     }
 
-    private boolean isDuplicate() {
-        if(message.equals(previousProcessedMessage)) {
-            return true;
+    public void updateProcessedMessage(NotificationExtraction notificationExtraction) {
+
+        if(processedMessages.size() == processedMessagesLimit) {
+            processedMessages.remove(0);
+        }
+
+        processedMessages.add( notificationExtraction);
+    }
+
+    private boolean isDuplicate(String name, String message) {
+        for(NotificationExtraction notificationExtraction : processedMessages) {
+            if (message.equals(notificationExtraction.getNotifierTextMessage()) && name.equals(notificationExtraction.getNotifierName())) {
+                Log.i(this.getClass().getSimpleName(), "Ignoring duplicate");
+                return true;
+            }
         }
         return false;
     }
 
     private boolean isStatusNotification() {
-        if(message.matches("([0-9]* new message[s]?)") ) {
+        if(message.matches("([0-9]* [new ]?message[s]?)") ) {
+            Log.i(this.getClass().getSimpleName(), "Ignoring status notification");
             return true;
         }
         return false;
     }
 
     private boolean isMSISDN(String value) {
-        if(value.matches("([+][0-9 ]{0,15})")) {
+        if(value.replaceAll("([+][0-9 ]{0,15})", "").isEmpty()) {
             return true;
         }
         return false;
     }
 
     private boolean isGroupChat() {
-        if(message.indexOf(':') > 0 || title.indexOf('@') > 0) {
+        if(title.indexOf(':') > 0 ||  message.indexOf(':') > 0 || title.indexOf('@') > 0) {
             return true;
         }
 
@@ -109,6 +131,20 @@ public class WhatsappExtractor {
         }
 
         return  androidText;
+    }
+
+    private String cleanStringValue(String value, String regEx) {
+        return value.replaceAll(regEx, "");
+    }
+
+    private String cleanLastCharacterStringValue(String value) {
+//        if(value.endsWith(":")) {
+//            value = value.substring(0, value.length()-3);
+//        }
+
+        value = value.replaceAll(": \u200B$", "");
+
+        return value;
     }
 
     private String getImageFilePath(String name) throws Exception {
@@ -173,8 +209,16 @@ public class WhatsappExtractor {
     private NotificationExtraction populateValuesFromSingleChat(NotificationExtraction notificationExtraction, String name, String message) {
 
         if(isMSISDN(name)) {
+            Log.i(this.getClass().getSimpleName(), "Ignoring MSISDN notifier");
             return null;
         }
+
+        if(isDuplicate(name, message)) {
+            Log.i(this.getClass().getSimpleName(), "Ignoring single chat duplicate");
+            return null;
+        }
+
+        name = cleanStringValue(name, "( [(][0-9]* [new ]?message[s]?[)])");
 
         String imageFilePath = "";
         try {
@@ -186,6 +230,7 @@ public class WhatsappExtractor {
         notificationExtraction.setNotifierName(name);
         notificationExtraction.setNotifierTextMessage(message);
         notificationExtraction.setNotifierImagePath(imageFilePath);
+        notificationExtraction.setTimeStamp(new Date());
 
         return notificationExtraction;
     }
@@ -215,6 +260,7 @@ class NotificationExtraction {
     private String notifierImagePath;
     private String notifierTextMessage;
     private String notifierName;
+    private Date timeStamp;
 
     public String getNotifierImagePath() {
         return notifierImagePath;
@@ -238,5 +284,13 @@ class NotificationExtraction {
 
     public void setNotifierName(String notifierName) {
         this.notifierName = notifierName;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

@@ -1,7 +1,7 @@
 [
  {
    "codepoint": "U+1F602",
-   "traitName": "In tears",
+   "traitName": "In tears laughing",
    "statement": "What's <name>'s best friend? <any>",
    "popularityWeight": 1,
    "heading": "Because of <name>",
@@ -10,7 +10,7 @@
  },
  {
    "codepoint": "U+1F602",
-   "traitName": "In stitches",
+   "traitName": "In stitches laughing",
    "statement": "<name> gave me a gift, instead of <object> the package contained <object>. I do not trust <name> anymore",
    "popularityWeight": 1,
    "heading": "Because of <name>",
@@ -19,8 +19,8 @@
  },
  {
    "codepoint": "U+1F602",
-   "traitName": "Pissing my pants",
-   "statement": "If <name> could, he would call down a plague of <object>.",
+   "traitName": "Openly laughing",
+   "statement": "If <name> could, they'd call down a plague of <object>.",
    "popularityWeight": 1,
    "heading": "Because of <name>",
    "personaliseWeight": 100,
@@ -226,7 +226,7 @@
  },
  {
    "codepoint": "U+263A",
-   "traitName": "Anything's possible",
+   "traitName": "Thinking anything's possible",
    "statement": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on <any>.",
    "popularityWeight": 8,
    "heading": "Because of <name>",
@@ -262,7 +262,7 @@
  },
  {
    "codepoint": "U+1F60F",
-   "traitName": "Know it all",
+   "traitName": "A know it all",
    "statement": "The #1 Programmer's excuse for legitimately slacking off: <any>.",
    "popularityWeight": 10,
    "heading": "Because of <name>",
@@ -415,7 +415,7 @@
  },
  {
    "codepoint": "U+1F929",
-   "traitName": "",
+   "traitName": "Amazed",
    "statement": "And the Academy Award for <any> goes to <any>.",
    "popularityWeight": 99,
    "heading": "Because of <name>",
@@ -424,7 +424,7 @@
  },
  {
    "codepoint": "U+1F914",
-   "traitName": "Ponderer",
+   "traitName": "Pondering",
    "statement": "What would grandma find disturbing, yet oddly charming?",
    "popularityWeight": 99,
    "heading": "Because of <name>",
@@ -442,7 +442,7 @@
  },
  {
    "codepoint": "U+1F644",
-   "traitName": "At their limit",
+   "traitName": "At the limit",
    "statement": "Now I have to live my whole life pretending <any> never happened. It's going to be a fun 70 years.",
    "popularityWeight": 99,
    "heading": "Because of <name>",
@@ -1105,5 +1105,14 @@
    "heading": "Because of <name>",
    "personaliseWeight": 0,
    "placeholderType": "any"
+ },
+ {
+   "codepoint": "U+1F601",
+   "traitName": "Excited",
+   "statement": "I can now fully express my emotions and <default>",
+   "popularityWeight": -1,
+   "heading": "Thanks to <name>",
+   "personaliseWeight": 0,
+   "placeholderType": "default"
  }
 ]

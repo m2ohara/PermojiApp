@@ -149,6 +149,7 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
 
     public void setTraitNotifierFillerResultList(List<TraitNotifierFillerResult> traitNotifierFillerResultList) {
         this.traitNotifierFillerResultList = traitNotifierFillerResultList;
+        notifyDataSetChanged();
     }
 
     public void clear() { traitNotifierFillerResultList.clear(); }

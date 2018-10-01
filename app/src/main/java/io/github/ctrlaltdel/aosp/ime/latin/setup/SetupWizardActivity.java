@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.permoji.activity.UserTraitActivity;
 import com.permoji.broadcast.MessageNotificationListenerService;
 
 import java.util.ArrayList;
@@ -262,7 +263,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         step4.setAction(new Runnable() {
             @Override
             public void run() {
-                invokeSubtypeEnablerOfThisIme();
+                invokeApp();
             }
         });
         mSetupStepGroup.addStep(step4);
@@ -378,6 +379,11 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         intent.setAction(Settings.ACTION_INPUT_METHOD_SUBTYPE_SETTINGS);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.putExtra(Settings.EXTRA_INPUT_METHOD_ID, imi.getId());
+        startActivity(intent);
+    }
+
+    void invokeApp() {
+        final Intent intent = new Intent(this, UserTraitActivity.class);
         startActivity(intent);
     }
 

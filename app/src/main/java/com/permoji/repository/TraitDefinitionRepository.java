@@ -40,9 +40,9 @@ public class TraitDefinitionRepository {
         return liveTraitEntities;
     }
 
-    public List<Trait> getAll() { return traitDefinitionDao.getAll(); }
+    public List<TraitResult> getAll() { return traitDefinitionDao.getAll(); }
 
-    public List<Trait> getLatestByAmount(int amount) {
+    public List<TraitResult> getLatestByAmount(int amount) {
         return traitDefinitionDao.getLatestByCount(amount);
     }
 

@@ -1,21 +1,24 @@
-package com.permoji.builder;
+package com.permoji.database.tasks;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.permoji.builder.TraitDefinitionBuilder;
+import com.permoji.database.LocalDatabase;
+import com.permoji.database.dao.NotifierDao;
+import com.permoji.database.dao.NotifierFillerDao;
+import com.permoji.database.dao.TraitDefinitionDao;
+import com.permoji.database.dao.TraitFillerDao;
+import com.permoji.database.dao.TraitNotifierFillerDao;
+import com.permoji.database.dao.TraitStatementDao;
 import com.permoji.model.entity.Notifier;
 import com.permoji.model.entity.NotifierFiller;
 import com.permoji.model.entity.Trait;
-import com.permoji.model.result.TraitNotifierFillerResult;
-import com.permoji.model.result.TraitResult;
-import com.permoji.repository.NotifierFillerRepository;
-import com.permoji.repository.TraitDefinitionRepository;
 import com.permoji.model.entity.TraitFiller;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
-import com.permoji.repository.TraitFillerRepository;
-import com.permoji.repository.TraitNotifierFillerRepository;
-import com.permoji.repository.TraitStatementRepository;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,26 +29,44 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by michael on 11/06/18.
+ * Created by michael on 25/09/18.
  */
 
-public class TraitDefinitionBuilder {
-    private TraitDefinitionRepository traitDefinitionRepository;
-    private TraitNotifierFillerRepository traitNotifierFillerRepository;
-    private TraitFillerRepository traitFillerRepository;
-    private TraitStatementRepository traitStatementRepository;
-    private NotifierFillerRepository notifierFillerRepository;
-    private int traitAmountToGet = 5;
-    private int statementsToFillAmount = 1;
-    private int traitLimit = 10;
-    private DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
 
-    public TraitDefinitionBuilder(Context context) {
-        traitDefinitionRepository = new TraitDefinitionRepository(context);
-        traitNotifierFillerRepository = new TraitNotifierFillerRepository(context);
-        traitFillerRepository = new TraitFillerRepository(context);
-        traitStatementRepository = new TraitStatementRepository(context);
-        notifierFillerRepository = new NotifierFillerRepository(context);
+    private String packageName;
+    private DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private int traitAmountToGet = 5;
+    private int statementsToFillAmount = 3;
+    private TraitDefinitionDao traitDefinitionDao;
+    private NotifierDao notifierDao;
+    private TraitStatementDao traitStatementDao;
+    private TraitFillerDao traitFillerDao;
+    private TraitNotifierFillerDao traitNotifierFillerDao;
+    private NotifierFillerDao notifierFillerDao;
+
+    public InsertDefaultTraitAsync(LocalDatabase localDatabase, String packageName) {
+        this.packageName = packageName;
+        this.traitDefinitionDao = localDatabase.traitDefinitionDao();
+        this.notifierDao = localDatabase.notifierDao();
+        this.traitStatementDao = localDatabase.traitStatementDao();
+        this.traitFillerDao = localDatabase.traitFillerDao();
+        this.traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
+        this.notifierFillerDao = localDatabase.notifierFillerDao();
+    }
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+
+        createTrait(2056223);
+
+        Notifier notifier = new Notifier();
+        notifier.setName("Permoji");
+        notifier.setImagePath("android.resource://" + packageName + "/raw/permoji.png");
+
+        addNotifierToRecentTrait(2056223, notifier);
+
+        return null;
     }
 
     public void createTrait(int codepoint) {
@@ -56,10 +77,8 @@ public class TraitDefinitionBuilder {
         trait.setDateCreated(simpleDateFormat.format(new Date()));
 
         //TODO: Prioristise statements query by least amount of fillers
-        List<TraitStatement> statementList = traitStatementRepository.getByCodepoint(codepoint);
-        List<TraitResult> currentTraits = traitDefinitionRepository.getAll();
-
-        currentTraits = removeOldestTraitIfLimit(currentTraits);
+        List<TraitStatement> statementList =  traitStatementDao.getDefault();
+        List<Trait> currentTraits = traitDefinitionDao.getAllTraits();
 
         statementList = filterExistingStatements(statementList, currentTraits);
 
@@ -67,38 +86,12 @@ public class TraitDefinitionBuilder {
 
     }
 
-    private List<TraitResult> removeOldestTraitIfLimit(List<TraitResult> currentTraits) {
 
-        if(currentTraits.size() == traitLimit) {
-            
-            Trait traitToRemove = new Trait();
-            traitToRemove.setDateCreated(simpleDateFormat.format(new Date()));
-
-            for(TraitResult currentTrait : currentTraits) {
-                try {
-                    if(simpleDateFormat.parse(currentTrait.getDateCreated())
-                            .compareTo(simpleDateFormat.parse(traitToRemove.getDateCreated())) == -1) {
-                        traitToRemove.setId(currentTrait.getId());
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            currentTraits.remove(traitToRemove);
-            traitDefinitionRepository.removeAsync(traitToRemove);
-        }
-
-        return currentTraits;
-
-
-    }
-
-    private List<TraitStatement> filterExistingStatements(List<TraitStatement> statementList, List<TraitResult> currentTraits) {
+    private List<TraitStatement> filterExistingStatements(List<TraitStatement> statementList, List<Trait> currentTraits) {
         //Filter any existing statements & remove
         List<TraitStatement> statementsToRemove = new ArrayList<>();
         for(TraitStatement traitStatement : statementList) {
-            for (TraitResult currentTrait : currentTraits) {
+            for (Trait currentTrait : currentTraits) {
                 if (currentTrait.getStatementId() == traitStatement.getId()) {
                     statementsToRemove.add(traitStatement);
                 }
@@ -116,25 +109,19 @@ public class TraitDefinitionBuilder {
             TraitStatement traitStatement = statementList.get(new Random().nextInt(statementList.size()));
 
             trait.setStatementId(traitStatement.getId());
-            traitDefinitionRepository.insertAsync(trait);
+            traitDefinitionDao.insert(trait);
         }
     }
 
     public void addNotifierToRecentTrait(int codepoint, Notifier notifier) {
 
-        Log.d(this.getClass().getSimpleName(), "Processing notifier broadcast");
-
-        List<TraitResult> traits = traitDefinitionRepository.getLatestByAmount(traitAmountToGet);
+        List<Trait> traits = traitDefinitionDao.getLatestTraitsByCount(traitAmountToGet);
         if(traits.size() > 0) {
             //Pick random trait from latest
-            TraitResult trait = traits.get(new Random().nextInt(traits.size()));
+            Trait trait = traits.get(new Random().nextInt(traits.size()));
 
-            if(notifierIsMostRecentInTrait(trait, notifier)) {
-                return;
-            }
-
-            List<TraitFiller> traitFillers = traitFillerRepository.getAll();
-            TraitStatement statement = traitStatementRepository.getById(trait.getStatementId());
+            List<TraitFiller> traitFillers = traitFillerDao.getAll();
+            TraitStatement statement = traitStatementDao.getById(trait.getStatementId());
 
             traitFillers = filterTraitFillersByPlaceHolderType(statement.getPlaceholderType(), traitFillers);
 
@@ -148,7 +135,7 @@ public class TraitDefinitionBuilder {
             traitNotifierFiller.setTraitDefinitionId(trait.getId());
 
             int traitNotifierFillerId = -1;
-            traitNotifierFillerId = traitNotifierFillerRepository.insert(traitNotifierFiller);
+            traitNotifierFillerId = (int)traitNotifierFillerDao.insert(traitNotifierFiller);
 
             int fillerCount = statement.getStatement().split("<"+statement.getPlaceholderType()+">").length - 1;
 
@@ -168,7 +155,7 @@ public class TraitDefinitionBuilder {
                 if(idx == personalisedFiller) {
                     notifierFiller.setPersonalised(true);
                 }
-                notifierFillerRepository.insert(notifierFiller);
+                notifierFillerDao.insert(notifierFiller);
 
             }
         }
@@ -189,7 +176,7 @@ public class TraitDefinitionBuilder {
     }
 
     private int checkNotifierExists(Notifier notifier) {
-        List<Notifier> notifierList = traitDefinitionRepository.getAllNotifiers();
+        List<Notifier> notifierList = notifierDao.getAll();
 
         if(notifierList.size() > 0) {
             for (Notifier existingNotifier : notifierList) {
@@ -201,18 +188,9 @@ public class TraitDefinitionBuilder {
         }
 
         if(notifier.getImagePath() != null && !notifier.getImagePath().isEmpty()) {
-            return traitDefinitionRepository.insertNotifier(notifier);
+            return (int)notifierDao.insert(notifier);
         }
 
         return -1;
-    }
-
-    private boolean notifierIsMostRecentInTrait(TraitResult traitResult, Notifier notifier) {
-        if(traitResult.traitNotifierFillerResultList.size() > 0) {
-            TraitNotifierFillerResult traitNotifierFillerResult = traitResult.traitNotifierFillerResultList.get(traitResult.traitNotifierFillerResultList.size() - 1);
-            return (traitNotifierFillerResult.notifier.get(0).getName().equals(notifier.getName()));
-        }
-        return false;
-
     }
 }
