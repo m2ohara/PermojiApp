@@ -1107,11 +1107,11 @@
    "placeholderType": "any"
  },
  {
-   "codepoint": "U+1F601",
-   "traitName": "Excited",
-   "statement": "I can now fully express my emotions and <default>",
+   "codepoint": "U+1F62E",
+   "traitName": "Intrigued",
+   "statement": "Due to my retarded ability to express myself, <default>",
    "popularityWeight": -1,
-   "heading": "Thanks to <name>",
+   "heading": "With <name>",
    "personaliseWeight": 0,
    "placeholderType": "default"
  }

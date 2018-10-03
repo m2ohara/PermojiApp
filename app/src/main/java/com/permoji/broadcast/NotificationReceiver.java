@@ -119,7 +119,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             notifier.setName(notifierName);
 
             for(Integer codepoint : emojiCodepoints) {
-                traitDefinitionBuilder.addNotifierToRecentTrait(codepoint, notifier);
+                traitDefinitionBuilder.addNotifierToRecentTrait(notifier);
             }
         }
     }

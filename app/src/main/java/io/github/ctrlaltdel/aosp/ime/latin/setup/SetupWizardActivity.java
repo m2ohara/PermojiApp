@@ -17,7 +17,6 @@
 package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
 import android.app.ActivityManager;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,7 +27,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -48,7 +46,6 @@ import com.permoji.repository.UserRepository;
 import com.permoji.viewModel.SetupWizardViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -87,8 +84,8 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     private static final int STEP_1 = 1;
     private static final int STEP_2 = 2;
     private static final int STEP_3 = 3;
-    private static final int STEP_Name = 4;
-    private static final int STEP_4 = 5;
+    private static final int STEP_4 = 4;
+    private static final int STEP_5 = 5;
     private static final int STEP_LAUNCHING_IME_SETTINGS = 6;
     private static final int STEP_BACK_FROM_IME_SETTINGS = 7;
 
@@ -271,31 +268,31 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         mSetupStepGroup.addStep(step3);
 
 
-        final SetupStep stepName = new SetupStep(STEP_Name, applicationName,
-                (TextView)findViewById(R.id.setup_stepName_bullet), findViewById(R.id.setup_stepName),
-                R.string.setup_step3a_title, R.string.setup_step3a_instruction,
+        final SetupStep step4 = new SetupStep(STEP_4, applicationName,
+                (TextView)findViewById(R.id.setup_step4_bullet), findViewById(R.id.setup_step4),
+                R.string.setup_step4_title, R.string.setup_step4_instruction,
                 0 /* finishedInstruction */, R.drawable.ic_setup_step2,
                 R.string.setup_step3_action);
-        stepName.setInputAction(new Runnable() {
+        step4.setInputAction(new Runnable() {
             @Override
             public void run() {
                 setupWizardViewModel.isSetup.value = true;
             }
         });
-        mSetupStepGroup.addStep(stepName);
+        mSetupStepGroup.addStep(step4);
 
-        final SetupStep step4 = new SetupStep(STEP_4, applicationName,
-                (TextView)findViewById(R.id.setup_step4_bullet), findViewById(R.id.setup_step4),
-                R.string.setup_step4_title, R.string.setup_step4_instruction,
-                0 /* finishedInstruction */, R.drawable.ic_setup_step3,
-                R.string.setup_step4_action);
-        step4.setAction(new Runnable() {
+        final SetupStep step5 = new SetupStep(STEP_5, applicationName,
+                (TextView)findViewById(R.id.setup_step5_bullet), findViewById(R.id.setup_step5),
+                R.string.setup_step5_title, R.string.setup_step5_instruction,
+                0 /* finishedInstruction */, R.drawable.ic_setup_step5,
+                R.string.setup_step5_action);
+        step5.setAction(new Runnable() {
             @Override
             public void run() {
                 invokeApp();
             }
         });
-        mSetupStepGroup.addStep(step4);
+        mSetupStepGroup.addStep(step5);
 
         mWelcomeVideoUri = new Uri.Builder()
                 .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
@@ -421,7 +418,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         if (stepNumber == STEP_1) {
             return STEP_WELCOME;
         }
-        if (stepNumber == STEP_4) {
+        if (stepNumber == STEP_5) {
             return STEP_LAUNCHING_IME_SETTINGS;
         }
         return stepNumber;
@@ -444,9 +441,9 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             return STEP_3;
         }
         if (!setupWizardViewModel.isSetup.value) {
-            return STEP_Name;
+            return STEP_4;
         }
-        return STEP_4;
+        return STEP_5;
     }
 
     @Override
@@ -462,7 +459,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     }
 
     private static boolean isInSetupSteps(final int stepNumber) {
-        return stepNumber >= STEP_1 && stepNumber <= STEP_4;
+        return stepNumber >= STEP_1 && stepNumber <= STEP_5;
     }
 
     @Override
@@ -552,8 +549,8 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         hideAndStopWelcomeVideo();
         final boolean isStepActionAlreadyDone = mStepNumber < determineSetupStepNumber();
         mSetupStepGroup.enableStep(mStepNumber, isStepActionAlreadyDone);
-        mActionNext.setVisibility(isStepActionAlreadyDone || mStepNumber == STEP_Name ? View.VISIBLE : View.GONE);
-        mActionFinish.setVisibility((mStepNumber == STEP_4) ? View.VISIBLE : View.GONE);
+        mActionNext.setVisibility(isStepActionAlreadyDone || mStepNumber == STEP_4 ? View.VISIBLE : View.GONE);
+        mActionFinish.setVisibility((mStepNumber == STEP_5) ? View.VISIBLE : View.GONE);
     }
 
     static final class SetupStep implements View.OnClickListener {
@@ -589,7 +586,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
 
             mInput = (EditText) mStepView.findViewById(R.id.setup_step_input);
             mActionLabel = (TextView) mStepView.findViewById(R.id.setup_step_action_label);
-            if(stepNo == STEP_Name) {
+            if(stepNo == STEP_4) {
                 mInput.setVisibility(View.VISIBLE);
                 mActionLabel.setVisibility(View.GONE);
                 mInput.setOnKeyListener(new View.OnKeyListener() {
@@ -599,7 +596,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
                             // Perform action on key press
                             User user = new User();
                             user.setName(((EditText)v).getText().toString());
-                            userRepository.Insert(user);
+                            userRepository.insertOrUpdateSingle(user);
                             InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                             return true;
@@ -630,7 +627,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             final TextView instructionView = (TextView)mStepView.findViewById(
                     R.id.setup_step_instruction);
             instructionView.setText(isStepActionAlreadyDone ? mFinishedInstruction : mInstruction);
-            if(mStepNo != STEP_Name) {
+            if(mStepNo != STEP_4) {
                 mActionLabel.setVisibility(isStepActionAlreadyDone ? View.GONE : View.VISIBLE);
             }
         }
@@ -652,7 +649,6 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
                 return;
             }
             else if (mInput != null && v == mInput && mAction != null) {
-                mInput.setHint("Starting Permoji Keyboard..");
                 mAction.run();
                 return;
             }

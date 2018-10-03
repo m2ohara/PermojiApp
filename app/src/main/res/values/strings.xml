@@ -424,22 +424,24 @@ mobile devices. [CHAR LIMIT=25] -->
     <!-- The label of the button that triggers the notification access settings. [CHAR_LIMIT=64] -->
     <string name="setup_step3_action">Enable in Notification Settings</string>
     <!-- Ordinal number of the 4th step in the setup wizard. [CHAR LIMIT=5] -->
-    <string name="setup_step3a_bullet" translatable="false">3a</string>
+    <string name="setup_step4_bullet" translatable="false">4</string>
     <!-- Title of the 3rd step in the setup wizard. [CHAR LIMIT=64] -->
-    <string name="setup_step3a_title">"Tell us your name"</string>
+    <string name="setup_step4_title">"Tell us your name"</string>
     <!-- Detailed instruction of the 3rd step in the setup wizard. [CHAR LIMIT=120] -->
-    <string name="setup_step3a_instruction">"Enter your name below and hit next to continue."</string>
+    <string name="setup_step4_instruction">"Enter your name below and hit next to continue."</string>
+    <!--Hint for input -->
+    <string name="set_step4_hint">Tap to enter name..</string>
     <!-- The label of the button that triggers the notification access settings. [CHAR_LIMIT=64] -->
     <string name="setup_step3a_action">Next step</string>
     <!-- Ordinal number of the 4th step in the setup wizard. [CHAR LIMIT=5] -->
-    <string name="setup_step4_bullet" translatable="false">4</string>
+    <string name="setup_step5_bullet" translatable="false">5</string>
     <!-- Title of the 4th step in the setup wizard. [CHAR LIMIT=64] -->
-    <string name="setup_step4_title">"Congratulations, you're all set!"</string>
+    <string name="setup_step5_title">"Congratulations, you're all set!"</string>
     <!-- The label of the button that triggers the screen for configuaring additional languages of the keyboard. [CHAR_LIMIT=64] -->
-    <string name="setup_step4_action">See your Permojis!</string>
+    <string name="setup_step5_action">See your Permojis!</string>
     <!--<string name="setup_step4_action">Configure additional languages</string>-->
     <!-- Detailed instruction of the 4th step in the setup wizard. [CHAR LIMIT=120] -->
-    <string name="setup_step4_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
+    <string name="setup_step5_instruction">Now you can type in all your favorite apps with <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>.</string>
     <!-- The label of the button that finishes the setup wizard. [CHAR_LIMIT=64] -->
     <string name="setup_finish_action">Finished</string>
     <!-- Option to show setup wizard icon. [CHAR LIMIT=30]-->

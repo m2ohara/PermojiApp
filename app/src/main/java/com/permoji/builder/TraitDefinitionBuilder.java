@@ -120,7 +120,7 @@ public class TraitDefinitionBuilder {
         }
     }
 
-    public void addNotifierToRecentTrait(int codepoint, Notifier notifier) {
+    public void addNotifierToRecentTrait(Notifier notifier) {
 
         Log.d(this.getClass().getSimpleName(), "Processing notifier broadcast");
 

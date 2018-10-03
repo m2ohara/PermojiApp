@@ -85,7 +85,7 @@
             android:name=".latin.setup.SetupWizardActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/ctrl_alt_del_ime_name"
-            android:theme="@style/platformActivityTheme">
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -177,14 +177,6 @@
             android:label="@string/dictionary_provider_name"
             android:multiprocess="false" />
 
-        <!-- <activity -->
-        <!-- android:name="com.permoji.user.UserActivity" -->
-        <!-- android:label="@string/title_activity_user" -->
-        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
@@ -205,7 +197,7 @@
         <activity
             android:name="com.permoji.activity.TraitSelectedActivity"
             android:label="@string/title_activity_trait_selected"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
