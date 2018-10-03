@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.permoji.helper.FileWriter;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -160,7 +162,7 @@ public class WhatsappExtractor {
 
                 Bitmap bigIcon = (Bitmap) extras.get(Notification.EXTRA_LARGE_ICON);
 
-                filePath = writeImageToLocalDirectory(bigIcon, name);
+                filePath = FileWriter.writeImageToLocalDirectory(bigIcon, name);
             }
 
         }
@@ -169,42 +171,42 @@ public class WhatsappExtractor {
 
     }
 
-    private String writeImageToLocalDirectory(Bitmap bigIcon, String name) throws Exception {
-
-        File outFile = null;
-        String localDirectory = "/Permoji/";
-        OutputStream stream = null;
-
-        try {
-
-            File dir = new File(Environment.getExternalStorageDirectory(), localDirectory);
-            if(!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
-                    name + ".png");
-            if (outFile.exists()) {
-                outFile.delete();
-            }
-
-            stream = new FileOutputStream(outFile);
-
-            bigIcon.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            stream.flush();
-            stream.close();
-        }
-        catch (SecurityException e) {
-            Log.e(this.getClass().getSimpleName(),  e.getMessage());
-            throw e;
-        }
-        catch (Exception e) {
-            Log.e(this.getClass().getSimpleName(),  e.getMessage());
-            throw e;
-        }
-
-        return outFile.getPath();
-    }
+//    private String writeImageToLocalDirectory(Bitmap bigIcon, String name) throws Exception {
+//
+//        File outFile = null;
+//        String localDirectory = "/Permoji/";
+//        OutputStream stream = null;
+//
+//        try {
+//
+//            File dir = new File(Environment.getExternalStorageDirectory(), localDirectory);
+//            if(!dir.exists()) {
+//                dir.mkdirs();
+//            }
+//
+//            outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
+//                    name + ".png");
+//            if (outFile.exists()) {
+//                outFile.delete();
+//            }
+//
+//            stream = new FileOutputStream(outFile);
+//
+//            bigIcon.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            stream.flush();
+//            stream.close();
+//        }
+//        catch (SecurityException e) {
+//            Log.e(this.getClass().getSimpleName(),  e.getMessage());
+//            throw e;
+//        }
+//        catch (Exception e) {
+//            Log.e(this.getClass().getSimpleName(),  e.getMessage());
+//            throw e;
+//        }
+//
+//        return outFile.getPath();
+//    }
 
     private NotificationExtraction populateValuesFromSingleChat(NotificationExtraction notificationExtraction, String name, String message) {
 

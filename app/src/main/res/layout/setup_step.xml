@@ -31,6 +31,19 @@
         android:id="@+id/setup_step_instruction"
         style="@style/setupStepInstructionStyle"
         android:paddingBottom="@dimen/setup_step_vertical_padding" />
+    <EditText
+        android:id="@+id/setup_step_input"
+        style="@style/setupStepActionLabelStyle"
+        android:textAlignment="center"
+        android:hint="Tap to enter name.."
+        android:layout_marginTop="@dimen/setup_step_horizontal_line_height"
+        android:visibility="gone"
+        android:maxLines="1"
+        android:imeActionLabel="Done"
+        android:imeOptions="actionDone"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true" />
     <TextView
         android:id="@+id/setup_step_action_label"
         style="@style/setupStepActionLabelStyle"

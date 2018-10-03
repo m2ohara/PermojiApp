@@ -9,15 +9,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
-import com.permoji.builder.TraitDefinitionBuilder;
 import com.permoji.database.dao.NotifierDao;
 import com.permoji.database.dao.NotifierFillerDao;
 import com.permoji.database.dao.TraitAdjustPropertiesDao;
-import com.permoji.database.dao.TraitDao;
 import com.permoji.database.dao.TraitDefinitionDao;
 import com.permoji.database.dao.TraitFillerDao;
 import com.permoji.database.dao.TraitNotifierFillerDao;
 import com.permoji.database.dao.TraitStatementDao;
+import com.permoji.database.dao.UserDao;
 import com.permoji.database.dao.UserNotificationDao;
 import com.permoji.database.tasks.CleanDbAsync;
 import com.permoji.database.tasks.InsertDefaultTraitAsync;
@@ -25,6 +24,7 @@ import com.permoji.database.tasks.LoadTraitsFromFileAsync;
 import com.permoji.database.tasks.PopulatePropertiesAsync;
 import com.permoji.model.entity.NotifierFiller;
 import com.permoji.model.entity.TraitAdjustProperties;
+import com.permoji.model.entity.User;
 import com.permoji.notifications.UserNotification;
 import com.permoji.model.entity.Notifier;
 import com.permoji.model.entity.Trait;
@@ -43,7 +43,7 @@ import javax.annotation.Nonnull;
                 com.permoji.api.trait.Trait.class, UserNotification.class,
                 Trait.class, TraitStatement.class,
                 TraitNotifierFiller.class, NotifierFiller.class, TraitFiller.class, Notifier.class,
-                TraitAdjustProperties.class
+                TraitAdjustProperties.class, User.class
         }, version = 1)
 @TypeConverters({Converters.class})
 public abstract class LocalDatabase extends RoomDatabase {
@@ -66,7 +66,7 @@ public abstract class LocalDatabase extends RoomDatabase {
 //                            .addCallback(cleanDBCallback)
                             .addCallback(loadFilesToDBCallback)
                             .addCallback(populatePropertiesCallback)
-//                            .addCallback(insertDefaultTraitCallback)
+                            .addCallback(insertDefaultTraitCallback)
                             .build();
 
         }
@@ -74,7 +74,7 @@ public abstract class LocalDatabase extends RoomDatabase {
     }
 
 
-    public abstract TraitDao traitDao();
+//    public abstract TraitDao traitDao();
     public abstract UserNotificationDao userNotificationDao();
 
     public abstract TraitDefinitionDao traitDefinitionDao();
@@ -84,6 +84,7 @@ public abstract class LocalDatabase extends RoomDatabase {
     public abstract NotifierDao notifierDao();
     public abstract TraitNotifierFillerDao traitNotifierFillerDao();
     public abstract TraitAdjustPropertiesDao traitAdjustPropertiesDao();
+    public abstract UserDao userDao();
 
     private static LocalDatabase.Callback cleanDBCallback =
             new LocalDatabase.Callback() {
@@ -117,7 +118,7 @@ public abstract class LocalDatabase extends RoomDatabase {
                 @Override
                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                     super.onCreate(db);
-                    new InsertDefaultTraitAsync(instance, packageName).execute();
+                    new InsertDefaultTraitAsync(instance, packageName, resources).execute();
                 }
             };
 }

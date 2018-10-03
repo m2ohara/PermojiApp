@@ -1,5 +1,7 @@
 package com.permoji.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.text.emoji.EmojiCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,19 +23,24 @@ import android.widget.TextView;
 import com.permoji.builder.StatementViewBuilder;
 import com.permoji.compatability.EmojiInitCallback;
 import com.permoji.model.entity.TraitStatement;
+import com.permoji.model.entity.User;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
+import com.permoji.viewModel.TraitSelectedViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import io.github.ctrlaltdel.aosp.ime.R;
 
 public class TraitSelectedActivity extends AppCompatActivity {
 
-    TraitResult traitResult;
+    private TraitResult traitResult;
+    private TraitSelectedViewModel traitSelectedViewModel;
+    private String userName = "Your friend";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +52,27 @@ public class TraitSelectedActivity extends AppCompatActivity {
 
         traitResult = (TraitResult)getIntent().getSerializableExtra("TraitResult");
 
-        setView();
+        traitSelectedViewModel = ViewModelProviders.of(this).get(TraitSelectedViewModel.class);
+        setUserName();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 shareView(findViewById(R.id.selected_trait));
+            }
+        });
+    }
+
+    private void setUserName() {
+        traitSelectedViewModel.getLiveUsers.observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if(users.size() > 0) {
+                    userName = users.get(0).getName();
+                }
+
+                setView();
             }
         });
     }
@@ -63,7 +85,7 @@ public class TraitSelectedActivity extends AppCompatActivity {
             TraitNotifierFillerResult traitNotifierFiller = traitResult.getSelectedTraitNotifierFillerResult().get(0);
 
             TextView userEmotionView = findViewById(R.id.user_emotion_text);
-            userEmotionView.setText("Right now Michael is "+traitStatement.getTraitName().toLowerCase()); //TODO: store user's name
+            userEmotionView.setText("Right now "+userName+" is "+traitStatement.getTraitName().toLowerCase());
 
             TextView emojiHeadText = findViewById(R.id.emoji_head_image);
             EmojiCompat.get().registerInitCallback(new EmojiInitCallback(emojiHeadText, new String(Character.toChars(traitStatement.getCodePoint()))));

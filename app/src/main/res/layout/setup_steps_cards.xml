@@ -38,6 +38,10 @@
             style="@style/setupStepBulletStyle"
             android:text="@string/setup_step3_bullet" />
         <TextView
+            android:id="@+id/setup_stepName_bullet"
+            style="@style/setupStepBulletStyle"
+            android:text="@string/setup_step3_bullet" />
+        <TextView
             android:id="@+id/setup_step4_bullet"
             style="@style/setupStepBulletStyle"
             android:text="@string/setup_step4_bullet" />
@@ -57,6 +61,9 @@
             layout="@layout/setup_step" />
         <include
             android:id="@+id/setup_step3"
+            layout="@layout/setup_step" />
+        <include
+            android:id="@+id/setup_stepName"
             layout="@layout/setup_step" />
         <include
             android:id="@+id/setup_step4"

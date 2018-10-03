@@ -29,7 +29,7 @@ import io.github.ctrlaltdel.aosp.ime.R;
 
 public class UserActivity extends AppCompatActivity {
 
-    private UserTraitsViewModel userTraitsViewModel;
+//    private UserTraitsViewModel userTraitsViewModel;
     private UserTraitListAdapter userTraitListAdapter;
     private NotificationViewModel notificationViewModel;
     private NotificationListAdapter notificationListAdapter;
@@ -46,8 +46,8 @@ public class UserActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         userTraitListAdapter = new UserTraitListAdapter(this);
-        userTraitsViewModel = ViewModelProviders.of(this).get(UserTraitsViewModel.class);
-        setUserTraitsObserver();
+//        userTraitsViewModel = ViewModelProviders.of(this).get(UserTraitsViewModel.class);
+//        setUserTraitsObserver();
         setUserTraitsRecyclerView();
 
         notificationListAdapter = new NotificationListAdapter(this);
@@ -80,15 +80,15 @@ public class UserActivity extends AppCompatActivity {
         EmojiCompat.init(config);
     }
 
-    private void setUserTraitsObserver() {
-
-        userTraitsViewModel.getGetUserTraits().observe(this, new Observer<List<Trait>>() {
-            @Override
-            public void onChanged(@Nullable List<Trait> traits) {
-                userTraitListAdapter.setTraits(traits);
-            }
-        });
-    }
+//    private void setUserTraitsObserver() {
+//
+//        userTraitsViewModel.getGetUserTraits().observe(this, new Observer<List<Trait>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Trait> traits) {
+//                userTraitListAdapter.setTraits(traits);
+//            }
+//        });
+//    }
 
     private void setUserTraitsRecyclerView() {
         RecyclerView view = findViewById(R.id.user_trait_recyclerView);

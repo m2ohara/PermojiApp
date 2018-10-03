@@ -62,15 +62,15 @@
     <string name="cloud_sync_summary_disabled">Sync your personal dictionary across devices</string>
     <!-- Option title for starting the sync cycle now. [CHAR LIMIT=33]-->
     <string name="sync_now_title">Sync now</string>
-    <!-- Option title for letting user delete synced google keyboard data from Google servers.  [CHAR LIMIT=35] -->
+    <!-- Option title for lettliveUsersuser delete synced google keyboard data from Google servers.  [CHAR LIMIT=35] -->
     <string name="clear_sync_data_title">Delete cloud data</string>
-    <!-- Option summary for letting user delete synced google keyboard data from Google servers. [CHAR LIMIT=65] -->
+    <!-- Option summary for lettliveUsersuser delete synced google keyboard data from Google servers. [CHAR LIMIT=65] -->
     <string name="clear_sync_data_summary">Deletes your synced data from Google</string>
-    <!-- Text for confirmation dialog box asking user to confirm deletion of cloud data. [CHAR LIMIT=65] -->
+    <!-- Text for confirmation dialog box askliveUsersuser to confirm deletion of cloud data. [CHAR LIMIT=65] -->
     <string name="clear_sync_data_confirmation">Your synced data will be deleted from the cloud. Are you sure?</string>
-    <!-- Option to confirm deleting of user data from cloud [CHAR LIMIT=20] -->
+    <!-- Option to confirm deletingliveUsersuser data from cloud [CHAR LIMIT=20] -->
     <string name="clear_sync_data_ok">Delete</string>
-    <!-- Option to cancel the deletion of user data from cloud [CHAR LIMIT=20] -->
+    <!-- Option to cancel the deletionliveUsersuser data from cloud [CHAR LIMIT=20] -->
     <string name="cloud_sync_cancel">Cancel</string>
     <!-- Option to agree to terms and conditions for enabling cloud sync feature. -->
     <string name="cloud_sync_opt_in_text">Your personal dictionary will be synced and backed up to
@@ -78,11 +78,11 @@
         improve our products. The collection and usage of all the information will be compliant with
         <a href="https://www.google.com/policies/privacy">Google\'s Privacy Policy</a>.
     </string>
-    <!-- Text to tell the user to add a Google account to the device to enable the cloud sync feature. [CHAR LIMIT=65]-->
+    <!-- Text to tell liveUsersuser to add a Google account to the device to enable the cloud sync feature. [CHAR LIMIT=65]-->
     <string name="add_account_to_enable_sync">
         Please add a Google account to this device to enable this feature
     </string>
-    <!-- Text to tell the user that sync feature is disabled because they have Google Apps for Business account(s) on their device. [CHAR LIMIT=80]-->
+    <!-- Text to tell liveUsersuser that sync feature is disabled because they have Google Apps for Business account(s) on their device. [CHAR LIMIT=80]-->
     <string name="cloud_sync_summary_disabled_work_profile">
         Sync is not available for devices with Google Apps for Business accounts
     </string>
@@ -161,24 +161,24 @@
     <!-- Option to suggest auto correction suggestions very aggressively. Auto-corrects to a word which has even large edit distance from typed word. [CHAR LIMIT=20] -->
     <string name="auto_correction_threshold_mode_very_aggressive">Very aggressive</string>
 
-    <!-- Option to enable using next word suggestions. After the user types a space, with this option on, the keyboard will try to predict the next word. -->
+    <!-- Option to enable using next word suggestions. After liveUsersuser types a space, with this option on, the keyboard will try to predict the next word. -->
     <string name="bigram_prediction">Next-word suggestions</string>
     <!-- Description for "next word suggestion" option. This displays suggestions even when there is no input, based on the previous word. -->
     <string name="bigram_prediction_summary">Use the previous word in making suggestions</string>
 
-    <!-- Option to enable gesture input. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=30]-->
+    <!-- Option to enable gesture input. liveUsersuser can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=30]-->
     <string name="gesture_input">Enable gesture typing</string>
-    <!-- Description for "gesture_input" option. The user can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=65]-->
+    <!-- Description for "gesture_input" option. liveUsersuser can input a word by tracing the letters of a word without releasing the finger from the screen. [CHAR LIMIT=65]-->
     <string name="gesture_input_summary">Input a word by sliding through the letters</string>
-    <!-- Option to enable gesture trail preview. The user can see a trail of the gesture during gesture input. [CHAR LIMIT=30]-->
+    <!-- Option to enable gesture trail preview. liveUsersuser can see a trail of the gesture during gesture input. [CHAR LIMIT=30]-->
     <string name="gesture_preview_trail">Show gesture trail</string>
-    <!-- Option to enable gesture floating text preview. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=30]-->
+    <!-- Option to enable gesture floating text preview. liveUsersuser can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=30]-->
     <string name="gesture_floating_preview_text">Dynamic floating preview</string>
-    <!-- Description for "gesture_floating_preview_text" option. The user can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=65]-->
+    <!-- Description for "gesture_floating_preview_text" option. liveUsersuser can see a suggested word floating under the moving finger during a gesture input. [CHAR LIMIT=65]-->
     <string name="gesture_floating_preview_text_summary">See the suggested word while gesturing</string>
-    <!-- Option to enable space aware gesture input. The user can input multiple words by gliding through the space key during a gesture input. [CHAR LIMIT=30]-->
+    <!-- Option to enable space aware gesture input. liveUsersuser can input multiple words by gliding through the space key during a gesture input. [CHAR LIMIT=30]-->
     <string name="gesture_space_aware">Phrase gesture</string>
-    <!-- Description for "gesture_space_aware" option. The user can input multiple words by gliding through the space key during a gesture input.[CHAR LIMIT=65]-->
+    <!-- Description for "gesture_space_aware" option. liveUsersuser can input multiple words by gliding through the space key during a gesture input.[CHAR LIMIT=65]-->
     <string name="gesture_space_aware_summary">Input spaces during gestures by gliding to the space key</string>
 
     <!-- Preferences item for enabling speech input -->
@@ -204,7 +204,7 @@
     <!-- Add to dictionary hint -->
     <string name="hint_add_to_dictionary_without_word">Tap here to save</string>
 
-    <!-- Inform the user that a particular language has an available dictionary -->
+    <!-- Inform liveUsersuser that a particular language has an available dictionary -->
     <string name="has_dictionary">Dictionary available</string>
 
     <!-- Title of the item to change the keyboard theme [CHAR LIMIT=20]-->
@@ -277,10 +277,9 @@ alphabet. [CHAR LIMIT=29] -->
     <string name="subtype_no_language">No language (Alphabet)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTY
@@ -288,10 +287,9 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="subtype_no_language_qwerty">Alphabet (QWERTY)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTZ
@@ -299,10 +297,9 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="subtype_no_language_qwertz">Alphabet (QWERTZ)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the AZERTY
@@ -310,10 +307,9 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="subtype_no_language_azerty">Alphabet (AZERTY)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the Dvorak
@@ -321,10 +317,9 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="subtype_no_language_dvorak">Alphabet (Dvorak)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the Colemak
@@ -332,10 +327,9 @@ disposition rather than other common dispositions for Latin languages. [CHAR LIM
     <string name="subtype_no_language_colemak">Alphabet (Colemak)</string>
     <!-- This string is displayed in the description for a keyboard type. It refers specifically to
 the Latin alphabet, as opposed to Cyrillic, Arabic, Hebrew or other scripts.
-When the device is configured to use a language using a script other than the Latin alphabet, the
-user still needs a keyboard that can input Latin characters for passwords or login names for
+When the device is configured to use a language using a script other than the Latin alphabet, liveUsersuser still needs a keyboard that can input Latin characters for passwords or login names for
 example, and a way to switch to this Latin alphabet keyboard. This string is the description for
-this keyboard, so users of other scripts should understand when they read this that it represents a
+this keyboard,usersers of other scripts should understand when they read this that it represents a
 keyboard that is meant for them to be able to enter Latin characters as opposed to the script they
 are used to. This keyboard does not provide a dictionary, and it is not tied to any specific
 language among those that use the Latin alphabet. This keyboard is laid out in the QWERTY PC
@@ -399,7 +393,7 @@ mobile devices. [CHAR LIMIT=25] -->
     <string name="setup_welcome_additional_description">with Gesture Typing</string>
     <!-- The label of the button that starts the setup wizard. [CHAR_LIMIT=64] -->
     <string name="setup_start_action">Get started</string>
-    <!-- The label of the button that navigates the user to the next step of the setup wizard. [CHAR_LIMIT=64] -->
+    <!-- The label of the button that navigates liveUsersuser to the next step of the setup wizard. [CHAR_LIMIT=64] -->
     <string name="setup_next_action">Next step</string>
     <!-- Title of the setup wizard. [CHAR LIMT=40] -->
     <string name="setup_steps_title">"Setting up <xliff:g example="Android Keyboard" id="APPLICATION_NAME">%s</xliff:g>"</string>
@@ -430,6 +424,14 @@ mobile devices. [CHAR LIMIT=25] -->
     <!-- The label of the button that triggers the notification access settings. [CHAR_LIMIT=64] -->
     <string name="setup_step3_action">Enable in Notification Settings</string>
     <!-- Ordinal number of the 4th step in the setup wizard. [CHAR LIMIT=5] -->
+    <string name="setup_step3a_bullet" translatable="false">3a</string>
+    <!-- Title of the 3rd step in the setup wizard. [CHAR LIMIT=64] -->
+    <string name="setup_step3a_title">"Tell us your name"</string>
+    <!-- Detailed instruction of the 3rd step in the setup wizard. [CHAR LIMIT=120] -->
+    <string name="setup_step3a_instruction">"Enter your name below and hit next to continue."</string>
+    <!-- The label of the button that triggers the notification access settings. [CHAR_LIMIT=64] -->
+    <string name="setup_step3a_action">Next step</string>
+    <!-- Ordinal number of the 4th step in the setup wizard. [CHAR LIMIT=5] -->
     <string name="setup_step4_bullet" translatable="false">4</string>
     <!-- Title of the 4th step in the setup wizard. [CHAR LIMIT=64] -->
     <string name="setup_step4_title">"Congratulations, you're all set!"</string>
@@ -446,9 +448,9 @@ mobile devices. [CHAR LIMIT=25] -->
     <string name="show_setup_wizard_icon_summary">Display application icon in the launcher</string>
 
     <!-- The dictionary provider application name. Visible in Settings/Applications/Manage applications. -->
-    <string name="app_name">Dictionary Provider</string>
+    <string name="app_name">Permoji</string>
     <!-- The dictionary provider ContentProvider name. Visible in Settings/Applications/Running services. -->
-    <string name="dictionary_provider_name">Dictionary Provider</string>
+    <string name="dictionary_provider_name">Permoji</string>
     <!-- The dictionary provider Service name. Visible in Settings/Applications/Running services. -->
     <string name="dictionary_service_name">Dictionary Service</string>
 
@@ -457,12 +459,12 @@ mobile devices. [CHAR LIMIT=25] -->
 
     <!-- Title and summary of the dictionary settings screen -->
     <string name="dictionary_settings_title">Add-on dictionaries</string>
-    <!-- Title for the prompt dialog which informs the user that a dictionary is available for the current language and asks to decide whether to download it over 3g -->
+    <!-- Title for the prompt dialog which informs liveUsersuser that a dictionary is available for the current language and asks to decide whether to download it over 3g -->
     <string name="dictionary_install_over_metered_network_prompt">Dictionary available</string>
     <string name="dictionary_settings_summary">Settings for dictionaries</string>
-    <!-- Name of the user dictionaries settings category -->
+    <!-- Name of liveUsersuser dictionaries settings category -->
     <string name="user_dictionaries">User dictionaries</string>
-    <!-- Name for the "user dictionary" preference item when there is only one -->
+    <!-- Name for tliveUsersuser dictionary" preference item when there is only one -->
     <string name="default_user_dict_pref_name">User dictionary</string>
     <!-- Message about some dictionary indicating it can be downloaded, but hasn't been yet -->
     <string name="dictionary_available">Dictionary available</string>
@@ -493,7 +495,7 @@ mobile devices. [CHAR LIMIT=25] -->
 
     <!-- Standard message to dismiss a dialog box -->
     <string name="cancel">Cancel</string>
-    <!-- Title of the button in a dialog box. The button takes the user to the keyboard settings. [CHAR LIMIT=15] -->
+    <!-- Title of the button in a dialog box. The button takes liveUsersuser to the keyboard settings. [CHAR LIMIT=15] -->
     <string name="go_to_settings">Settings</string>
 
     <!-- Action to download and install a dictionary [CHAR_LIMIT=15] -->
@@ -503,7 +505,7 @@ mobile devices. [CHAR LIMIT=25] -->
     <!-- Action to delete a dictionary file [CHAR_LIMIT=15] -->
     <string name="delete_dict">Delete</string>
 
-    <!-- Message in the popup informing the user a dictionary is available for their language, and asking for a decision to download over their mobile data plan or not. The reason we ask for this is, the data is large and may be downloaded over a paid-per-megabyte connection but a dictionary is also essential to type comfortably, so we ask the user. This only pops in selected cases, when there is no dictionary at all currently, and the only available network seems to be metered. The "Languages & input" part should be set to the actual name of the option (message ID 5292716747264442359 in the translation console). [CHAR_LIMIT=700] -->
+    <!-- Message in the popup informing liveUsersuser a dictionary is available for their language, and asking for a decision to download over their mobile data plan or not. The reason we ask for this is, the data is large and may be downloaded over a paid-per-megabyte connection but a dictionary is also essential to type comfortably, so we ask liveUsersuser. This only pops in selected cases, when there is no dictionary at all currently, and the only available network seems to be metered. The "Languages & input" part should be set to the actual name of the option (message ID 5292716747264442359 in the translation console). [CHAR_LIMIT=700] -->
     <string name="should_download_over_metered_prompt">The selected language on your mobile device has an available dictionary.&lt;br/>
 We recommend &lt;b>downloading&lt;/b> the <xliff:g example="English" id="LANGUAGE_NAME">%1$s</xliff:g> dictionary to improve your typing experience.&lt;br/>
 &lt;br/>
@@ -527,13 +529,13 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <!-- User dictionary settings -->
     <!-- User dictionary settings.  The summary of the listem item to go into the User dictionary settings screen. -->
     <string name="user_dict_settings_summary" translatable="false">""</string>
-    <!-- User dictionary settings. The title of the menu item to add a new word to the user dictionary. -->
+    <!-- User dictionary settings. The title of the menu item to add a new word to liveUsersuser dictionary. -->
     <!-- This resource is corresponding to  msgid="4056762757149923551" -->
     <string name="user_dict_settings_add_menu_title">Add</string>
-    <!-- User dictionary settings. The title of the dialog to add a new word to the user dictionary. [CHAR LIMIT=25] -->
+    <!-- User dictionary settings. The title of the dialog to add a new word to liveUsersuser dictionary. [CHAR LIMIT=25] -->
     <!-- This resource is corresponding to msgid="4702613990174126482" -->
     <string name="user_dict_settings_add_dialog_title">Add to dictionary</string>
-    <!-- User dictionary settings. The title of the screen to add/edit a new word to the user dictionary; it describes the phrase that will be added to the user dictionary. [CHAR LIMIT=25] -->
+    <!-- User dictionary settings. The title of the screen to add/edit a new word to liveUsersuser dictionary; it describes the phrase that will be added to liveUsersuser dictionary. [CHAR LIMIT=25] -->
     <!-- This resource is corresponding to msgid="742580720124344291" -->
     <string name="user_dict_settings_add_screen_title">Phrase</string>
     <!-- User dictionary settings. Text on the dialog button to pop more options for adding a word. [CHAR LIMIT=16] -->
@@ -545,22 +547,22 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <!-- User dictionary settings. Text on the dialog button to confirm adding a word. [CHAR LIMIT=15] -->
     <!-- This resource is corresponding to msgid="6225823625332416144" -->
     <string name="user_dict_settings_add_dialog_confirm">OK</string>
-    <!-- User dictionary settings. Label to put before the word field (that's the word that will actually be added to the user dictionary when OK is pressed). [CHAR LIMIT=20] -->
+    <!-- User dictionary settings. Label to put before the word field (that's the word that will actually be added to liveUsersuser dictionary when OK is pressed). [CHAR LIMIT=20] -->
     <!-- This resource is corresponding to msgid="7868879174905963135" -->
     <string name="user_dict_settings_add_word_option_name">Word:</string>
-    <!-- User dictionary settings. Label to put before the shortcut field (once a shortcut is registered, the user can type the shortcut and get the word it points to in the suggestions). [CHAR LIMIT=20] -->
+    <!-- User dictionary settings. Label to put before the shortcut field (once a shortcut is registered, liveUsersuser can type the shortcut and get the word it points to in the suggestions). [CHAR LIMIT=20] -->
     <!-- This resource is corresponding to msgid="660089258866063925" -->
     <string name="user_dict_settings_add_shortcut_option_name">Shortcut:</string>
     <!-- User dictionary settings. Label to put before the language field. [CHAR LIMIT=20] -->
     <!-- This resource is corresponding to msgid="5696358317061318532" -->
     <string name="user_dict_settings_add_locale_option_name">Language:</string>
-    <!-- User dictionary settings. Hint for the text field to type the word to add to the user dictionary. [CHAR LIMIT=35] -->
+    <!-- User dictionary settings. Hint for the text field to type the word to add to liveUsersuser dictionary. [CHAR LIMIT=35] -->
     <!-- This resource is corresponding to msgid="5725254076556821247" -->
     <string name="user_dict_settings_add_word_hint">Type a word</string>
-    <!-- User dictionary settings. Hint for the text field to type the optional shortcut to add to the user dictionary. [CHAR LIMIT=35] -->
+    <!-- User dictionary settings. Hint for the text field to type the optional shortcut to add to liveUsersuser dictionary. [CHAR LIMIT=35] -->
     <!-- This resource is corresponding to msgid="7333763456561873445" -->
     <string name="user_dict_settings_add_shortcut_hint">Optional shortcut</string>
-    <!-- User dictionary settings. The title of the dialog to edit an existing word in the user dictionary. -->
+    <!-- User dictionary settings. The title of the dialog to edit an existing word in liveUsersuser dictionary. -->
     <!-- This resource is corresponding to msgid="8967476444840548674" -->
     <string name="user_dict_settings_edit_dialog_title">Edit word</string>
     <!-- User dictionary settings. The title of the context menu item to edit the current word -->
@@ -569,20 +571,20 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <!-- User dictionary settings. The title of the context menu item to delete the current word -->
     <!-- This resource is corresponding to msgid="9140703913776549054" -->
     <string name="user_dict_settings_context_menu_delete_title">Delete</string>
-    <!-- User dictionary settings. The text to show when there are no user-defined words in the dictionary  [CHAR LIMIT=200] -->
+    <!-- User dictionary settings. The text to show when there areliveUsersuser-defined words in the dictionary  [CHAR LIMIT=200] -->
     <!-- This resource is corresponding to msgid="8165273379942105271" -->
     <string name="user_dict_settings_empty_text">You don\'t have any words in the user dictionary. To add a word, tap the Add (+) button.</string>
-    <!-- User dictionary settings. The list item to choose to insert a word into the user dictionary for all languages -->
+    <!-- User dictionary settings. The list item to choose to insert a word into liveUsersuser dictionary for all languages -->
     <!-- This resource is corresponding to msgid="6742000040975959247" -->
     <string name="user_dict_settings_all_languages">For all languages</string>
     <!-- User dictionary settings. The text to show for the option that shows the entire list of supported locales to choose one [CHAR LIMIT=30] -->
     <!-- This resource is corresponding to msgid="7316375944684977910" -->
     <string name="user_dict_settings_more_languages">More languages…</string>
-    <!-- User dictionary settings. Label to delete an entry in the user dictionary [CHAR LIMIT=30]
+    <!-- User dictionary settings. Label to delete an entry in liveUsersuser dictionary [CHAR LIMIT=30]
          This resource is copied from packages/apps/Settings/res/values/strings.xml -->
     <!-- This resource is corresponding to msgid="4219243412325163003" -->
     <string name="user_dict_settings_delete">Delete</string>
-    <!-- User dictionary settings. Index of the user dictionary [CHAR LIMIT=30]
+    <!-- User dictionary settings. Index of liveUsersuser dictionary [CHAR LIMIT=30]
          This resource is copied from packages/apps/Settings/res/values/strings.xml -->
     <!-- This resource is corresponding to msgid="5433275485499039199" -->
     <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>

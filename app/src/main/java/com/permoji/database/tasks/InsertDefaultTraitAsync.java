@@ -1,11 +1,12 @@
 package com.permoji.database.tasks;
 
-import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.permoji.builder.TraitDefinitionBuilder;
 import com.permoji.database.LocalDatabase;
 import com.permoji.database.dao.NotifierDao;
 import com.permoji.database.dao.NotifierFillerDao;
@@ -13,6 +14,7 @@ import com.permoji.database.dao.TraitDefinitionDao;
 import com.permoji.database.dao.TraitFillerDao;
 import com.permoji.database.dao.TraitNotifierFillerDao;
 import com.permoji.database.dao.TraitStatementDao;
+import com.permoji.helper.FileWriter;
 import com.permoji.model.entity.Notifier;
 import com.permoji.model.entity.NotifierFiller;
 import com.permoji.model.entity.Trait;
@@ -20,8 +22,8 @@ import com.permoji.model.entity.TraitFiller;
 import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.entity.TraitStatement;
 
+import java.io.InputStream;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +38,6 @@ public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
 
     private String packageName;
     private DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private int traitAmountToGet = 5;
     private int statementsToFillAmount = 3;
     private TraitDefinitionDao traitDefinitionDao;
     private NotifierDao notifierDao;
@@ -44,8 +45,9 @@ public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
     private TraitFillerDao traitFillerDao;
     private TraitNotifierFillerDao traitNotifierFillerDao;
     private NotifierFillerDao notifierFillerDao;
+    private Resources resources;
 
-    public InsertDefaultTraitAsync(LocalDatabase localDatabase, String packageName) {
+    public InsertDefaultTraitAsync(LocalDatabase localDatabase, String packageName, Resources resources) {
         this.packageName = packageName;
         this.traitDefinitionDao = localDatabase.traitDefinitionDao();
         this.notifierDao = localDatabase.notifierDao();
@@ -53,72 +55,65 @@ public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
         this.traitFillerDao = localDatabase.traitFillerDao();
         this.traitNotifierFillerDao = localDatabase.traitNotifierFillerDao();
         this.notifierFillerDao = localDatabase.notifierFillerDao();
+        this.resources = resources;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
 
-        createTrait(2056223);
+        try {
 
-        Notifier notifier = new Notifier();
-        notifier.setName("Permoji");
-        notifier.setImagePath("android.resource://" + packageName + "/raw/permoji.png");
+            createDefaultTrait(2056223);
 
-        addNotifierToRecentTrait(2056223, notifier);
+            String name = "Permoji";
+
+            InputStream inputStream = resources.openRawResource(resources.getIdentifier("permoji", "raw", packageName));
+
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+            String imagePath = FileWriter.writeImageToLocalDirectory(bitmap, name);
+
+            Notifier notifier = new Notifier();
+            notifier.setName(name);
+            notifier.setImagePath(imagePath);
+
+            addNotifierToDefaultTrait(notifier);
+        }
+        catch (Exception ex) {
+            Log.e(this.getClass().getSimpleName(), "Error creating default trait");
+        }
 
         return null;
     }
 
-    public void createTrait(int codepoint) {
-
-        Log.d(this.getClass().getSimpleName(), "Processing keyboard broadcast for emoji "+Long.toHexString(codepoint));
+    public void createDefaultTrait(int codepoint) {
 
         Trait trait = new Trait();
         trait.setDateCreated(simpleDateFormat.format(new Date()));
 
-        //TODO: Prioristise statements query by least amount of fillers
         List<TraitStatement> statementList =  traitStatementDao.getDefault();
         List<Trait> currentTraits = traitDefinitionDao.getAllTraits();
 
-        statementList = filterExistingStatements(statementList, currentTraits);
-
-        createTrait(statementList, trait);
+        createDefaultTrait(statementList, trait);
 
     }
 
 
-    private List<TraitStatement> filterExistingStatements(List<TraitStatement> statementList, List<Trait> currentTraits) {
-        //Filter any existing statements & remove
-        List<TraitStatement> statementsToRemove = new ArrayList<>();
-        for(TraitStatement traitStatement : statementList) {
-            for (Trait currentTrait : currentTraits) {
-                if (currentTrait.getStatementId() == traitStatement.getId()) {
-                    statementsToRemove.add(traitStatement);
-                }
-            }
-        }
-        if(statementsToRemove.size() != statementList.size()) {
-            statementList.removeAll(statementsToRemove);
-        }
 
-        return statementList;
-    }
-
-    private void createTrait(List<TraitStatement> statementList, Trait trait) {
+    private void createDefaultTrait(List<TraitStatement> statementList, Trait trait) {
         if(statementList.size() > 0) {
-            TraitStatement traitStatement = statementList.get(new Random().nextInt(statementList.size()));
+            TraitStatement traitStatement = statementList.get(statementList.size()-1);
 
             trait.setStatementId(traitStatement.getId());
             traitDefinitionDao.insert(trait);
         }
     }
 
-    public void addNotifierToRecentTrait(int codepoint, Notifier notifier) {
+    public void addNotifierToDefaultTrait(Notifier notifier) {
 
-        List<Trait> traits = traitDefinitionDao.getLatestTraitsByCount(traitAmountToGet);
+        List<Trait> traits = traitDefinitionDao.getLatestTraitsByCount(1);
         if(traits.size() > 0) {
-            //Pick random trait from latest
-            Trait trait = traits.get(new Random().nextInt(traits.size()));
+            Trait trait = traits.get(0);
 
             List<TraitFiller> traitFillers = traitFillerDao.getAll();
             TraitStatement statement = traitStatementDao.getById(trait.getStatementId());
@@ -148,7 +143,7 @@ public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
             int personalisedFiller = random.nextInt(fillerCount);
 
             for(int idx = 0; idx < statementsToFillAmount; idx++) {
-                TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
+                TraitFiller traitFiller = traitFillers.get(0);
                 NotifierFiller notifierFiller = new NotifierFiller();
                 notifierFiller.setTraitNotifierFillerId(traitNotifierFillerId);
                 notifierFiller.setFillerId(traitFiller.getId());
@@ -181,7 +176,6 @@ public class InsertDefaultTraitAsync extends AsyncTask<Void, Void, Void> {
         if(notifierList.size() > 0) {
             for (Notifier existingNotifier : notifierList) {
                 if (existingNotifier.getName().equals(notifier.getName())) {
-                    //TODO: Resolve updated images, duplicate notifier names
                     return existingNotifier.getId();
                 }
             }

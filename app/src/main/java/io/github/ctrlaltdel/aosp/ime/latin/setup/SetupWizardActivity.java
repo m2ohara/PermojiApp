@@ -16,8 +16,9 @@
 
 package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
-import android.app.Activity;
 import android.app.ActivityManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,18 +28,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.permoji.activity.UserTraitActivity;
 import com.permoji.broadcast.MessageNotificationListenerService;
+import com.permoji.database.LocalDatabase;
+import com.permoji.model.entity.User;
+import com.permoji.repository.UserRepository;
+import com.permoji.viewModel.SetupWizardViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -50,7 +60,7 @@ import io.github.ctrlaltdel.aosp.ime.latin.utils.LeakGuardHandlerWrapper;
 import io.github.ctrlaltdel.aosp.ime.latin.utils.UncachedInputMethodManagerUtils;
 
 // TODO: Use Fragment to implement welcome screen and setup steps.
-public final class SetupWizardActivity extends Activity implements View.OnClickListener {
+public final class SetupWizardActivity extends AppCompatActivity implements View.OnClickListener {
     static final String TAG = SetupWizardActivity.class.getSimpleName();
 
     // For debugging purpose.
@@ -77,12 +87,16 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private static final int STEP_1 = 1;
     private static final int STEP_2 = 2;
     private static final int STEP_3 = 3;
-    private static final int STEP_4 = 4;
-    private static final int STEP_LAUNCHING_IME_SETTINGS = 5;
-    private static final int STEP_BACK_FROM_IME_SETTINGS = 6;
+    private static final int STEP_Name = 4;
+    private static final int STEP_4 = 5;
+    private static final int STEP_LAUNCHING_IME_SETTINGS = 6;
+    private static final int STEP_BACK_FROM_IME_SETTINGS = 7;
 
     private SettingsPoolingHandler mHandler;
     private NotificationAccessHandler notificationAccessHandler;
+
+    private SetupWizardViewModel setupWizardViewModel;
+    private boolean nameInputed = false;
 
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
@@ -186,6 +200,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         mHandler = new SettingsPoolingHandler(this, mImm);
         notificationAccessHandler = new NotificationAccessHandler(this);
 
+        setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
 
         setContentView(R.layout.setup_wizard);
         mSetupWizard = findViewById(R.id.setup_wizard);
@@ -254,6 +269,20 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             }
         });
         mSetupStepGroup.addStep(step3);
+
+
+        final SetupStep stepName = new SetupStep(STEP_Name, applicationName,
+                (TextView)findViewById(R.id.setup_stepName_bullet), findViewById(R.id.setup_stepName),
+                R.string.setup_step3a_title, R.string.setup_step3a_instruction,
+                0 /* finishedInstruction */, R.drawable.ic_setup_step2,
+                R.string.setup_step3_action);
+        stepName.setInputAction(new Runnable() {
+            @Override
+            public void run() {
+                setupWizardViewModel.isSetup.value = true;
+            }
+        });
+        mSetupStepGroup.addStep(stepName);
 
         final SetupStep step4 = new SetupStep(STEP_4, applicationName,
                 (TextView)findViewById(R.id.setup_step4_bullet), findViewById(R.id.setup_step4),
@@ -401,6 +430,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
     private int determineSetupStepNumber() {
         mHandler.cancelPollingImeSettings();
         notificationAccessHandler.cancelPollingImeSettings();
+
         if (FORCE_TO_SHOW_WELCOME_SCREEN) {
             return STEP_1;
         }
@@ -412,6 +442,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         }
         if (!notificationAccessHandler.isServiceRunning()) {
             return STEP_3;
+        }
+        if (!setupWizardViewModel.isSetup.value) {
+            return STEP_Name;
         }
         return STEP_4;
     }
@@ -519,7 +552,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         hideAndStopWelcomeVideo();
         final boolean isStepActionAlreadyDone = mStepNumber < determineSetupStepNumber();
         mSetupStepGroup.enableStep(mStepNumber, isStepActionAlreadyDone);
-        mActionNext.setVisibility(isStepActionAlreadyDone ? View.VISIBLE : View.GONE);
+        mActionNext.setVisibility(isStepActionAlreadyDone || mStepNumber == STEP_Name ? View.VISIBLE : View.GONE);
         mActionFinish.setVisibility((mStepNumber == STEP_4) ? View.VISIBLE : View.GONE);
     }
 
@@ -531,8 +564,10 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
         private final int mDeactivatedColor;
         private final String mInstruction;
         private final String mFinishedInstruction;
-        private final TextView mActionLabel;
+        private TextView mActionLabel;
+        private EditText mInput;
         private Runnable mAction;
+        private UserRepository userRepository;
 
         public SetupStep(final int stepNo, final String applicationName, final TextView bulletView,
                 final View stepView, final int title, final int instruction,
@@ -543,6 +578,7 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             final Resources res = stepView.getResources();
             mActivatedColor = res.getColor(R.color.setup_text_action);
             mDeactivatedColor = res.getColor(R.color.setup_text_dark);
+            userRepository = new UserRepository(LocalDatabase.getInstance(stepView.getContext()).userDao());
 
             final TextView titleView = (TextView)mStepView.findViewById(R.id.setup_step_title);
             titleView.setText(res.getString(title, applicationName));
@@ -551,15 +587,41 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             mFinishedInstruction = (finishedInstruction == 0) ? null
                     : res.getString(finishedInstruction, applicationName);
 
-            mActionLabel = (TextView)mStepView.findViewById(R.id.setup_step_action_label);
-            mActionLabel.setText(res.getString(actionLabel));
-            if (actionIcon == 0) {
-                final int paddingEnd = ViewCompatUtils.getPaddingEnd(mActionLabel);
-                ViewCompatUtils.setPaddingRelative(mActionLabel, paddingEnd, 0, paddingEnd, 0);
-            } else {
-                TextViewCompatUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        mActionLabel, res.getDrawable(actionIcon), null, null, null);
+            mInput = (EditText) mStepView.findViewById(R.id.setup_step_input);
+            mActionLabel = (TextView) mStepView.findViewById(R.id.setup_step_action_label);
+            if(stepNo == STEP_Name) {
+                mInput.setVisibility(View.VISIBLE);
+                mActionLabel.setVisibility(View.GONE);
+                mInput.setOnKeyListener(new View.OnKeyListener() {
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // If the event is a key-down event on the "enter" button
+                        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && !((EditText)v).getText().toString().isEmpty()) {
+                            // Perform action on key press
+                            User user = new User();
+                            user.setName(((EditText)v).getText().toString());
+                            userRepository.Insert(user);
+                            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
             }
+            else {
+                mInput.setVisibility(View.GONE);
+                mActionLabel.setVisibility(View.VISIBLE);
+                mActionLabel.setText(res.getString(actionLabel));
+                if (actionIcon == 0) {
+                    final int paddingEnd = ViewCompatUtils.getPaddingEnd(mActionLabel);
+                    ViewCompatUtils.setPaddingRelative(mActionLabel, paddingEnd, 0, paddingEnd, 0);
+                } else {
+                    TextViewCompatUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            mActionLabel, res.getDrawable(actionIcon), null, null, null);
+                }
+            }
+
+
         }
 
         public void setEnabled(final boolean enabled, final boolean isStepActionAlreadyDone) {
@@ -568,7 +630,9 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             final TextView instructionView = (TextView)mStepView.findViewById(
                     R.id.setup_step_instruction);
             instructionView.setText(isStepActionAlreadyDone ? mFinishedInstruction : mInstruction);
-            mActionLabel.setVisibility(isStepActionAlreadyDone ? View.GONE : View.VISIBLE);
+            if(mStepNo != STEP_Name) {
+                mActionLabel.setVisibility(isStepActionAlreadyDone ? View.GONE : View.VISIBLE);
+            }
         }
 
         public void setAction(final Runnable action) {
@@ -576,9 +640,19 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
             mAction = action;
         }
 
+        public void setInputAction(final Runnable action) {
+            mInput.setOnClickListener(this);
+            mAction = action;
+        }
+
         @Override
         public void onClick(final View v) {
-            if (v == mActionLabel && mAction != null) {
+            if (mActionLabel != null && v == mActionLabel && mAction != null) {
+                mAction.run();
+                return;
+            }
+            else if (mInput != null && v == mInput && mAction != null) {
+                mInput.setHint("Starting Permoji Keyboard..");
                 mAction.run();
                 return;
             }
