@@ -20,7 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.permoji.builder.StatementViewBuilder;
+import com.permoji.builder.StatementBuilder;
 import com.permoji.compatability.EmojiInitCallback;
 import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.entity.User;
@@ -90,8 +90,9 @@ public class TraitSelectedActivity extends AppCompatActivity {
             TextView emojiHeadText = findViewById(R.id.emoji_head_image);
             EmojiCompat.get().registerInitCallback(new EmojiInitCallback(emojiHeadText, new String(Character.toChars(traitStatement.getCodePoint()))));
 
-            TextView statementText = findViewById(R.id.statement_text);
-            StatementViewBuilder.get().setExistingView(traitResult, statementText);
+            TextView statementTextView = findViewById(R.id.statement_text);
+//            StatementViewBuilder.get().setExistingView(traitResult, statementText);
+            new StatementBuilder().setStatement(statementTextView, traitResult, traitNotifierFiller);
 
             TextView notifierText = findViewById(R.id.notifier_text);
             notifierText.setText(traitStatement.getHeading().replace("<name>", traitNotifierFiller.notifier.get(0).getName()));

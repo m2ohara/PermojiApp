@@ -4,10 +4,13 @@ import android.content.Context;
 import android.text.Html;
 import android.widget.TextView;
 
+import com.permoji.model.entity.TraitFiller;
+import com.permoji.model.entity.TraitNotifierFiller;
 import com.permoji.model.result.TraitNotifierFillerResult;
 import com.permoji.model.result.TraitResult;
 import com.permoji.repository.TraitDefinitionRepository;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -131,8 +134,7 @@ public class StatementViewBuilder {
 
             String fillerText = traitNotifierFiller.notifierFillerResultList.get(fillerIdx).traitFiller.get(0).getText();
             String fillerExtraText = traitNotifierFiller.notifierFillerResultList.get(fillerIdx).traitFiller.get(0).getPersonalisedText();
-            boolean isPersonalisedFiller = false;
-            isPersonalisedFiller = fillerIdx == personalisedFiller ? true  :false; //TODO: Implement traitNotifierFiller.notifierFillerResultList.get(fillerIdx).traitFiller.get(0)
+            boolean isPersonalisedFiller = traitNotifierFiller.notifierFillerResultList.get(fillerIdx).isPersonalised();
 
             if (statementText.endsWith(">.")) {
                 statementText = statementText.replace(">.", ">");

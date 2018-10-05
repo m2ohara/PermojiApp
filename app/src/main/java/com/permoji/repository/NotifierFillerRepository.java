@@ -6,6 +6,8 @@ import com.permoji.database.LocalDatabase;
 import com.permoji.database.dao.NotifierFillerDao;
 import com.permoji.model.entity.NotifierFiller;
 
+import java.util.List;
+
 /**
  * Created by michael on 22/06/18.
  */
@@ -19,8 +21,8 @@ public class NotifierFillerRepository {
         notifierFillerDao = db.notifierFillerDao();
     }
 
-    public int insert(NotifierFiller notifierFiller) {
-        return (int) notifierFillerDao.insert(notifierFiller);
+    public void insertAll(List<NotifierFiller> notifierFillers) {
+        notifierFillerDao.insertAll(notifierFillers);
     }
 
     public void update(NotifierFiller notifierFiller) {

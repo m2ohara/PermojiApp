@@ -151,27 +151,54 @@ public class TraitDefinitionBuilder {
             traitNotifierFillerId = traitNotifierFillerRepository.insert(traitNotifierFiller);
 
             int fillerCount = statement.getStatement().split("<"+statement.getPlaceholderType()+">").length - 1;
+            addPersonalisedFillers(fillerCount, traitNotifierFillerId, traitFillers);
 
-            //Default to at least 1 if none detected due to human error
-            if(fillerCount == 0) {
-                fillerCount = 1;
-            }
-
-            Random random = new Random();
-            int personalisedFiller = random.nextInt(fillerCount);
-
-            for(int idx = 0; idx < statementsToFillAmount; idx++) {
-                TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
-                NotifierFiller notifierFiller = new NotifierFiller();
-                notifierFiller.setTraitNotifierFillerId(traitNotifierFillerId);
-                notifierFiller.setFillerId(traitFiller.getId());
-                if(idx == personalisedFiller) {
-                    notifierFiller.setPersonalised(true);
-                }
-                notifierFillerRepository.insert(notifierFiller);
-
-            }
+//            //Default to at least 1 if none detected due to human error
+//            if(fillerCount == 0) {
+//                fillerCount = 1;
+//            }
+//
+//            Random random = new Random();
+//            int personalisedFiller = random.nextInt(fillerCount);
+//
+//            for(int idx = 0; idx < statementsToFillAmount; idx++) {
+//                TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
+//                NotifierFiller notifierFiller = new NotifierFiller();
+//                notifierFiller.setTraitNotifierFillerId(traitNotifierFillerId);
+//                notifierFiller.setFillerId(traitFiller.getId());
+//                if(idx == personalisedFiller) {
+//                    notifierFiller.setPersonalised(true);
+//                }
+//                notifierFillerRepository.insert(notifierFiller);
+//
+//            }
         }
+    }
+
+    private void addPersonalisedFillers(int fillerCount, int traitNotifierFillerId, List<TraitFiller> traitFillers) {
+        //Default to at least 1 if none detected due to human error
+        if(fillerCount == 0) {
+            fillerCount = 1;
+        }
+
+        Random random = new Random();
+        int personalisedFiller = random.nextInt(fillerCount);
+
+        List<NotifierFiller> notifierFillers = new ArrayList<>();
+
+        for(int idx = 0; idx < fillerCount; idx++) {
+            NotifierFiller notifierFiller = new NotifierFiller();
+            notifierFiller.setTraitNotifierFillerId(traitNotifierFillerId);
+
+            TraitFiller traitFiller = traitFillers.remove(new Random().nextInt(traitFillers.size()));
+            notifierFiller.setFillerId(traitFiller.getId());
+            if(idx == personalisedFiller) {
+                notifierFiller.setPersonalised(true);
+            }
+            notifierFillers.add(notifierFiller);
+        }
+
+        notifierFillerRepository.insertAll(notifierFillers);
     }
 
     private List<TraitFiller> filterTraitFillersByPlaceHolderType(String placeHolder, List<TraitFiller> traitFillerList) {
