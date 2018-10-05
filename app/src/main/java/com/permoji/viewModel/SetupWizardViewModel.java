@@ -18,8 +18,8 @@ import java.util.List;
 
 public class SetupWizardViewModel extends AndroidViewModel {
 
-    public LiveData<List<User>> user;
     private UserRepository userRepository;
+    public LiveData<List<User>> user;
     public MutableBoolean isSetup;
 
     public SetupWizardViewModel(@NonNull Application application) {
@@ -30,6 +30,7 @@ public class SetupWizardViewModel extends AndroidViewModel {
         user = userRepository.get();
 
         isSetup = new MutableBoolean(false);
+
     }
 
 

@@ -17,6 +17,7 @@
 package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
 import android.app.ActivityManager;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -46,6 +48,7 @@ import com.permoji.repository.UserRepository;
 import com.permoji.viewModel.SetupWizardViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -93,7 +96,6 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     private NotificationAccessHandler notificationAccessHandler;
 
     private SetupWizardViewModel setupWizardViewModel;
-    private boolean nameInputed = false;
 
     private static final class SettingsPoolingHandler
             extends LeakGuardHandlerWrapper<SetupWizardActivity> {
@@ -198,10 +200,54 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         notificationAccessHandler = new NotificationAccessHandler(this);
 
         setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
-
         setContentView(R.layout.setup_wizard);
         mSetupWizard = findViewById(R.id.setup_wizard);
 
+        setupWelcomeVideo();
+
+        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                    setupWizardViewModel.isSetup.value = true;
+                }
+
+                setupCreate(savedInstanceState);
+                setupWizardViewModel.user.removeObserver(this);
+            }
+        });
+    }
+
+    private void setupWelcomeVideo() {
+        mWelcomeVideoUri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(getPackageName())
+                .path(Integer.toString(R.raw.setup_welcome_video))
+                .build();
+        final VideoView welcomeVideoView = (VideoView)findViewById(R.id.setup_welcome_video);
+        welcomeVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(final MediaPlayer mp) {
+                // Now VideoView has been laid-out and ready to play, remove background of it to
+                // reveal the video.
+                welcomeVideoView.setBackgroundResource(0);
+                mp.setLooping(true);
+            }
+        });
+        welcomeVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(final MediaPlayer mp, final int what, final int extra) {
+                Log.e(TAG, "Playing welcome video causes error: what=" + what + " extra=" + extra);
+                hideWelcomeVideoAndShowWelcomeImage();
+                return true;
+            }
+        });
+        mWelcomeVideoView = welcomeVideoView;
+        mWelcomeImageView = (ImageView)findViewById(R.id.setup_welcome_image);
+
+    }
+
+    private void setupCreate(final Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             mStepNumber = determineSetupStepNumberFromLauncher();
         } else {
@@ -294,31 +340,6 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         });
         mSetupStepGroup.addStep(step5);
 
-        mWelcomeVideoUri = new Uri.Builder()
-                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                .authority(getPackageName())
-                .path(Integer.toString(R.raw.setup_welcome_video))
-                .build();
-        final VideoView welcomeVideoView = (VideoView)findViewById(R.id.setup_welcome_video);
-        welcomeVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(final MediaPlayer mp) {
-                // Now VideoView has been laid-out and ready to play, remove background of it to
-                // reveal the video.
-                welcomeVideoView.setBackgroundResource(0);
-                mp.setLooping(true);
-            }
-        });
-        welcomeVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(final MediaPlayer mp, final int what, final int extra) {
-                Log.e(TAG, "Playing welcome video causes error: what=" + what + " extra=" + extra);
-                hideWelcomeVideoAndShowWelcomeImage();
-                return true;
-            }
-        });
-        mWelcomeVideoView = welcomeVideoView;
-        mWelcomeImageView = (ImageView)findViewById(R.id.setup_welcome_image);
 
         mActionStart = findViewById(R.id.setup_start_label);
         mActionStart.setOnClickListener(this);
@@ -425,6 +446,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     }
 
     private int determineSetupStepNumber() {
+
         mHandler.cancelPollingImeSettings();
         notificationAccessHandler.cancelPollingImeSettings();
 
@@ -465,6 +487,19 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     @Override
     protected void onRestart() {
         super.onRestart();
+
+        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                    setupWizardViewModel.isSetup.value = true;
+                }
+                setupRestart();
+            }
+        });
+    }
+
+    private void setupRestart() {
         // Probably the setup wizard has been invoked from "Recent" menu. The setup step number
         // needs to be adjusted to system state, because the state (IME is enabled and/or current)
         // may have been changed.
@@ -476,6 +511,20 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     @Override
     protected void onResume() {
         super.onResume();
+
+        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                    setupWizardViewModel.isSetup.value = true;
+                }
+                setupResume();
+            }
+        });
+
+    }
+
+    private void setupResume() {
         if (mStepNumber == STEP_LAUNCHING_IME_SETTINGS) {
             // Prevent white screen flashing while launching settings activity.
             mSetupWizard.setVisibility(View.INVISIBLE);

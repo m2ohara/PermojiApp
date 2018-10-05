@@ -36,7 +36,6 @@ public class TraitDefinitionBuilder {
     private TraitStatementRepository traitStatementRepository;
     private NotifierFillerRepository notifierFillerRepository;
     private int traitAmountToGet = 5;
-    private int statementsToFillAmount = 1;
     private int traitLimit = 10;
     private DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

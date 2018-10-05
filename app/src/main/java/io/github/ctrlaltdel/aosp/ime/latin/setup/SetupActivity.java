@@ -20,11 +20,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.permoji.viewModel.SetupWizardViewModel;
+
 public final class SetupActivity extends Activity {
+
+    private SetupWizardViewModel setupWizardViewModel;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Intent intent = new Intent();
+
+
+
         intent.setClass(this, SetupWizardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_NEW_TASK);

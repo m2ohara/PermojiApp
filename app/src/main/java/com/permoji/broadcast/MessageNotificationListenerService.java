@@ -34,7 +34,7 @@ public class MessageNotificationListenerService extends NotificationListenerServ
 
         NotificationExtraction notificationExtraction = null;
         if(sbn.getPackageName().contains("whatsapp") || sbn.getPackageName().contains("facebook.orca")) {
-            notificationExtraction = WhatsappExtractor.get().extract(sbn);
+            notificationExtraction = NotificationsExtractor.get().extract(sbn);
 
             if(notificationExtraction != null) {
                 ArrayList<Integer> emojiCodepoints = extractEmojis(notificationExtraction.getNotifierTextMessage());
@@ -43,7 +43,7 @@ public class MessageNotificationListenerService extends NotificationListenerServ
                     return;
                 }
                 else {
-                    WhatsappExtractor.get().updateProcessedMessage(notificationExtraction);
+                    NotificationsExtractor.get().updateProcessedMessage(notificationExtraction);
                     broadcastNotification(notificationExtraction.getNotifierImagePath(), notificationExtraction.getNotifierName(), emojiCodepoints);
                 }
             }
