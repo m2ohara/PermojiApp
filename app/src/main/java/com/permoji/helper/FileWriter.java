@@ -25,6 +25,7 @@ public class FileWriter {
             File dir = new File(Environment.getExternalStorageDirectory(), localDirectory);
             if(!dir.exists()) {
                 dir.mkdirs();
+                createNoMediaFile();
             }
 
             outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
@@ -49,5 +50,14 @@ public class FileWriter {
         }
 
         return outFile.getPath();
+    }
+
+    private static void createNoMediaFile() {
+        File outFile = null;
+        String localDirectory = "/Permoji/";
+        OutputStream stream = null;
+
+        outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
+                ".nomedia");
     }
 }
