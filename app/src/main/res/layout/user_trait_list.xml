@@ -53,6 +53,7 @@
             android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/notifier_icon"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"

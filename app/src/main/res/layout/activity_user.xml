@@ -16,32 +16,32 @@
         android:theme="@style/ToolBarStyle"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <RelativeLayout
-        android:id="@+id/user_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:background="@color/user_profile_layout">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/contactimage10"
-            android:foreground="@drawable/profile_circle_border"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"/>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/user_profile"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.8"-->
+        <!--android:background="@color/user_profile_layout">-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/contactimage10"-->
+            <!--android:foreground="@drawable/profile_circle_border"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center_vertical"/>-->
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:layout_gravity="left"
-        android:background="@color/user_trait_layout">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/traiticon" />
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="0.2"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:background="@color/user_trait_layout">-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/traiticon" />-->
+    <!--</RelativeLayout>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/user_trait_recyclerView"

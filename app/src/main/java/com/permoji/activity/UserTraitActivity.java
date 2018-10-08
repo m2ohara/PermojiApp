@@ -24,10 +24,12 @@ import com.permoji.builder.TraitDefinitionBuilder;
 import com.permoji.builder.TraitItemClickBuilder;
 import com.permoji.clickListener.TraitItemClickListener;
 import com.permoji.database.tasks.InsertDefaultTraitAsync;
+import com.permoji.model.entity.TraitStatement;
 import com.permoji.model.result.TraitResult;
 import com.permoji.viewModel.TraitViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -87,9 +89,23 @@ public class UserTraitActivity extends AppCompatActivity {
         traitViewModel.getLiveTraitEntities().observe(this, new Observer<List<TraitResult>>() {
             @Override
             public void onChanged(@Nullable List<TraitResult> traitEntities) {
+                if(traitEntities.size() < 2) {
+                    setTraitMessage(traitEntities);
+                }
                 traitDefinitionListAdapter.setTraits(traitEntities);
             }
         });
+    }
+
+    private void setTraitMessage(List<TraitResult> traitEntities) {
+
+        TraitResult message = new TraitResult();
+        TraitStatement statement = new TraitStatement();
+        statement.setTraitName("Add emojis using Permoji Keyboard for more traits");
+        message.traitStatement = Arrays.asList(statement);
+
+        traitEntities.add(message);
+
     }
 
     private void setRecyclerView() {

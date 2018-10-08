@@ -8,20 +8,20 @@
     tools:context="com.permoji.activity.UserTraitActivity"
     tools:showIn="@layout/activity_user_trait">
 
-    <RelativeLayout
-        android:id="@+id/user_trait_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:background="@color/user_trait_layout">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/contactimage10"
-            android:foreground="@drawable/profile_circle_border"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"/>
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/user_trait_profile"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.2"-->
+        <!--android:background="@color/user_trait_layout">-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/contactimage10"-->
+            <!--android:foreground="@drawable/profile_circle_border"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center_vertical"/>-->
+    <!--</RelativeLayout>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/user_trait_definition_recyclerView"

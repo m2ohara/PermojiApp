@@ -44,28 +44,29 @@ public class TraitItemClickBuilder {
             public void onItemClick(View view, int position) {
                 TraitResult traitResult = traitDefinitionListAdapter.getTraitResultByPosition(position);
 
-                if(!longClicked) {
-                    Intent startUserActivity = new Intent(view.getContext(), TraitNotifierActivity.class);
-                    startUserActivity.putExtra("TraitResult", traitResult);
-                    if (traitResult.traitNotifierFillerResultList.size() > 0)
-                        startUserActivity.putExtra("NotifierFillerEntityId", traitResult.traitNotifierFillerResultList.get(0).getId());
+                if(traitResult != null) {
 
-                    startUserActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    view.getContext().startActivity(startUserActivity);
-                }
-                else {
-                    if(!traitResult.isSelected) {
-                        setViewSelected(view);
-                        traitResultsToRemove.add(traitResult);
-                        traitResult.isSelected = true;
-                    }
-                    else {
-                        setViewUnselected(view);
-                        traitResultsToRemove.remove(traitResult);
-                        if(traitResultsToRemove.size() == 0) {
-                            cancelToolbarEdit();
+                    if (!longClicked) {
+                        Intent startUserActivity = new Intent(view.getContext(), TraitNotifierActivity.class);
+                        startUserActivity.putExtra("TraitResult", traitResult);
+                        if (traitResult.traitNotifierFillerResultList.size() > 0)
+                            startUserActivity.putExtra("NotifierFillerEntityId", traitResult.traitNotifierFillerResultList.get(0).getId());
+
+                        startUserActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        view.getContext().startActivity(startUserActivity);
+                    } else {
+                        if (!traitResult.isSelected) {
+                            setViewSelected(view);
+                            traitResultsToRemove.add(traitResult);
+                            traitResult.isSelected = true;
+                        } else {
+                            setViewUnselected(view);
+                            traitResultsToRemove.remove(traitResult);
+                            if (traitResultsToRemove.size() == 0) {
+                                cancelToolbarEdit();
+                            }
+                            traitResult.isSelected = false;
                         }
-                        traitResult.isSelected = false;
                     }
                 }
             }
@@ -74,10 +75,13 @@ public class TraitItemClickBuilder {
             public void onLongItemClick(View view, int position) {
                 TraitResult traitResult = traitDefinitionListAdapter.getTraitResultByPosition(position);
 
-                longClicked = true;
-                setViewSelected(view);
-                traitResultsToRemove.add(traitResult);
-                traitDefinitionListAdapter.getTraitResultByPosition(position).isSelected = true;
+                if(traitResult != null) {
+
+                    longClicked = true;
+                    setViewSelected(view);
+                    traitResultsToRemove.add(traitResult);
+                    traitDefinitionListAdapter.getTraitResultByPosition(position).isSelected = true;
+                }
             }
         }));
     }

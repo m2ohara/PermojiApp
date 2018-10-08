@@ -102,7 +102,7 @@
             android:id="@+id/contactFrame"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/contactimage10"
+            android:background="@drawable/keyboard_icon"
             android:foreground="@drawable/contact_circle_border_lxx_light"
             android:layout_weight="0.1429">
         </FrameLayout>
