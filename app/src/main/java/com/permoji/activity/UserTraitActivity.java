@@ -59,7 +59,7 @@ public class UserTraitActivity extends AppCompatActivity {
 
         initializeDeviceEmojiSupport();
 
-        grantExternalStorageWritePermission();
+//        grantExternalStorageWritePermission();
     }
 
 

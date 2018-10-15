@@ -16,12 +16,14 @@
 
 package io.github.ctrlaltdel.aosp.ime.latin.setup;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -29,6 +31,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -62,6 +66,9 @@ import io.github.ctrlaltdel.aosp.ime.latin.utils.UncachedInputMethodManagerUtils
 // TODO: Use Fragment to implement welcome screen and setup steps.
 public final class SetupWizardActivity extends AppCompatActivity implements View.OnClickListener {
     static final String TAG = SetupWizardActivity.class.getSimpleName();
+
+    private final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private Bundle savedState;
 
     // For debugging purpose.
     private static final boolean FORCE_TO_SHOW_WELCOME_SCREEN = false;
@@ -199,23 +206,28 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         mHandler = new SettingsPoolingHandler(this, mImm);
         notificationAccessHandler = new NotificationAccessHandler(this);
 
-        setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
         setContentView(R.layout.setup_wizard);
         mSetupWizard = findViewById(R.id.setup_wizard);
 
         setupWelcomeVideo();
 
-        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> users) {
-                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                    setupWizardViewModel.isSetup.value = true;
-                }
+//        setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
+//        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(@Nullable List<User> users) {
+//                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
+//                    setupWizardViewModel.isSetup.value = true;
+//                }
+//
+//                setupCreate(savedInstanceState);
+//                setupWizardViewModel.user.removeObserver(this);
+//            }
+//        });
 
-                setupCreate(savedInstanceState);
-                setupWizardViewModel.user.removeObserver(this);
-            }
-        });
+        savedState = savedInstanceState;
+        grantExternalStorageWritePermission();
+
+        setupCreate(savedInstanceState);
     }
 
     private void setupWelcomeVideo() {
@@ -247,12 +259,21 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
 
     }
 
-    private void setupCreate(final Bundle savedInstanceState) {
+    private void setupStep(final Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             mStepNumber = determineSetupStepNumberFromLauncher();
         } else {
             mStepNumber = savedInstanceState.getInt(STATE_STEP);
         }
+    }
+
+    private void setupCreate(final Bundle savedInstanceState) {
+
+//        if (savedInstanceState == null) {
+//            mStepNumber = determineSetupStepNumberFromLauncher();
+//        } else {
+//            mStepNumber = savedInstanceState.getInt(STATE_STEP);
+//        }
 
         final String applicationName = getResources().getString(getApplicationInfo().labelRes);
         mWelcomeScreen = findViewById(R.id.setup_welcome_screen);
@@ -322,7 +343,9 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         step4.setInputAction(new Runnable() {
             @Override
             public void run() {
-                setupWizardViewModel.isSetup.value = true;
+                if(setupWizardViewModel != null) {
+                    setupWizardViewModel.isSetup.value = true;
+                }
             }
         });
         mSetupStepGroup.addStep(step4);
@@ -462,7 +485,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         if (!notificationAccessHandler.isServiceRunning()) {
             return STEP_3;
         }
-        if (!setupWizardViewModel.isSetup.value) {
+        if (setupWizardViewModel != null && !setupWizardViewModel.isSetup.value) {
             return STEP_4;
         }
         return STEP_5;
@@ -488,15 +511,17 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     protected void onRestart() {
         super.onRestart();
 
-        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> users) {
-                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                    setupWizardViewModel.isSetup.value = true;
+        if(setupWizardViewModel != null) {
+            setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+                @Override
+                public void onChanged(@Nullable List<User> users) {
+                    if (users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                        setupWizardViewModel.isSetup.value = true;
+                    }
+                    setupRestart();
                 }
-                setupRestart();
-            }
-        });
+            });
+        }
     }
 
     private void setupRestart() {
@@ -512,15 +537,17 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
     protected void onResume() {
         super.onResume();
 
-        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> users) {
-                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                    setupWizardViewModel.isSetup.value = true;
+        if(setupWizardViewModel != null) {
+            setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+                @Override
+                public void onChanged(@Nullable List<User> users) {
+                    if (users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                        setupWizardViewModel.isSetup.value = true;
+                    }
+                    setupResume();
                 }
-                setupResume();
-            }
-        });
+            });
+        }
 
     }
 
@@ -722,5 +749,58 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             }
             mIndicatorView.setIndicatorPosition(enableStepNo - STEP_1, mGroup.size());
         }
+    }
+
+    private void grantExternalStorageWritePermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            //request for the permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
+        }
+        else {
+            createViewModel();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED)   {
+
+                    createViewModel();
+
+
+                } else {
+
+                    //TODO: Set warning message
+                }
+                return;
+            }
+        }
+    }
+
+    private void createViewModel() {
+        setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
+
+        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
+                    setupWizardViewModel.isSetup.value = true;
+                }
+
+                setupStep(savedState);
+                setupWizardViewModel.user.removeObserver(this);
+            }
+        });
     }
 }

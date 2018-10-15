@@ -25,8 +25,8 @@ public class FileWriter {
             File dir = new File(Environment.getExternalStorageDirectory(), localDirectory);
             if(!dir.exists()) {
                 dir.mkdirs();
-                createNoMediaFile();
             }
+            createNoMediaFile();
 
             outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
                     name + ".png");
@@ -52,12 +52,18 @@ public class FileWriter {
         return outFile.getPath();
     }
 
-    private static void createNoMediaFile() {
+    private static void createNoMediaFile() throws Exception {
         File outFile = null;
         String localDirectory = "/Permoji/";
         OutputStream stream = null;
 
         outFile = new File(Environment.getExternalStorageDirectory() + localDirectory,
                 ".nomedia");
+
+        if(!outFile.exists()) {
+            stream = new FileOutputStream(outFile);
+            stream.flush();
+            stream.close();
+        }
     }
 }

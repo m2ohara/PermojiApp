@@ -105,7 +105,6 @@ public class TraitNotifierActivity extends AppCompatActivity {
 
         notifierRecyclerView = findViewById(R.id.notifier_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setReverseLayout(true);
         notifierRecyclerView.setLayoutManager(layoutManager);
 
 

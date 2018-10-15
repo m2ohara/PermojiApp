@@ -24,8 +24,6 @@ import com.permoji.viewModel.SetupWizardViewModel;
 
 public final class SetupActivity extends Activity {
 
-    private SetupWizardViewModel setupWizardViewModel;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

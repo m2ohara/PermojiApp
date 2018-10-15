@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.permoji.repository.TraitNotifierFillerRepository;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.github.ctrlaltdel.aosp.ime.R;
@@ -85,7 +87,7 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
             imageFile = new File(traitNotifierFillerResult.notifier.get(0).getImagePath());
         }
         catch (Exception e) {
-            //TODO: add default image
+            imageFile = new File(Environment.getExternalStorageDirectory()+"/Permoji/Permoji.png");
         }
         Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
         holder.notifierImage.setImageBitmap(imageBitmap);
@@ -94,7 +96,6 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
         holder.tickButton.setImageDrawable(setDrawableSize(R.drawable.tick_icon, 80, 80));
         holder.removeButton.setImageDrawable(setDrawableSize(R.drawable.cross_icon, 80, 80));
 
-//        StatementViewBuilder.get().buildStatement(traitResult, holder.content, traitNotifierFillerResult);
         new StatementBuilder(new StyledFillerBuilder()).setStatement(holder.content, traitResult, traitNotifierFillerResult);
 
         holder.removeButton.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +151,7 @@ public class TraitNotifierListAdapter extends RecyclerView.Adapter<TraitNotifier
     }
 
     public void setTraitNotifierFillerResultList(List<TraitNotifierFillerResult> traitNotifierFillerResultList) {
+        Collections.reverse(traitNotifierFillerResultList);
         this.traitNotifierFillerResultList = traitNotifierFillerResultList;
         notifyDataSetChanged();
     }

@@ -183,7 +183,8 @@
         <activity
             android:name="com.permoji.activity.UserTraitActivity"
             android:label="@string/title_activity_user_trait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -193,11 +194,13 @@
         <activity
             android:name="com.permoji.activity.TraitNotifierActivity"
             android:label="@string/title_activity_trait_notifier"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.permoji.activity.TraitSelectedActivity"
             android:label="@string/title_activity_trait_selected"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
