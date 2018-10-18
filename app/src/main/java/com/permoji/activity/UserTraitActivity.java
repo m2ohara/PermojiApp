@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.permoji.adapter.TraitDefinitionListAdapter;
 import com.permoji.builder.TraitDefinitionBuilder;
@@ -58,8 +59,6 @@ public class UserTraitActivity extends AppCompatActivity {
         setRecyclerView();
 
         initializeDeviceEmojiSupport();
-
-//        grantExternalStorageWritePermission();
     }
 
 
@@ -80,6 +79,7 @@ public class UserTraitActivity extends AppCompatActivity {
                     @Override
                     public void onFailed(@Nullable Throwable throwable) {
                         Log.e(this.getClass().getSimpleName(), "EmojiCompat initialization failed", throwable);
+                        Toast.makeText(getApplicationContext(), "Turn on your network on to see traits", Toast.LENGTH_LONG).show();
                     }
                 });
         EmojiCompat.init(config);
@@ -101,7 +101,7 @@ public class UserTraitActivity extends AppCompatActivity {
 
         TraitResult message = new TraitResult();
         TraitStatement statement = new TraitStatement();
-        statement.setTraitName("Add emojis using Permoji Keyboard for more traits");
+        statement.setTraitName("Add more traits using Permoji Keyboard"); //TODO: Move to strings resource
         message.traitStatement = Arrays.asList(statement);
 
         traitEntities.add(message);
@@ -113,42 +113,6 @@ public class UserTraitActivity extends AppCompatActivity {
         traitRecyclerView.setAdapter(traitDefinitionListAdapter);
         traitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         traitItemClickBuilder.setRecyclerOnClick(traitRecyclerView);
-    }
-
-    private void grantExternalStorageWritePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            //request for the permission
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED)   {
-
-                    // permission was granted, yay! Do the
-                    // write to external strage operations here
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                        /*You can forcefully again ask for the permissions to the user here but it is a bad practice*/
-                }
-                return;
-            }
-        }
     }
 
 }

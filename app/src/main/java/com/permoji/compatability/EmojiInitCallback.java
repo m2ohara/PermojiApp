@@ -1,6 +1,7 @@
 package com.permoji.compatability;
 
 import android.support.text.emoji.EmojiCompat;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -21,11 +22,16 @@ public class EmojiInitCallback extends EmojiCompat.InitCallback {
 
     @Override
     public void onInitialized() {
-        final TextView regularTextView = textView.get();
-        if (regularTextView != null) {
-            final EmojiCompat compat = EmojiCompat.get();
-            regularTextView.setText(
-                    compat.process(text));
+        try {
+            final TextView regularTextView = textView.get();
+            if (regularTextView != null) {
+                final EmojiCompat compat = EmojiCompat.get();
+                regularTextView.setText(
+                        compat.process(text));
+            }
+        }
+        catch (Exception e) {
+            Log.e(this.getClass().getSimpleName(), "Error processing emoji "+e.getMessage());
         }
     }
 

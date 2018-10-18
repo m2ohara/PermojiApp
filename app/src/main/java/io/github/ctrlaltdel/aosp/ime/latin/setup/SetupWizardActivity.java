@@ -209,20 +209,9 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         setContentView(R.layout.setup_wizard);
         mSetupWizard = findViewById(R.id.setup_wizard);
 
-        setupWelcomeVideo();
+        mSetupWizard.setVisibility(View.INVISIBLE);
 
-//        setupWizardViewModel = ViewModelProviders.of(this).get(SetupWizardViewModel.class);
-//        setupWizardViewModel.user.observe(this, new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(@Nullable List<User> users) {
-//                if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
-//                    setupWizardViewModel.isSetup.value = true;
-//                }
-//
-//                setupCreate(savedInstanceState);
-//                setupWizardViewModel.user.removeObserver(this);
-//            }
-//        });
+        setupWelcomeVideo();
 
         savedState = savedInstanceState;
         grantExternalStorageWritePermission();
@@ -269,12 +258,6 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
 
     private void setupCreate(final Bundle savedInstanceState) {
 
-//        if (savedInstanceState == null) {
-//            mStepNumber = determineSetupStepNumberFromLauncher();
-//        } else {
-//            mStepNumber = savedInstanceState.getInt(STATE_STEP);
-//        }
-
         final String applicationName = getResources().getString(getApplicationInfo().labelRes);
         mWelcomeScreen = findViewById(R.id.setup_welcome_screen);
         final TextView welcomeTitle = (TextView)findViewById(R.id.setup_welcome_title);
@@ -319,6 +302,8 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         });
         mSetupStepGroup.addStep(step2);
 
+        String val = getResources().getString(R.string.setup_step3_title);
+
         final SetupStep step3 = new SetupStep(STEP_3, applicationName,
                 (TextView)findViewById(R.id.setup_step3_bullet), findViewById(R.id.setup_step3),
                 R.string.setup_step3_title, R.string.setup_step3_instruction,
@@ -344,7 +329,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             @Override
             public void run() {
                 if(setupWizardViewModel != null) {
-                    setupWizardViewModel.isSetup.value = true;
+                    setupWizardViewModel.isUserNameInputted.value = true;
                 }
             }
         });
@@ -482,10 +467,10 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
         if (!UncachedInputMethodManagerUtils.isThisImeCurrent(this, mImm)) {
             return STEP_2;
         }
-        if (!notificationAccessHandler.isServiceRunning()) {
+        if (!notificationAccessHandler.isServiceRunning() && (setupWizardViewModel != null && !setupWizardViewModel.isUserNameInputted.value)) {
             return STEP_3;
         }
-        if (setupWizardViewModel != null && !setupWizardViewModel.isSetup.value) {
+        if (setupWizardViewModel != null && !setupWizardViewModel.isUserNameInputted.value) {
             return STEP_4;
         }
         return STEP_5;
@@ -516,7 +501,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                        setupWizardViewModel.isSetup.value = true;
+                        setupWizardViewModel.isUserNameInputted.value = true;
                     }
                     setupRestart();
                 }
@@ -542,7 +527,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                        setupWizardViewModel.isSetup.value = true;
+                        setupWizardViewModel.isUserNameInputted.value = true;
                     }
                     setupResume();
                 }
@@ -756,6 +741,8 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
+            mSetupWizard.setVisibility(View.INVISIBLE);
+
             //request for the permission
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -795,7 +782,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if(users.size() > 0 && !users.get(0).getName().isEmpty()) {
-                    setupWizardViewModel.isSetup.value = true;
+                    setupWizardViewModel.isUserNameInputted.value = true;
                 }
 
                 setupStep(savedState);

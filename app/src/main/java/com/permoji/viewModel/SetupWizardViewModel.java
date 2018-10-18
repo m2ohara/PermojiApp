@@ -20,7 +20,7 @@ public class SetupWizardViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
     public LiveData<List<User>> user;
-    public MutableBoolean isSetup;
+    public MutableBoolean isUserNameInputted;
 
     public SetupWizardViewModel(@NonNull Application application) {
         super(application);
@@ -29,7 +29,7 @@ public class SetupWizardViewModel extends AndroidViewModel {
 
         user = userRepository.get();
 
-        isSetup = new MutableBoolean(false);
+        isUserNameInputted = new MutableBoolean(false);
 
     }
 
